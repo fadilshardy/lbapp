@@ -1,18 +1,5 @@
-import {
-  mdiAccountCircle,
-  mdiMonitor,
-  mdiGithub,
-  mdiLock,
-  mdiAlertCircle,
-  mdiSquareEditOutline,
-  mdiTable,
-  mdiViewList,
-  mdiTelevisionGuide,
-  mdiResponsive,
-  mdiPalette,
-  mdiVuejs,
-} from '@mdi/js'
-import { MenuAsideItem } from './interfaces'
+import { mdiCashRegister, mdiChartBar, mdiCogs, mdiFinance, mdiMonitor, mdiPointOfSale, mdiStore, mdiTextBoxPlus, mdiWarehouse } from '@mdi/js';
+import { MenuAsideItem } from './interfaces';
 
 const menuAside: MenuAsideItem[] = [
   {
@@ -21,69 +8,94 @@ const menuAside: MenuAsideItem[] = [
     label: 'Dashboard',
   },
   {
-    href: '/tables',
-    label: 'Tables',
-    icon: mdiTable,
+    href: '/cashier',
+    label: 'Cashier',
+    icon: mdiPointOfSale,
   },
   {
-    href: '/forms',
-    label: 'Forms',
-    icon: mdiSquareEditOutline,
+    href: '/sales',
+    label: 'Sales',
+    icon: mdiCashRegister,
   },
   {
-    href: '/ui',
-    label: 'UI',
-    icon: mdiTelevisionGuide,
+    href: '/purchases',
+    label: 'Purchases',
+    icon: mdiTextBoxPlus,
   },
   {
-    href: '/responsive',
-    label: 'Responsive',
-    icon: mdiResponsive,
-  },
-  {
-    href: '/',
-    label: 'Styles',
-    icon: mdiPalette,
-  },
-  {
-    href: '/profile',
-    label: 'Profile',
-    icon: mdiAccountCircle,
-  },
-  {
-    href: '/login',
-    label: 'Login',
-    icon: mdiLock,
-  },
-  {
-    href: '/error',
-    label: 'Error',
-    icon: mdiAlertCircle,
-  },
-  {
-    label: 'Dropdown',
-    icon: mdiViewList,
+    label: 'Accountant',
+    icon: mdiFinance,
     menu: [
       {
-        label: 'Item One',
+        label: 'Chart of Accounts', // Daftar Akun
       },
       {
-        label: 'Item Two',
+        label: 'Journal Entry', // Entri Jurnal
+      },
+      {
+        label: 'General Ledger', // Buku Besar
+      },
+      {
+        label: 'General Journal', // Jurnal Umum
+      },
+      {
+        label: 'Trial Balance', // Neraca Percobaan
       },
     ],
   },
   {
-    href: 'https://github.com/justboil/admin-one-react-tailwind',
-    label: 'GitHub',
-    icon: mdiGithub,
-    target: '_blank',
+    label: 'Inventory',
+    icon: mdiWarehouse,
+    menu: [
+      {
+        label: 'Stock',
+      },
+      {
+        label: 'Products',
+      },
+      {
+        label: 'Categories',
+      },
+    ],
   },
   {
-    href: 'https://github.com/justboil/admin-one-vue-tailwind',
-    label: 'Vue version',
-    icon: mdiVuejs,
-    target: '_blank',
+    label: 'Reports',
+    icon: mdiChartBar,
+    menu: [
+      {
+        label: 'Sales Reports',
+      },
+      {
+        label: 'Purchase Reports',
+      },
+      {
+        label: 'Financial reports',
+      },
+      {
+        label: 'Profit and Loss',
+      },
+    ],
   },
-]
+  {
+    href: '/vendors',
+    label: 'Vendors',
+    icon: mdiStore,
+  },
+  {
+    label: 'Settings',
+    icon: mdiCogs,
+    menu: [
+      {
+        label: 'Company Information',
+      },
+      {
+        label: 'Currency Settings',
+      },
+      {
+        label: 'User Management',
+      },
+    ],
+  },
+];
 
-export default menuAside
+export default menuAside;

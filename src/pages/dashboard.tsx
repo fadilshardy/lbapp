@@ -3,43 +3,42 @@ import {
   mdiCartOutline,
   mdiChartPie,
   mdiChartTimelineVariant,
-  mdiGithub,
   mdiMonitorCellphone,
   mdiReload,
-} from '@mdi/js'
-import Head from 'next/head'
-import React, { useState } from 'react'
-import type { ReactElement } from 'react'
-import BaseButton from '../components/BaseButton'
-import LayoutAuthenticated from '../layouts/Authenticated'
-import SectionMain from '../components/SectionMain'
-import SectionTitleLineWithButton from '../components/SectionTitleLineWithButton'
-import CardBoxWidget from '../components/CardBoxWidget'
-import { useSampleClients, useSampleTransactions } from '../hooks/sampleData'
-import CardBoxTransaction from '../components/CardBoxTransaction'
-import { Client, Transaction } from '../interfaces'
-import CardBoxClient from '../components/CardBoxClient'
-import SectionBannerStarOnGitHub from '../components/SectionBannerStarOnGitHub'
-import CardBox from '../components/CardBox'
-import { sampleChartData } from '../components/ChartLineSample/config'
-import ChartLineSample from '../components/ChartLineSample'
-import NotificationBar from '../components/NotificationBar'
-import TableSampleClients from '../components/TableSampleClients'
-import { getPageTitle } from '../config'
+} from '@mdi/js';
+import Head from 'next/head';
+import type { ReactElement } from 'react';
+import React, { useState } from 'react';
+import BaseButton from '../components/BaseButton';
+import CardBox from '../components/CardBox';
+import CardBoxClient from '../components/CardBoxClient';
+import CardBoxTransaction from '../components/CardBoxTransaction';
+import CardBoxWidget from '../components/CardBoxWidget';
+import ChartLineSample from '../components/ChartLineSample';
+import { sampleChartData } from '../components/ChartLineSample/config';
+import NotificationBar from '../components/NotificationBar';
+import SectionBannerStarOnGitHub from '../components/SectionBannerStarOnGitHub';
+import SectionMain from '../components/SectionMain';
+import SectionTitleLineWithButton from '../components/SectionTitleLineWithButton';
+import TableSampleClients from '../components/TableSampleClients';
+import { getPageTitle } from '../config';
+import { useSampleClients, useSampleTransactions } from '../hooks/sampleData';
+import { Client, Transaction } from '../interfaces';
+import LayoutAuthenticated from '../layouts/Authenticated';
 
 const Dashboard = () => {
-  const { clients } = useSampleClients()
-  const { transactions } = useSampleTransactions()
+  const { clients } = useSampleClients();
+  const { transactions } = useSampleTransactions();
 
-  const clientsListed = clients.slice(0, 4)
+  const clientsListed = clients.slice(0, 4);
 
-  const [chartData, setChartData] = useState(sampleChartData())
+  const [chartData, setChartData] = useState(sampleChartData());
 
   const fillChartData = (e: React.MouseEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    setChartData(sampleChartData())
-  }
+    setChartData(sampleChartData());
+  };
 
   return (
     <>
@@ -47,17 +46,11 @@ const Dashboard = () => {
         <title>{getPageTitle('Dashboard')}</title>
       </Head>
       <SectionMain>
-        <SectionTitleLineWithButton icon={mdiChartTimelineVariant} title="Overview" main>
-          <BaseButton
-            href="https://github.com/justboil/admin-one-react-tailwind"
-            target="_blank"
-            icon={mdiGithub}
-            label="Star on GitHub"
-            color="contrast"
-            roundedFull
-            small
-          />
-        </SectionTitleLineWithButton>
+        <SectionTitleLineWithButton
+          icon={mdiChartTimelineVariant}
+          title="Overview"
+          main
+        ></SectionTitleLineWithButton>
 
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
           <CardBoxWidget
@@ -125,11 +118,11 @@ const Dashboard = () => {
         </CardBox>
       </SectionMain>
     </>
-  )
-}
+  );
+};
 
 Dashboard.getLayout = function getLayout(page: ReactElement) {
-  return <LayoutAuthenticated>{page}</LayoutAuthenticated>
-}
+  return <LayoutAuthenticated>{page}</LayoutAuthenticated>;
+};
 
-export default Dashboard
+export default Dashboard;

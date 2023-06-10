@@ -2,16 +2,16 @@
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
-  basePath: "/lbapp",
+  basePath: '/lbapp',
   async redirects() {
     return [
       {
         source: '/',
-        destination: '/lbapp/dashboard',
+        destination: '/lbapp/',
         basePath: false,
-        permanent: false
-      }
-    ]
+        permanent: false,
+      },
+    ];
   },
   images: {
     unoptimized: true,
@@ -22,6 +22,6 @@ const nextConfig = {
       },
     ],
   },
-}
+};
 
-export default nextConfig
+export default nextConfig;

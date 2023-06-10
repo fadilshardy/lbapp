@@ -1,36 +1,34 @@
-import React from 'react'
-import Script from 'next/script'
-import type { AppProps } from 'next/app'
-import type { ReactElement, ReactNode } from 'react'
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import { store } from '../stores/store'
-import { Provider } from 'react-redux'
-import '../css/main.css'
+import type { NextPage } from 'next';
+import type { AppProps } from 'next/app';
+import Head from 'next/head';
+import type { ReactElement, ReactNode } from 'react';
+import { Provider } from 'react-redux';
+import '../css/main.css';
+import { store } from '../stores/store';
 
 export type NextPageWithLayout<P = Record<string, unknown>, IP = P> = NextPage<P, IP> & {
-  getLayout?: (page: ReactElement) => ReactNode
-}
+  getLayout?: (page: ReactElement) => ReactNode;
+};
 
 type AppPropsWithLayout = AppProps & {
-  Component: NextPageWithLayout
-}
+  Component: NextPageWithLayout;
+};
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   // Use the layout defined at the page level, if available
-  const getLayout = Component.getLayout || ((page) => page)
+  const getLayout = Component.getLayout || ((page) => page);
 
-  const title = `Admin One React Tailwind free`
+  const title = `Lbapp`;
 
-  const description = 'Admin One - free React Next Tailwind dashboard with TypeScript and dark mode'
+  const description = 'Lbapp - ERP/PoS + accountant app';
 
-  const url = 'https://justboil.github.io/admin-one-react-tailwind/'
+  const url = 'https://Lbapp.com';
 
-  const image = `https://static.justboil.me/templates/one/repo-tailwind-react.png`
+  const image = ``;
 
-  const imageWidth = '1920'
+  const imageWidth = '1920';
 
-  const imageHeight = '960'
+  const imageHeight = '960';
 
   return (
     <Provider store={store}>
@@ -40,7 +38,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
             <meta name="description" content={description} />
 
             <meta property="og:url" content={url} />
-            <meta property="og:site_name" content="JustBoil.me" />
+            <meta property="og:site_name" content="Lbapp" />
             <meta property="og:title" content={title} />
             <meta property="og:description" content={description} />
             <meta property="og:image" content={image} />
@@ -54,29 +52,12 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
             <meta property="twitter:image:src" content={image} />
             <meta property="twitter:image:width" content={imageWidth} />
             <meta property="twitter:image:height" content={imageHeight} />
-
-            <link rel="icon" href="/admin-one-react-tailwind/favicon.png" />
           </Head>
-
-          <Script
-            src="https://www.googletagmanager.com/gtag/js?id=UA-130795909-1"
-            strategy="afterInteractive"
-          />
-
-          <Script id="google-analytics" strategy="afterInteractive">
-            {`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'UA-130795909-1');
-            `}
-          </Script>
-
           <Component {...pageProps} />
         </>
       )}
     </Provider>
-  )
+  );
 }
 
-export default MyApp
+export default MyApp;
