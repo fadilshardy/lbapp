@@ -1,4 +1,5 @@
 import type { NextPage } from 'next';
+import { appWithTranslation } from 'next-i18next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import type { ReactElement, ReactNode } from 'react';
@@ -15,7 +16,6 @@ type AppPropsWithLayout = AppProps & {
 };
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-  // Use the layout defined at the page level, if available
   const getLayout = Component.getLayout || ((page) => page);
 
   const title = `Lbapp`;
@@ -60,4 +60,4 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   );
 }
 
-export default MyApp;
+export default appWithTranslation(MyApp);

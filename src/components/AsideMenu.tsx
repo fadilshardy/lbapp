@@ -1,14 +1,13 @@
-import React from 'react'
-import { MenuAsideItem } from '../interfaces'
-import AsideMenuLayer from './AsideMenuLayer'
-import OverlayLayer from './OverlayLayer'
+import { MenuAsideItem } from '../interfaces';
+import AsideMenuLayer from './AsideMenuLayer';
+import OverlayLayer from './OverlayLayer';
 
 type Props = {
-  menu: MenuAsideItem[]
-  isAsideMobileExpanded: boolean
-  isAsideLgActive: boolean
-  onAsideLgClose: () => void
-}
+  menu: MenuAsideItem[];
+  isAsideMobileExpanded: boolean;
+  isAsideLgActive: boolean;
+  onAsideLgClose: () => void;
+};
 
 export default function AsideMenu({
   isAsideMobileExpanded = false,
@@ -26,5 +25,5 @@ export default function AsideMenu({
       />
       {isAsideLgActive && <OverlayLayer zIndex="z-30" onClick={props.onAsideLgClose} />}
     </>
-  )
+  );
 }

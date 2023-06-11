@@ -6,6 +6,8 @@ import {
   mdiMonitorCellphone,
   mdiReload,
 } from '@mdi/js';
+import { GetStaticProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import type { ReactElement } from 'react';
 import React, { useState } from 'react';
@@ -126,3 +128,9 @@ Dashboard.getLayout = function getLayout(page: ReactElement) {
 };
 
 export default Dashboard;
+
+export const getStaticProps: GetStaticProps = async ({ locale }: any) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+});

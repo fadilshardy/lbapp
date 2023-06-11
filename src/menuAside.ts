@@ -1,101 +1,108 @@
 import { mdiCashRegister, mdiChartBar, mdiCogs, mdiFinance, mdiMonitor, mdiPointOfSale, mdiStore, mdiTextBoxPlus, mdiWarehouse } from '@mdi/js';
+import { useTranslation } from 'next-i18next';
 import { MenuAsideItem } from './interfaces';
 
-const menuAside: MenuAsideItem[] = [
-  {
-    href: '/dashboard',
-    icon: mdiMonitor,
-    label: 'Dashboard',
-  },
-  {
-    href: '/cashier',
-    label: 'Cashier',
-    icon: mdiPointOfSale,
-  },
-  {
-    href: '/sales',
-    label: 'Sales',
-    icon: mdiCashRegister,
-  },
-  {
-    href: '/purchases',
-    label: 'Purchases',
-    icon: mdiTextBoxPlus,
-  },
-  {
-    label: 'Accountant',
-    icon: mdiFinance,
-    menu: [
-      {
-        label: 'Chart of Accounts', // Daftar Akun
-      },
-      {
-        label: 'Journal Entry', // Entri Jurnal
-      },
-      {
-        label: 'General Ledger', // Buku Besar
-      },
-      {
-        label: 'General Journal', // Jurnal Umum
-      },
-      {
-        label: 'Trial Balance', // Neraca Percobaan
-      },
-    ],
-  },
-  {
-    label: 'Inventory',
-    icon: mdiWarehouse,
-    menu: [
-      {
-        label: 'Stock',
-      },
-      {
-        label: 'Products',
-      },
-      {
-        label: 'Categories',
-      },
-    ],
-  },
-  {
-    label: 'Reports',
-    icon: mdiChartBar,
-    menu: [
-      {
-        label: 'Sales Reports',
-      },
-      {
-        label: 'Purchase Reports',
-      },
-      {
-        label: 'Financial reports',
-      },
-      {
-        label: 'Profit and Loss',
-      },
-    ],
-  },
-  {
-    href: '/vendors',
-    label: 'Vendors',
-    icon: mdiStore,
-  },
-  {
-    label: 'Settings',
-    icon: mdiCogs,
-    menu: [
-      {
-        label: 'Company Information',
-      },
-      {
-        label: 'Currency Settings',
-      },
-      {
-        label: 'User Management',
-      },
-    ],
-  },
-];
+const MenuAside = () => {
+  const { t } = useTranslation("common");
 
-export default menuAside;
+  const menuAside: MenuAsideItem[] = [
+    {
+      href: '/dashboard',
+      icon: mdiMonitor,
+      label: t('dashboard'),
+    },
+    {
+      href: '/cashier',
+      label: t('cashier'),
+      icon: mdiPointOfSale,
+    },
+    {
+      href: '/sales',
+      label: t('sales'),
+      icon: mdiCashRegister,
+    },
+    {
+      href: '/purchases',
+      label: t('purchases'),
+      icon: mdiTextBoxPlus,
+    },
+    {
+      label: t('accountant'),
+      icon: mdiFinance,
+      menu: [
+        {
+          label: t('chart_of_accounts'),
+        },
+        {
+          label: t('journal_entry'),
+        },
+        {
+          label: t('general_ledger'),
+        },
+        {
+          label: t('general_journal'),
+        },
+        {
+          label: t('trial_balance'),
+        },
+      ],
+    },
+    {
+      label: t('inventory'),
+      icon: mdiWarehouse,
+      menu: [
+        {
+          label: t('stock'),
+        },
+        {
+          label: t('products'),
+        },
+        {
+          label: t('categories'),
+        },
+      ],
+    },
+    {
+      label: t('reports'),
+      icon: mdiChartBar,
+      menu: [
+        {
+          label: t('sales_reports'),
+        },
+        {
+          label: t('purchase_reports'),
+        },
+        {
+          label: t('financial_reports'),
+        },
+        {
+          label: t('profit_and_loss'),
+        },
+      ],
+    },
+    {
+      href: '/vendors',
+      label: t('vendors'),
+      icon: mdiStore,
+    },
+    {
+      label: t('settings'),
+      icon: mdiCogs,
+      menu: [
+        {
+          label: t('company_information'),
+        },
+        {
+          label: t('currency_settings'),
+        },
+        {
+          label: t('user_management'),
+        },
+      ],
+    },
+  ];
+
+  return menuAside;
+};
+
+export default MenuAside;

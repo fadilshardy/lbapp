@@ -9,7 +9,7 @@ type Props = {
   title: string;
   main?: boolean;
   children?: ReactNode;
-  hasSetting: boolean;
+  hasSetting?: boolean;
 };
 
 export default function SectionTitleLineWithButton({
