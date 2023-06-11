@@ -1,43 +1,41 @@
-import { mdiClose, mdiLogout } from '@mdi/js'
-import React from 'react'
-import { appTitle } from '../config'
-import { MenuAsideItem } from '../interfaces'
-import { useAppSelector } from '../stores/hooks'
-import AsideMenuItem from './AsideMenuItem'
-import AsideMenuList from './AsideMenuList'
-import BaseIcon from './BaseIcon'
+import { mdiClose, mdiLogout } from '@mdi/js';
+import React from 'react';
+import { appTitle } from '../config';
+import { MenuAsideItem } from '../interfaces';
+import { useAppSelector } from '../stores/hooks';
+import AsideMenuItem from './AsideMenuItem';
+import AsideMenuList from './AsideMenuList';
+import BaseIcon from './BaseIcon';
 
 type Props = {
-  menu: MenuAsideItem[]
-  className?: string
-  onAsideLgCloseClick: () => void
-}
+  menu: MenuAsideItem[];
+  className?: string;
+  onAsideLgCloseClick: () => void;
+};
 
 export default function AsideMenuLayer({ menu, className = '', ...props }: Props) {
-  const asideStyle = useAppSelector((state) => state.style.asideStyle)
-  const asideBrandStyle = useAppSelector((state) => state.style.asideBrandStyle)
-  const asideScrollbarsStyle = useAppSelector((state) => state.style.asideScrollbarsStyle)
-  const darkMode = useAppSelector((state) => state.style.darkMode)
+  const asideStyle = useAppSelector((state) => state.style.asideStyle);
+  const asideBrandStyle = useAppSelector((state) => state.style.asideBrandStyle);
+  const asideScrollbarsStyle = useAppSelector((state) => state.style.asideScrollbarsStyle);
+  const darkMode = useAppSelector((state) => state.style.darkMode);
 
   const logoutItem: MenuAsideItem = {
     label: 'Logout',
     icon: mdiLogout,
     color: 'info',
     isLogout: true,
-  }
+  };
 
   const handleAsideLgCloseClick = (e: React.MouseEvent) => {
-    e.preventDefault()
-    props.onAsideLgCloseClick()
-  }
+    e.preventDefault();
+    props.onAsideLgCloseClick();
+  };
 
   return (
     <aside
       className={`${className} w-60 fixed flex z-40 top-0 h-screen transition-position overflow-hidden`}
     >
-      <div
-        className={` flex-1 flex flex-col overflow-hidden dark:bg-slate-900 ${asideStyle}`}
-      >
+      <div className={` flex-1 flex flex-col overflow-hidden dark:bg-slate-900 ${asideStyle}`}>
         <div
           className={`flex flex-row h-14 items-center justify-between dark:bg-slate-900 ${asideBrandStyle}`}
         >
@@ -63,5 +61,5 @@ export default function AsideMenuLayer({ menu, className = '', ...props }: Props
         </ul>
       </div>
     </aside>
-  )
+  );
 }

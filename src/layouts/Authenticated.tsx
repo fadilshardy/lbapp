@@ -35,6 +35,8 @@ export default function LayoutAuthenticated({ children }: Props) {
 
   const router = useRouter();
 
+  const menuSidebar = menuAside();
+
   useEffect(() => {
     const handleRouteChangeStart = () => {
       setIsAsideMobileExpanded(false);
@@ -79,7 +81,7 @@ export default function LayoutAuthenticated({ children }: Props) {
         <AsideMenu
           isAsideMobileExpanded={isAsideMobileExpanded}
           isAsideLgActive={isAsideLgActive}
-          menu={menuAside}
+          menu={menuSidebar}
           onAsideLgClose={() => setIsAsideLgActive(false)}
         />
         {children}
