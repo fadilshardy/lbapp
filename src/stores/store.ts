@@ -1,11 +1,16 @@
+import { cartReducer, paymentReducer } from '@features/pos-cart'
+import { productCatalogReducer } from '@features/pos-product-catalog'
 import { configureStore } from '@reduxjs/toolkit'
-import styleReducer from './styleSlice'
 import mainReducer from './mainSlice'
+import styleReducer from './styleSlice'
 
 export const store = configureStore({
   reducer: {
     style: styleReducer,
     main: mainReducer,
+    productCatalog: productCatalogReducer,
+    cart: cartReducer,
+    payment: paymentReducer
   },
 })
 

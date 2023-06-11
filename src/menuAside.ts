@@ -12,7 +12,7 @@ const MenuAside = () => {
       label: t('dashboard'),
     },
     {
-      href: '/cashier',
+      href: '/pos',
       label: t('cashier'),
       icon: mdiPointOfSale,
     },
