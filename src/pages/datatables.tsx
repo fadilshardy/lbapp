@@ -3,7 +3,6 @@ import { ReactElement } from 'react';
 import SectionMain from '../components/SectionMain';
 import LayoutAuthenticated from '../layouts/Authenticated';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
 import { Cart, PaymentInfo } from '@features/pos-cart';
 import { ProductCatalog } from '@features/pos-product-catalog';
 import { GetStaticProps } from 'next';
@@ -18,20 +17,12 @@ const PosPage = () => {
       </Head>
 
       <SectionMain>
-        <div className="grid grid-cols-6 w-full">
-          <div className="col-span-4 ">
-            <ProductCatalog />
-          </div>
-          <div className="col-span-2">
-            <Card>
-              <CardHeader>
-                <CardTitle>Carts</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <Cart />
-                <PaymentInfo />
-              </CardContent>
-            </Card>
+        <div className="grid grid-cols-6 w-full border bg-white">
+          <ProductCatalog />
+          <div className="col-span-2 bg-white">
+            <Cart />
+
+            <PaymentInfo />
           </div>
         </div>
       </SectionMain>

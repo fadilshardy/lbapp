@@ -1,4 +1,5 @@
 export * from './components/ProductCatalog';
+export * from './datatable/productCatalogColumns';
 export * from './interfaces/product';
-export * from './stores/productCatalog';
+export * from './utils/productCatalogUtils';
 

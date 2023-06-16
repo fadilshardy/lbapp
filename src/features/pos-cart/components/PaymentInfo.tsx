@@ -1,14 +1,15 @@
-import { addCash, calculateChange, updateCash } from '@features/pos-cart';
+import { Button } from '@components/ui/button';
+import { Input } from '@components/ui/input';
+import { addCash, calculateChange, clearCart, updateCash } from '@features/pos-cart';
+import { formatCurrency } from '@lib/utils';
 import { useAppDispatch, useAppSelector } from '@stores/hooks';
 import { useEffect, useState } from 'react';
 
 interface IPaymentInfoProps {}
 
 export const PaymentInfo: React.FunctionComponent<IPaymentInfoProps> = (props) => {
-  const cash = useAppSelector((state) => state.payment.cash);
-  const change = useAppSelector((state) => state.payment.change);
-  const totalPrice = useAppSelector((state) => state.cart.totalPrice);
-  const cartItems = useAppSelector((state) => state.cart.cartItems);
+  const { cash, change } = useAppSelector((state) => state.payment);
+  const { totalPrice, cartItems } = useAppSelector((state) => state.cart);
   const [submitable, setSubmitable] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -22,6 +23,15 @@ export const PaymentInfo: React.FunctionComponent<IPaymentInfoProps> = (props) =
     dispatch(addCash(cash));
   };
 
+  const handleClearCash = () => {
+    dispatch(updateCash(0));
+  };
+
+  const handleClearCart = () => {
+    handleClearCash();
+    dispatch(clearCart());
+  };
+
   useEffect(() => {
     dispatch(calculateChange(totalPrice));
 
@@ -33,73 +43,89 @@ export const PaymentInfo: React.FunctionComponent<IPaymentInfoProps> = (props) =
     }
   }, [totalPrice, cash, cartItems]);
 
-  const formatter = new Intl.NumberFormat('id-ID', {
-    style: 'currency',
-    currency: 'IDR',
-    minimumFractionDigits: 0,
-  });
-
-  const priceFormat = (price: number): string => {
-    const formattedPrice = formatter.format(price);
-    return `${formattedPrice}`;
-  };
-
   const submit = () => {};
 
   return (
-    <div className="select-none h-auto w-full text-center pt-3 pb-4 px-4">
-      <div className="flex mb-3 text-lg font-semibold text-blue-gray-700">
-        <div>TOTAL</div>
-        <div className="text-right w-full">{priceFormat(totalPrice)}</div>
-      </div>
-      <div className="mb-3 text-blue-gray-700 px-3 pt-2 pb-3 rounded-lg bg-blue-gray-50">
-        <div className="flex text-lg font-semibold">
-          <div className="flex-grow text-left">CASH</div>
-          <div className="flex text-right">
-            <div className="mr-2">Rp</div>
-            <input
-              value={cash.toLocaleString()}
-              onChange={(e) => handleUpdateCash(Number(e.target.value.replace(/,/g, '')))}
-              type="text"
-              className="w-28 text-right bg-white shadow rounded-lg focus:bg-white focus:shadow-lg px-2 focus:outline-none"
-            />
-          </div>
-        </div>
-        <hr className="my-2" />
-        <div className="hidden sm:grid md:grid-cols-3 gap-2 mt-2">
-          {moneys.map((money, index) => (
-            <button
-              key={index}
-              onClick={() => handleAddCash(money)}
-              className="bg-white rounded-lg shadow hover:shadow-lg focus:outline-none inline-block px-2 py-1 text-sm"
-            >
-              +{priceFormat(money)}
-            </button>
-          ))}
+    <div className="select-none h-auto w-full text-center  mt-8 border-t border-gray-100 pt-8">
+      <div className="flex w-full  justify-between items-baseline">
+        <span className="text-lg font-semibold leading-none tracking-tight">Cash</span>
+        <div className="flex space-x-2">
+          <Input
+            type="text"
+            placeholder="0"
+            className="w-28 text-right shadow rounded-lg px-2 focus:outline-none"
+            value={cash.toLocaleString()}
+            onChange={(e) => handleUpdateCash(Number(e.target.value.replace(/,/g, '')))}
+          />
+          <Button variant="outline" onClick={() => handleClearCash()} className="text-gray-600">
+            x
+          </Button>
         </div>
       </div>
-      {change !== 0 && totalPrice !== 0 && cash !== 0 && (
-        <div
-          className={`flex mb-3 text-lg font-semibold bg-${
-            change > 0 ? 'cyan-50' : 'pink-100'
-          } text-blue-gray-700 rounded-lg py-2 px-3`}
-        >
-          <div className={`text-${change > 0 ? 'cyan-800' : 'pink-600'}`}>
-            {change > 0 ? 'CHANGE' : `${priceFormat(change)} `}
-          </div>
-          <div className="text-right flex-grow text-cyan-600">{priceFormat(change)}</div>
-        </div>
-      )}
 
-      <button
-        className={`text-white rounded-2xl text-lg w-full py-3 focus:outline-none ${
-          submitable ? 'bg-cyan-500 hover:bg-cyan-600' : 'bg-blue-gray-200'
-        }`}
-        disabled={!submitable}
-        onClick={submit}
-      >
-        SUBMIT
-      </button>
+      <div className="hidden sm:grid md:grid-cols-3 gap-2 mt-2">
+        {moneys.map((money, index) => (
+          <Button
+            key={index}
+            onClick={() => handleAddCash(money)}
+            size="sm"
+            variant="outline"
+            className="text-gray-600"
+          >
+            {formatCurrency(money)}
+          </Button>
+        ))}
+      </div>
+      <div className="mt-8 flex justify-end border-t border-gray-100 pt-8">
+        <div className="w-screen max-w-lg space-y-4">
+          <dl className="space-y-0.5 text-sm text-gray-700">
+            <div className="flex justify-between">
+              <dt>Subtotal</dt>
+              <dd>{formatCurrency(totalPrice)}</dd>
+            </div>
+
+            <div className="flex justify-between">
+              <dt>Discount</dt>
+              <dd>{formatCurrency(0)}</dd>
+            </div>
+
+            <div className="flex justify-between !text-base font-medium">
+              <dt>Total</dt>
+              <dd>{formatCurrency(totalPrice)}</dd>
+            </div>
+            <div className="flex justify-between !text-base font-medium pb-2">
+              <dt>Cash</dt>
+              <dd>{formatCurrency(cash)}</dd>
+            </div>
+
+            <div className="flex justify-between !text-base font-medium  pt-6 border-t border-gray-200">
+              <dt>Change</dt>
+              <dd className={`text-${change >= 0 ? 'yellow-800' : 'red-600'}`}>
+                {formatCurrency(change)}
+              </dd>
+            </div>
+          </dl>
+
+          <div className="flex justify-between">
+            <Button
+              onClick={handleClearCart}
+              size="lg"
+              variant="outline"
+              className="hover:bg-red-500 hover:text-white rounded-full"
+            >
+              CLEAR
+            </Button>
+            <Button
+              disabled={!submitable}
+              onClick={submit}
+              className="bg-blue-600  rounded-full"
+              size="lg"
+            >
+              SUBMIT
+            </Button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
