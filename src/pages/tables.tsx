@@ -1,15 +1,15 @@
-import { mdiGithub, mdiMonitorCellphone, mdiTableBorder, mdiTableOff } from '@mdi/js'
-import Head from 'next/head'
-import React, { ReactElement } from 'react'
-import BaseButton from '../components/BaseButton'
-import CardBox from '../components/CardBox'
-import CardBoxComponentEmpty from '../components/CardBoxComponentEmpty'
-import LayoutAuthenticated from '../layouts/Authenticated'
-import NotificationBar from '../components/NotificationBar'
-import SectionMain from '../components/SectionMain'
-import SectionTitleLineWithButton from '../components/SectionTitleLineWithButton'
-import TableSampleClients from '../components/TableSampleClients'
-import { getPageTitle } from '../config'
+import BaseButton from '@components/BaseButton';
+import CardBox from '@components/CardBox';
+import CardBoxComponentEmpty from '@components/CardBoxComponentEmpty';
+import NotificationBar from '@components/NotificationBar';
+import SectionMain from '@components/SectionMain';
+import SectionTitleLineWithButton from '@components/SectionTitleLineWithButton';
+import TableSampleClients from '@components/TableSampleClients';
+import { getPageTitle } from '@config';
+import LayoutAuthenticated from '@layouts/Authenticated';
+import { mdiGithub, mdiMonitorCellphone, mdiTableBorder, mdiTableOff } from '@mdi/js';
+import Head from 'next/head';
+import { ReactElement } from 'react';
 
 const TablesPage = () => {
   return (
@@ -49,11 +49,11 @@ const TablesPage = () => {
         </CardBox>
       </SectionMain>
     </>
-  )
-}
+  );
+};
 
 TablesPage.getLayout = function getLayout(page: ReactElement) {
-  return <LayoutAuthenticated>{page}</LayoutAuthenticated>
-}
+  return <LayoutAuthenticated>{page}</LayoutAuthenticated>;
+};
 
-export default TablesPage
+export default TablesPage;

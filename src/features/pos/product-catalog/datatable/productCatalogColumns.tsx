@@ -1,6 +1,6 @@
 import { Button } from '@components/ui/button';
 import { DataTableColumnHeader } from '@components/ui/datatables/column-header';
-import { IProductCatalog } from '@features/pos-product-catalog';
+import { IProductCatalog } from '@features/pos/product-catalog';
 import { formatCurrency, formatDateToString } from '@lib/utils';
 import { ColumnDef } from '@tanstack/react-table';
 import { PlusSquare } from 'lucide-react';

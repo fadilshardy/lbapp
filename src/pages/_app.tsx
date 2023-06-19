@@ -1,9 +1,8 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import type { NextPage } from 'next';
 import { appWithTranslation } from 'next-i18next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { useState, type ReactElement, type ReactNode } from 'react';
+import { type ReactElement, type ReactNode } from 'react';
 import { Provider } from 'react-redux';
 import '../css/main.css';
 import { store } from '../stores/store';
@@ -30,7 +29,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const imageWidth = '1920';
 
   const imageHeight = '960';
-  const [queryClient] = useState(() => new QueryClient());
+  // const [queryClient] = useState(() => new QueryClient());
 
   return (
     <Provider store={store}>
@@ -55,9 +54,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
             <meta property="twitter:image:width" content={imageWidth} />
             <meta property="twitter:image:height" content={imageHeight} />
           </Head>
-          <QueryClientProvider client={queryClient}>
-            <Component {...pageProps} />
-          </QueryClientProvider>
+          <Component {...pageProps} />
         </>
       )}
     </Provider>

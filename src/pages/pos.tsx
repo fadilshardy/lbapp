@@ -1,14 +1,14 @@
+import SectionMain from '@components/SectionMain';
+import LayoutAuthenticated from '@layouts/Authenticated';
 import Head from 'next/head';
 import { ReactElement } from 'react';
-import SectionMain from '../components/SectionMain';
-import LayoutAuthenticated from '../layouts/Authenticated';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
-import { Cart, PaymentInfo } from '@features/pos-cart';
-import { ProductCatalog } from '@features/pos-product-catalog';
+import { getPageTitle } from '@config';
+import { Cart, PaymentInfo } from '@features/pos/cart';
+import { ProductCatalog } from '@features/pos/product-catalog';
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { getPageTitle } from '../config';
 
 const PosPage = () => {
   return (

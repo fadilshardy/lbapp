@@ -1,8 +1,8 @@
+import { appTitle } from '@config';
+import { MenuAsideItem } from '@interfaces';
 import { mdiClose, mdiLogout } from '@mdi/js';
+import { useAppSelector } from '@stores/hooks';
 import React from 'react';
-import { appTitle } from '../config';
-import { MenuAsideItem } from '../interfaces';
-import { useAppSelector } from '../stores/hooks';
 import AsideMenuItem from './AsideMenuItem';
 import AsideMenuList from './AsideMenuList';
 import BaseIcon from './BaseIcon';

@@ -1,7 +1,7 @@
+import { localStorageDarkModeKey, localStorageStyleKey } from '@config'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import * as styles from '../styles'
-import { localStorageDarkModeKey, localStorageStyleKey } from '../config'
 import { StyleKey } from '../interfaces'
+import * as styles from '../styles'
 
 interface StyleState {
   asideStyle: string

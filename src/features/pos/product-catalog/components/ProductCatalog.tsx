@@ -2,17 +2,13 @@ import { Button } from '@components/ui/button';
 import { Card, CardContent, CardHeader } from '@components/ui/card';
 import { DataTable } from '@components/ui/datatables/data-tables';
 import { Input } from '@components/ui/input';
-import { CartItem, addToCart } from '@features/pos-cart';
-import {
-  IProductCatalog,
-  fetchProductCatalogs,
-  getProductCatalogColumns,
-} from '@features/pos-product-catalog';
+import { CartItem, addToCart } from '@features/pos/cart';
+import { getProductCatalogColumns, productCatalogsApi } from '@features/pos/product-catalog';
 import useDebounce from '@hooks/useDebounce';
 import { useAppDispatch } from '@stores/hooks';
-import { useQuery } from '@tanstack/react-query';
 import { PlusSquare } from 'lucide-react';
 import { useState } from 'react';
+
 interface IProductCatalogProps {}
 
 export const ProductCatalog: React.FunctionComponent<IProductCatalogProps> = (props) => {
@@ -31,10 +27,8 @@ export const ProductCatalog: React.FunctionComponent<IProductCatalogProps> = (pr
     data: productCatalog,
     isLoading,
     isError,
-  } = useQuery<IProductCatalog[]>({
-    queryKey: ['productCatalogs', debouncedSearchQuery],
-    queryFn: () => fetchProductCatalogs(searchQuery),
-  });
+    error,
+  } = productCatalogsApi.useGetProductCatalogsQuery(debouncedSearchQuery);
 
   return (
     <Card className="mx-2">
@@ -60,7 +54,7 @@ export const ProductCatalog: React.FunctionComponent<IProductCatalogProps> = (pr
         <DataTable
           columns={productCatalogColumns}
           data={productCatalog}
-          queryStatus={{ isLoading, isError }}
+          queryStatus={{ isLoading, isError, error }}
         />
       </CardContent>
     </Card>

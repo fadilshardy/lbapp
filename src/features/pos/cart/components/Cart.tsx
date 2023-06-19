@@ -1,4 +1,4 @@
-import { CartItem, removeFromCart, updateCartItemQuantity } from '@features/pos-cart';
+import { CartItem, removeFromCart, updateCartItemQuantity } from '@features/pos/cart';
 import { formatCurrency } from '@lib/utils';
 import { useAppDispatch, useAppSelector } from '@stores/hooks';
 import { ShoppingBag, Trash2 } from 'lucide-react';

@@ -18,12 +18,14 @@ import {
   TableHeader,
   TableRow,
 } from '@components/ui/table';
+import { SerializedError } from '@reduxjs/toolkit';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useState } from 'react';
 
 interface QueryStatus {
   isLoading: boolean;
   isError: boolean;
-  error?: string;
+  error?: FetchBaseQueryError | SerializedError;
 }
 
 interface DataTableProps<TData, TValue> {
@@ -77,10 +79,10 @@ export function DataTable<TData, TValue>({
                 Loading...
               </TableCell>
             </TableRow>
-          ) : isError ? (
+          ) : isError && error && 'status' in error ? (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
-                Error: {error}
+                {JSON.stringify(error.data)}
               </TableCell>
             </TableRow>
           ) : table.getRowModel().rows?.length ? (

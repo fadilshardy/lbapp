@@ -1,6 +1,6 @@
 import { Button } from '@components/ui/button';
 import { Input } from '@components/ui/input';
-import { addCash, calculateChange, clearCart, updateCash } from '@features/pos-cart';
+import { addCash, calculateChange, clearCart, updateCash } from '@features/pos/cart';
 import { formatCurrency } from '@lib/utils';
 import { useAppDispatch, useAppSelector } from '@stores/hooks';
 import { useEffect, useState } from 'react';
