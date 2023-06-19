@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import { appWithTranslation } from 'next-i18next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import type { ReactElement, ReactNode } from 'react';
+import { type ReactElement, type ReactNode } from 'react';
 import { Provider } from 'react-redux';
 import '../css/main.css';
 import { store } from '../stores/store';
@@ -29,6 +29,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const imageWidth = '1920';
 
   const imageHeight = '960';
+  // const [queryClient] = useState(() => new QueryClient());
 
   return (
     <Provider store={store}>

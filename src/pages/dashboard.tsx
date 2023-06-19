@@ -1,3 +1,19 @@
+import BaseButton from '@components/BaseButton';
+import CardBox from '@components/CardBox';
+import CardBoxClient from '@components/CardBoxClient';
+import CardBoxTransaction from '@components/CardBoxTransaction';
+import CardBoxWidget from '@components/CardBoxWidget';
+import ChartLineSample from '@components/ChartLineSample';
+import { sampleChartData } from '@components/ChartLineSample/config';
+import NotificationBar from '@components/NotificationBar';
+import SectionBannerStarOnGitHub from '@components/SectionBannerStarOnGitHub';
+import SectionMain from '@components/SectionMain';
+import SectionTitleLineWithButton from '@components/SectionTitleLineWithButton';
+import TableSampleClients from '@components/TableSampleClients';
+import { getPageTitle } from '@config';
+import { useSampleClients, useSampleTransactions } from '@hooks/sampleData';
+import { Client, Transaction } from '@interfaces';
+import LayoutAuthenticated from '@layouts/Authenticated';
 import {
   mdiAccountMultiple,
   mdiCartOutline,
@@ -11,22 +27,6 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import type { ReactElement } from 'react';
 import React, { useState } from 'react';
-import BaseButton from '../components/BaseButton';
-import CardBox from '../components/CardBox';
-import CardBoxClient from '../components/CardBoxClient';
-import CardBoxTransaction from '../components/CardBoxTransaction';
-import CardBoxWidget from '../components/CardBoxWidget';
-import ChartLineSample from '../components/ChartLineSample';
-import { sampleChartData } from '../components/ChartLineSample/config';
-import NotificationBar from '../components/NotificationBar';
-import SectionBannerStarOnGitHub from '../components/SectionBannerStarOnGitHub';
-import SectionMain from '../components/SectionMain';
-import SectionTitleLineWithButton from '../components/SectionTitleLineWithButton';
-import TableSampleClients from '../components/TableSampleClients';
-import { getPageTitle } from '../config';
-import { useSampleClients, useSampleTransactions } from '../hooks/sampleData';
-import { Client, Transaction } from '../interfaces';
-import LayoutAuthenticated from '../layouts/Authenticated';
 
 const Dashboard = () => {
   const { clients } = useSampleClients();
