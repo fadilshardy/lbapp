@@ -1,10 +1,4 @@
-export interface IProduct {
-    name: string;
-    code: string;
-    unit: string;
-    brand: string;
-    type: string;
-}
+import { IProduct } from "@features/products";
 
 export interface IProductCatalog extends IProduct {
     purchaseDetailId: number;

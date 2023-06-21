@@ -37,7 +37,7 @@ export const getProductCatalogColumns = ({
   },
   {
     accessorKey: 'detail',
-    header: ({ column }) => <DataTableColumnHeader column={column} title="Detail" />,
+    header: ({ column }) => 'Detail',
     cell: ({ row }) => {
       const { salePrice, QuantityInStock } = row.original;
       const formattedPrice = formatCurrency(salePrice);

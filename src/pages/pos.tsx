@@ -18,11 +18,11 @@ const PosPage = () => {
       </Head>
 
       <SectionMain>
-        <div className="grid grid-cols-6 w-full">
-          <div className="col-span-4 ">
+        <div className="grid grid-cols-6 w-full space-y-4 sm:space-y-0">
+          <div className="col-span-6 sm:col-span-4">
             <ProductCatalog />
           </div>
-          <div className="col-span-2">
+          <div className="col-span-6 sm:col-span-2">
             <Card>
               <CardHeader>
                 <CardTitle>Carts</CardTitle>

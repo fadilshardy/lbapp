@@ -74,3 +74,10 @@ export type UserForm = {
   name: string
   email: string
 }
+
+
+export interface PaginationResponse<T> {
+  data: T[];
+  links: Record<string, string>;
+  meta: Record<string, any>;
+}
