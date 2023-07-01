@@ -1,12 +1,14 @@
+import BaseIcon from '@components/BaseIcon';
 import { Button } from '@components/ui/button';
 import { DataTableColumnHeader } from '@components/ui/datatables/column-header';
+import { ICartItem } from '@features/pos/cart';
 import { IProductCatalog } from '@features/pos/product-catalog';
 import { formatCurrency, formatDateToString } from '@lib/utils';
+import { mdiPlusBoxOutline } from '@mdi/js';
 import { ColumnDef } from '@tanstack/react-table';
-import { PlusSquare } from 'lucide-react';
 
 interface ProductCatalogColumnsProps {
-  handleAddToCart: (product: IProductCatalog) => void;
+  handleAddToCart: (cart: ICartItem) => void;
 }
 
 export const getProductCatalogColumns = ({
@@ -73,11 +75,14 @@ export const getProductCatalogColumns = ({
       return (
         <>
           <Button
-            onClick={() => handleAddToCart(cartItem)}
+            onClick={() => handleAddToCart(cartItem as ICartItem)}
             variant="outline"
             className="text-sm leading-none  py-3 px-4  rounded group"
           >
-            <PlusSquare className="h-4 w-4 text-gray-600 group-hover:text-blue-500" />
+            <BaseIcon
+              path={mdiPlusBoxOutline}
+              className="h-4 w-4 text-gray-600 group-hover:text-blue-500"
+            />
           </Button>
         </>
       );

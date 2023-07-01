@@ -1,12 +1,11 @@
-import { Button } from '@components/ui/button';
+import { DataTableCrudRowActions } from '@components/ui/datatables/DataTableCrudRowActions';
 import { DataTableColumnHeader } from '@components/ui/datatables/column-header';
+import { Product } from '@features/products';
 import { ColumnDef } from '@tanstack/react-table';
-import { MoreHorizontal } from 'lucide-react';
-import { IProduct } from '../interfaces/product';
 
 interface ProductColumnsProps {}
 
-export const getProductColumns = (): ColumnDef<IProduct>[] => [
+export const getProductColumns = (): ColumnDef<Product>[] => [
   {
     accessorKey: 'name',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
@@ -34,15 +33,6 @@ export const getProductColumns = (): ColumnDef<IProduct>[] => [
   },
   {
     id: 'actions',
-    cell: ({ row }) => {
-      return (
-        <>
-          <Button variant="ghost" className="flex h-8 w-8 p-0 data-[state=open]:bg-muted">
-            <MoreHorizontal className="h-4 w-4" />
-            <span className="sr-only">Open menu</span>
-          </Button>
-        </>
-      );
-    },
+    cell: ({ row }) => <DataTableCrudRowActions row={row} />,
   },
 ];

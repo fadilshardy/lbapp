@@ -8,7 +8,6 @@ import {
   TableHeader,
   TableRow,
 } from '@components/ui/table';
-import { DataTablePagination } from './dataTablePagination';
 
 interface IDataTableProps<TData, TValue> {
   table: TableInterface<TData>;
@@ -17,20 +16,13 @@ interface IDataTableProps<TData, TValue> {
   dataStatus?: {
     isLoading?: boolean;
     isError?: boolean;
-    isFetching?: boolean;
   };
-  paginationInfo?: Record<string, any>;
-  handlePagination?: (number: number) => void;
-  handlePerPage?: (number: number) => void;
 }
 
 function BaseDatatable<TData, TValue>({
   table,
   columns,
-  dataStatus: { isLoading, isError, isFetching },
-  paginationInfo,
-  handlePagination,
-  handlePerPage,
+  dataStatus: { isLoading, isError },
 }: IDataTableProps<TData, TValue>) {
   return (
     <div>
@@ -84,15 +76,6 @@ function BaseDatatable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      {paginationInfo && (
-        <DataTablePagination
-          table={table}
-          paginationInfo={paginationInfo}
-          handlePagination={handlePagination}
-          isFetching={isFetching}
-          handlePerPage={handlePerPage}
-        />
-      )}
     </div>
   );
 }

@@ -81,3 +81,8 @@ export interface PaginationResponse<T> {
   links: Record<string, string>;
   meta: Record<string, any>;
 }
+
+export interface ISelectLabel {
+  name: string;
+  id: string;
+}

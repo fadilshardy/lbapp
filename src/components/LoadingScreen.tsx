@@ -2,10 +2,9 @@ import * as React from 'react';
 
 interface ILoadingSpinnerProps {}
 
-const LoadingSpinner: React.FunctionComponent<ILoadingSpinnerProps> = (props) => {
+export const LoadingScreen: React.FC<ILoadingSpinnerProps> = (props) => {
   return (
     <>
-      {/* component */}
       <div
         className="inset-0 bg-gray-800 fixed flex w-full h-full items-center justify-center duration-300 transition-opacity"
         style={{ zIndex: 6000 }}
@@ -56,5 +55,3 @@ const LoadingSpinner: React.FunctionComponent<ILoadingSpinnerProps> = (props) =>
     </>
   );
 };
-
-export default LoadingSpinner;

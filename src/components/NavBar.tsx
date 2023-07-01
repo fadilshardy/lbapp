@@ -27,15 +27,15 @@ export default function NavBar({ menu, className = '', children }: Props) {
         className={`flex lg:items-stretch ${containerMaxW} border-b shadow-sm dark:border-gray-700`}
       >
         <div className="flex flex-1 items-stretch h-14">{children}</div>
-        <div className="flex-none items-stretch flex h-14 lg:hidden">
+        <div className="flex-none items-stretch flex h-14 lg:hidden w-14">
           <NavBarItemPlain onClick={handleMenuNavBarToggleClick}>
-            <BaseIcon path={isMenuNavBarActive ? mdiClose : mdiDotsVertical} size="24" />
+            <BaseIcon path={isMenuNavBarActive ? mdiClose : mdiDotsVertical} className="w-4 h-4 " />
           </NavBarItemPlain>
         </div>
         <div
           className={`${
             isMenuNavBarActive ? 'block' : 'hidden'
-          } max-h-screen-menu overflow-y-auto lg:overflow-visible absolute w-screen top-14 left-0 shadow-lg lg:w-auto lg:flex lg:static lg:shadow-none dark:bg-slate-800`}
+          } max-h-screen-menu overflow-y-auto lg:overflow-visible absolute w-screen top-14 left-0 shadow-lg lg:w-auto lg:flex lg:static lg:shadow-none dark:bg-slate-800 bg-white`}
         >
           <NavBarMenuList menu={menu} />
         </div>

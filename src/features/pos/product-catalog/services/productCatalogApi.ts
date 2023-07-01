@@ -1,8 +1,7 @@
-import { API_URL } from '@config';
 import { IProductCatalog } from '@features/pos';
 import { appApi } from '@stores/appApi';
 
-const BASE_INVENTORY_URL = `${API_URL}/api/inventory`;
+const BASE_INVENTORY_URL = `/api/inventory`;
 
 export const productCatalogsApi = appApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -12,7 +11,7 @@ export const productCatalogsApi = appApi.injectEndpoints({
                 method: 'GET',
             }),
             transformResponse: (response: any) =>
-                response.data.map((item) => ({
+                response.data.map((item: any) => ({
                     name: item.product_name,
                     code: item.product_code,
                     unit: item.product_unit,

@@ -38,7 +38,9 @@ const AsideMenuItem = ({ item, isDropdownList = false }: Props) => {
   const asideMenuItemInnerContents = (
     <>
       {item.icon && (
-        <BaseIcon path={item.icon} className={`flex-none ${activeClassAddon}`} w="w-16" size="18" />
+        <div className="w-8 ml-2">
+          <BaseIcon path={item.icon} className={`h-4 w-4 ${activeClassAddon}`} />
+        </div>
       )}
       <span
         className={`grow text-ellipsis line-clamp-1 text-sm ${
@@ -48,18 +50,19 @@ const AsideMenuItem = ({ item, isDropdownList = false }: Props) => {
         {item.label}
       </span>
       {item.menu && (
-        <BaseIcon
-          path={isDropdownActive ? mdiMinus : mdiPlus}
-          className={`flex-none ${activeClassAddon}`}
-          w="w-12"
-        />
+        <div className="mr-2">
+          <BaseIcon
+            path={isDropdownActive ? mdiMinus : mdiPlus}
+            className={`h-4 w-4 ${activeClassAddon}`}
+          />
+        </div>
       )}
     </>
   );
 
   const componentClass = [
-    'flex cursor-pointer',
-    isDropdownList ? 'py-3 px-6 text-sm' : 'py-3',
+    'flex cursor-pointer ',
+    isDropdownList ? 'py-3 px-6 text-sm ' : 'py-3',
     item.color
       ? getButtonColor(item.color, false, true)
       : `${asideMenuItemStyle} dark:text-slate-300 dark:hover:text-white`,

@@ -1,12 +1,11 @@
-import React from 'react'
-import { MenuAsideItem } from '../interfaces'
-import AsideMenuItem from './AsideMenuItem'
+import { MenuAsideItem } from '../interfaces';
+import AsideMenuItem from './AsideMenuItem';
 
 type Props = {
-  menu: MenuAsideItem[]
-  isDropdownList?: boolean
-  className?: string
-}
+  menu: MenuAsideItem[];
+  isDropdownList?: boolean;
+  className?: string;
+};
 
 export default function AsideMenuList({ menu, isDropdownList = false, className = '' }: Props) {
   return (
@@ -15,5 +14,5 @@ export default function AsideMenuList({ menu, isDropdownList = false, className 
         <AsideMenuItem key={index} item={item} isDropdownList={isDropdownList} />
       ))}
     </ul>
-  )
+  );
 }

@@ -12,7 +12,7 @@ import {
 
 import BaseDatatable from '@components/ui/datatables/baseDataTable';
 import { Input } from '@components/ui/input';
-import { CartItem, addToCart } from '@features/pos/cart';
+import { ICartItem, addToCart } from '@features/pos/cart';
 import { getProductCatalogColumns, productCatalogsApi } from '@features/pos/product-catalog';
 import { useDebouncedQuery, useSearchQuery } from '@hooks/useSearchQuery';
 import { useAppDispatch } from '@stores/hooks';
@@ -30,17 +30,17 @@ export const CatalogDatatable: React.FC<CatalogataTableProps> = () => {
 
   const searchCatalogDebouncedQuery = useDebouncedQuery(searchCatalogQuery);
 
-  const handleAddToCart = (cart: CartItem) => {
+  const handleAddToCart = (cart: ICartItem) => {
     dispatch(addToCart(cart));
   };
 
   const productCatalogColumns = getProductCatalogColumns({ handleAddToCart });
 
-  const {
-    data: productCatalogs,
-    isLoading,
-    isError,
-  } = productCatalogsApi.useGetProductCatalogsQuery(searchCatalogDebouncedQuery);
+  const { data, isLoading, isError } = productCatalogsApi.useGetProductCatalogsQuery(
+    searchCatalogDebouncedQuery
+  );
+
+  const productCatalogs = data ?? [];
 
   const productTable = useReactTable({
     data: productCatalogs,

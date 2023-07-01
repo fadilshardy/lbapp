@@ -1,13 +1,14 @@
-import React, { ReactNode } from 'react'
+import { cn } from '@lib';
+import { ReactNode } from 'react';
 
 type Props = {
-  path: string
-  w?: string
-  h?: string
-  size?: string | number | null
-  className?: string
-  children?: ReactNode
-}
+  path: string;
+  w?: string;
+  h?: string;
+  size?: string | number | null;
+  className?: string;
+  children?: ReactNode;
+};
 
 export default function BaseIcon({
   path,
@@ -17,14 +18,14 @@ export default function BaseIcon({
   className = '',
   children,
 }: Props) {
-  const iconSize = size ?? 16
+  const iconSize = size ?? 16;
 
   return (
-    <span className={`inline-flex justify-center items-center ${w} ${h} ${className}`}>
-      <svg viewBox="0 0 24 24" width={iconSize} height={iconSize} className="inline-block">
+    <span className={cn('flex justify-center items-center', className)}>
+      <svg viewBox="0 0 24 24" className="inline-block">
         <path fill="currentColor" d={path} />
       </svg>
       {children}
     </span>
-  )
+  );
 }

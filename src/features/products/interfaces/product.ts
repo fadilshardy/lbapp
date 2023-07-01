@@ -1,13 +1,14 @@
 interface ICategory {
-    id: number;
+    id: string;
     name: string;
 }
 
 export interface IProduct {
     name: string;
-    code: string;
+    code?: string;
     unit: string;
     brand: string;
     type: string;
-    category: ICategory;
+    category_id: string;
+    category?: ICategory;
 }
