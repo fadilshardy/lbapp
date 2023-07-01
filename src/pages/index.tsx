@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import LoadingSpinner from '../components/LoadingSpinner';
+import { LoadingScreen } from '../components/LoadingScreen';
 
 const IndexPage = () => {
   const router = useRouter();
@@ -20,7 +20,7 @@ const IndexPage = () => {
 
   return (
     <div>
-      <LoadingSpinner />
+      <LoadingScreen />
     </div>
   );
 };

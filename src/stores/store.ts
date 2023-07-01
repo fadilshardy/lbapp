@@ -13,7 +13,13 @@ export const store = configureStore({
 
     apiApp: appApi.reducer
   }, middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: {
+          // cookies: context.ctx?req
+        }
+      }
+    }).concat([
       appApi.middleware
     ]),
 })

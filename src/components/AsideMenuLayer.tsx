@@ -10,7 +10,6 @@ import BaseIcon from './BaseIcon';
 type Props = {
   menu: MenuAsideItem[];
   className?: string;
-  onAsideLgCloseClick: () => void;
 };
 
 export default function AsideMenuLayer({ menu, className = '', ...props }: Props) {
@@ -28,7 +27,6 @@ export default function AsideMenuLayer({ menu, className = '', ...props }: Props
 
   const handleAsideLgCloseClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    props.onAsideLgCloseClick();
   };
 
   return (
@@ -46,11 +44,11 @@ export default function AsideMenuLayer({ menu, className = '', ...props }: Props
             className="hidden lg:inline-block xl:hidden p-3"
             onClick={handleAsideLgCloseClick}
           >
-            <BaseIcon path={mdiClose} />
+            <BaseIcon path={mdiClose} className="w-4 h-4" />
           </button>
         </div>
         <div
-          className={`flex-1 overflow-y-auto overflow-x-hidden ${
+          className={`flex-1 overflow-y-auto overflow-x-hidden no-scrollbar ${
             darkMode ? 'aside-scrollbars-[slate]' : asideScrollbarsStyle
           }`}
         >

@@ -56,6 +56,8 @@ const MenuAside = () => {
         },
         {
           label: t('products'),
+          href: '/product',
+
         },
         {
           label: t('categories'),

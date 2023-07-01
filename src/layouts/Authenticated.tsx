@@ -1,4 +1,5 @@
-import { mdiBackburger, mdiForwardburger, mdiMenu } from '@mdi/js';
+import { Toaster } from '@/components/ui/toaster';
+import { mdiBackburger, mdiForwardburger } from '@mdi/js';
 import { useRouter } from 'next/router';
 import { ReactNode, useEffect, useState } from 'react';
 import AsideMenu from '../components/AsideMenu';
@@ -21,8 +22,8 @@ export default function LayoutAuthenticated({ children }: Props) {
   useEffect(() => {
     dispatch(
       setUser({
-        name: 'John Doe',
-        email: 'john@example.com',
+        name: 'Fadil S Hardy',
+        email: 'fadilshrdy@gmail.com',
         avatar: 'https://fadilshardy.vercel.app/avatar.svg',
       })
     );
@@ -31,7 +32,7 @@ export default function LayoutAuthenticated({ children }: Props) {
   const darkMode = useAppSelector((state) => state.style.darkMode);
 
   const [isAsideMobileExpanded, setIsAsideMobileExpanded] = useState(false);
-  const [isAsideLgActive, setIsAsideLgActive] = useState(false);
+  const [isAsideLgActive, setIsAsideLgActive] = useState(true);
 
   const router = useRouter();
 
@@ -40,7 +41,7 @@ export default function LayoutAuthenticated({ children }: Props) {
   useEffect(() => {
     const handleRouteChangeStart = () => {
       setIsAsideMobileExpanded(false);
-      setIsAsideLgActive(false);
+      setIsAsideLgActive(true);
     };
 
     router.events.on('routeChangeStart', handleRouteChangeStart);
@@ -52,7 +53,7 @@ export default function LayoutAuthenticated({ children }: Props) {
     };
   }, [router.events, dispatch]);
 
-  const layoutAsidePadding = 'xl:pl-60';
+  const layoutAsidePadding = isAsideLgActive ? 'xl:pl-60' : '';
 
   return (
     <div className={`${darkMode ? 'dark' : ''} overflow-hidden lg:overflow-visible`}>
@@ -69,22 +70,33 @@ export default function LayoutAuthenticated({ children }: Props) {
             display="flex lg:hidden"
             onClick={() => setIsAsideMobileExpanded(!isAsideMobileExpanded)}
           >
-            <BaseIcon path={isAsideMobileExpanded ? mdiBackburger : mdiForwardburger} size="24" />
+            <BaseIcon
+              path={isAsideMobileExpanded ? mdiBackburger : mdiForwardburger}
+              className="w-4 h-4"
+            />
           </NavBarItemPlain>
           <NavBarItemPlain
-            display="hidden lg:flex xl:hidden"
-            onClick={() => setIsAsideLgActive(true)}
+            display="hidden lg:flex"
+            onClick={() => setIsAsideLgActive(!isAsideLgActive)}
           >
-            <BaseIcon path={mdiMenu} size="24" />
+            <BaseIcon
+              path={isAsideLgActive ? mdiBackburger : mdiForwardburger}
+              className="w-6 h-6"
+            />
           </NavBarItemPlain>
         </NavBar>
-        <AsideMenu
-          isAsideMobileExpanded={isAsideMobileExpanded}
-          isAsideLgActive={isAsideLgActive}
-          menu={menuSidebar}
-          onAsideLgClose={() => setIsAsideLgActive(false)}
-        />
+        {isAsideLgActive && (
+          <AsideMenu
+            isAsideMobileExpanded={isAsideMobileExpanded}
+            isAsideLgActive={isAsideLgActive}
+            menu={menuSidebar}
+            onAsideLgClose={() => setIsAsideMobileExpanded(false)}
+          />
+        )}
+
         {children}
+        <Toaster />
+
         <FooterBar>
           Theme made by{' '}
           <a

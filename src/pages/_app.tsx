@@ -53,6 +53,11 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
             <meta property="twitter:image:src" content={image} />
             <meta property="twitter:image:width" content={imageWidth} />
             <meta property="twitter:image:height" content={imageHeight} />
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+            />
+            <meta charSet="UTF-8" />
           </Head>
           <Component {...pageProps} />
         </>
