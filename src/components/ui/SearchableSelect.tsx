@@ -4,8 +4,8 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandList,
 } from '@/components/ui/command';
-import * as React from 'react';
 
 import { FormControl } from '@/components/ui/form';
 import BaseIcon from '@components/BaseIcon';
@@ -14,6 +14,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@components/ui/popover'
 import { ISelectLabel } from '@interfaces';
 import { cn } from '@lib/utils';
 import { mdiCheck, mdiUnfoldMoreHorizontal } from '@mdi/js';
+import { useState } from 'react';
 
 interface ISearchSelectProps<T> {
   field: any;
@@ -23,7 +24,8 @@ interface ISearchSelectProps<T> {
   handleSelect: (value: string) => void;
   searchQuery: string;
   handleQueryChange: (query: string) => void;
-  currentValue: ISelectLabel;
+  currentValue?: ISelectLabel;
+  disabled?: boolean;
 }
 
 export const SeaarchableSelect: React.FC<ISearchSelectProps<any>> = ({
@@ -35,6 +37,7 @@ export const SeaarchableSelect: React.FC<ISearchSelectProps<any>> = ({
   handleQueryChange,
   isLoading,
   currentValue,
+  disabled,
 }) => {
   function getSelectedOption() {
     const matchingItem = selectItems.find((item: ISelectLabel) => item.id === field.value);
@@ -43,52 +46,60 @@ export const SeaarchableSelect: React.FC<ISearchSelectProps<any>> = ({
 
     return `Select ${selectName}`;
   }
+  const [open, setOpen] = useState(false);
 
   const selectedOption = getSelectedOption();
 
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <FormControl>
           <Button
             variant="outline"
             role="combobox"
-            className={cn('justify-between font-normal', !field.value && 'text-muted-foreground')}
+            aria-expanded={open}
+            className={cn(
+              'justify-between font-normal flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring',
+              !field.value && 'text-muted-foreground'
+            )}
+            disabled={disabled}
           >
             {selectedOption}
             <BaseIcon path={mdiUnfoldMoreHorizontal} className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </FormControl>
       </PopoverTrigger>
-      <PopoverContent className=" p-0 w-full" align="end">
+      <PopoverContent className="p-0 w-[200px]" side="right" align="start">
         <Command>
           <CommandInput
-            placeholder={`search ${selectName}`}
+            placeholder={`Search ${selectName}...`}
             value={searchQuery}
             onValueChange={handleQueryChange}
           />
-          <CommandEmpty>{isLoading ? `Loading...` : `No ${selectName} found.`}</CommandEmpty>
-
-          <CommandGroup>
-            {selectItems.map((item: any) => (
-              <CommandItem
-                value={item.name}
-                key={item.id}
-                onSelect={() => {
-                  handleSelect(item.id);
-                }}
-              >
-                <BaseIcon
-                  path={mdiCheck}
-                  className={cn(
-                    'mr-2 h-4 w-4',
-                    item.id === field.value ? 'opacity-100' : 'opacity-0'
-                  )}
-                />
-                {item.name}
-              </CommandItem>
-            ))}
-          </CommandGroup>
+          <CommandList className="h-[var(--cmdk-list-height)] max-h-[200px]">
+            <CommandEmpty>{isLoading ? `Loading...` : `No ${selectName} found.`}</CommandEmpty>
+            <CommandGroup>
+              {selectItems.map((item: ISelectLabel) => (
+                <CommandItem
+                  value={item.name}
+                  key={item.id}
+                  onSelect={() => {
+                    handleSelect(item.id);
+                    setOpen(false);
+                  }}
+                >
+                  <BaseIcon
+                    path={mdiCheck}
+                    className={cn(
+                      'mr-2 h-4 w-4',
+                      item.id === field.value ? 'opacity-100' : 'opacity-0'
+                    )}
+                  />
+                  {item.name}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
         </Command>
       </PopoverContent>
     </Popover>

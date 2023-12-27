@@ -37,7 +37,7 @@ export const CreateProductForm: React.FC<IProductCreateFormProps> = ({ handleMod
       mutation: createProduct,
       handleModalToggle: handleModalToggle,
       mutationProps: {
-        payload: { ...product, name: '' },
+        payload: product,
       },
     });
   }

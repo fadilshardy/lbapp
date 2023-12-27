@@ -1,5 +1,5 @@
 import { localStorageDarkModeKey, localStorageStyleKey } from '@config'
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { StyleKey } from '../interfaces'
 import * as styles from '../styles'
 

@@ -1,9 +1,11 @@
 import { Button } from '@components/ui/button';
 import { Input } from '@components/ui/input';
 import { addCash, calculateChange, clearCart, updateCash } from '@features/pos/cart';
+import { useModalToggle } from '@hooks/useModalToggle';
 import { formatCurrency } from '@lib/utils';
 import { useAppDispatch, useAppSelector } from '@stores/hooks';
 import { useEffect, useState } from 'react';
+import ConfirmationReceipt from './ConfirmationReciept';
 
 interface IPaymentInfoProps {}
 
@@ -11,6 +13,8 @@ export const PaymentInfo: React.FunctionComponent<IPaymentInfoProps> = (props) =
   const { cash, change } = useAppSelector((state) => state.payment);
   const { totalPrice, cartItems } = useAppSelector((state) => state.cart);
   const [submitable, setSubmitable] = useState(false);
+
+  const { isOpen, handleModalToggle } = useModalToggle(false);
 
   const dispatch = useAppDispatch();
   const moneys = [1000, 5000, 10000, 20000, 50000, 100000];
@@ -43,7 +47,9 @@ export const PaymentInfo: React.FunctionComponent<IPaymentInfoProps> = (props) =
     }
   }, [totalPrice, cash, cartItems]);
 
-  const submit = () => {};
+  const submit = () => {
+    handleModalToggle(!isOpen);
+  };
 
   return (
     <div className="select-none h-auto w-full text-center  mt-8 border-t border-gray-100 pt-8">
@@ -62,7 +68,6 @@ export const PaymentInfo: React.FunctionComponent<IPaymentInfoProps> = (props) =
           </Button>
         </div>
       </div>
-
       <div className="hidden sm:grid md:grid-cols-3 gap-2 mt-2">
         {moneys.map((money, index) => (
           <Button
@@ -111,18 +116,22 @@ export const PaymentInfo: React.FunctionComponent<IPaymentInfoProps> = (props) =
               onClick={handleClearCart}
               size="lg"
               variant="outline"
-              className="hover:bg-red-500 hover:text-white rounded-full"
+              className="hover:bg-red-500 hover:text-white rounded-full uppercase"
             >
-              CLEAR
+              clear
             </Button>
-            <Button
+            {/* <Button
               disabled={!submitable}
               onClick={submit}
               className="bg-blue-600  rounded-full"
               size="lg"
             >
-              SUBMIT
-            </Button>
+            </Button> */}
+            <ConfirmationReceipt
+              isOpen={isOpen}
+              handleModalToggle={handleModalToggle}
+              submitable={submitable}
+            />
           </div>
         </div>
       </div>

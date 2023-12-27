@@ -32,6 +32,8 @@ const MenuAside = () => {
       menu: [
         {
           label: t('chart_of_accounts'),
+          href: '/account',
+
         },
         {
           label: t('journal_entry'),

@@ -1,13 +1,13 @@
 import { IProductCatalog } from '@features/pos';
 import { appApi } from '@stores/appApi';
 
-const BASE_INVENTORY_URL = `/api/inventory`;
+const BASE_INVENTORY_URL = `/api/inventory?available`;
 
 export const productCatalogsApi = appApi.injectEndpoints({
     endpoints: (builder) => ({
         getProductCatalogs: builder.query<IProductCatalog[], string>({
             query: (searchQuery) => ({
-                url: searchQuery ? `${BASE_INVENTORY_URL}?search=${searchQuery}` : BASE_INVENTORY_URL,
+                url: searchQuery ? `${BASE_INVENTORY_URL}&search=${searchQuery}` : BASE_INVENTORY_URL,
                 method: 'GET',
             }),
             transformResponse: (response: any) =>

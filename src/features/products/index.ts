@@ -8,5 +8,6 @@ export * from './components/ProductDataTable';
 export * from './datatable/productColumns';
 export * from './interfaces/product';
 export * from './schemas/productSchema';
+export * from './services/categoryApi';
 export * from './services/productApi';
 

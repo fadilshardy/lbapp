@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CartItem } from '../interfaces/cart';
+import { ICartItem } from '../interfaces/cart';
 
 export interface CartState {
-    cartItems: CartItem[];
+    cartItems: ICartItem[];
     totalPrice: number;
 }
 
@@ -15,23 +15,25 @@ const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
-        addToCart: (state, action: PayloadAction<CartItem>) => {
+        addToCart: (state, action: PayloadAction<ICartItem>) => {
             const { purchaseDetailId, QuantityInStock } = action.payload;
             const existingItem = state.cartItems.find(
                 (item) => item.purchaseDetailId === purchaseDetailId
             );
-            if (existingItem) {
-                if (existingItem.quantityToBuy < QuantityInStock) {
-                    existingItem.quantityToBuy++;
-                }
-            } else {
-                const newItem: CartItem = {
+            if (!existingItem) {
+
+                state.cartItems.push({
                     ...action.payload,
                     quantityToBuy: 1,
-                };
-                state.cartItems.push(newItem);
+                });
+
+                state.totalPrice = calculateTotalPrice(state.cartItems);
             }
-            state.totalPrice = calculateTotalPrice(state.cartItems);
+
+            if (existingItem && existingItem.quantityToBuy < QuantityInStock) {
+                existingItem.quantityToBuy++;
+                state.totalPrice = calculateTotalPrice(state.cartItems);
+            }
         },
         removeFromCart: (state, action: PayloadAction<number>) => {
             state.cartItems = state.cartItems.filter(
@@ -53,9 +55,9 @@ const cartSlice = createSlice({
             }
         },
         clearCart: (state) => {
-            state.cartItems = [];
-            state.totalPrice = 0;
+            return initialState
         },
+
     },
 });
 
@@ -67,9 +69,16 @@ export const {
 } = cartSlice.actions;
 export const cartReducer = cartSlice.reducer;
 
-function calculateTotalPrice(cartItems: CartItem[]): number {
+function calculateTotalPrice(cartItems: ICartItem[]): number {
     return cartItems.reduce(
         (total, item) => total + item.salePrice * item.quantityToBuy,
         0
     );
 }
+function updateTotalPrice(state: CartState) {
+    return {
+        ...state,
+        totalPrice: calculateTotalPrice(state.cartItems),
+    };
+}
+

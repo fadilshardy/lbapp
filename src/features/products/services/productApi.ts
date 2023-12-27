@@ -1,7 +1,7 @@
 import { Product } from '@features/products';
 import { PaginationResponse } from '@interfaces';
+import { generateGetAllEndpoint, generateGetEndpoint } from '@lib/reduxQuery';
 import { appApi } from '@stores/appApi';
-import { AxiosBaseQueryArgs } from '@stores/axiosBaseQuery';
 
 const BASE_PRODUCT_URL = `/api/product`;
 
@@ -16,30 +16,16 @@ export const productApi = appApi.injectEndpoints({
                 };
             },
         }),
-        getProducts: builder.query<PaginationResponse<Product>, any>({
-            query: ({ searchQuery = '', page = 1, perPage = 10 }): AxiosBaseQueryArgs => {
-                const searchParam = searchQuery ? `search=${searchQuery}` : '';
-                const pageParam = page ? `page=${page}` : '';
-                const perPageParam = perPage ? `per_page=${perPage}` : '';
-                const queryParams = [searchParam, pageParam, perPageParam].filter(param => param !== '').join('&');
-
-                return {
-                    url: `${BASE_PRODUCT_URL}?${queryParams}`,
-                    method: 'GET',
-                };
-            },
-            providesTags: (result, error, searchQuery) => {
-                return searchQuery ? [{ type: 'products', searchQuery }] : ['products']
-            }
-        }),
-        getProduct: builder.query<Product, any>({
-            query: ({ product_code }): AxiosBaseQueryArgs => {
-                return {
-                    url: `${BASE_PRODUCT_URL}/${product_code}`,
-                    method: 'GET',
-                };
-            }
-        }),
+        getProducts: builder.query<PaginationResponse<Product>, any>(generateGetAllEndpoint({
+            baseUrl: BASE_PRODUCT_URL,
+            tagType: 'products',
+            itemId: 'code',
+        })),
+        getProduct: builder.query<Product, any>(generateGetEndpoint({
+            baseUrl: BASE_PRODUCT_URL,
+            tagType: 'products',
+            itemId: 'code',
+        })),
         createProduct: builder.mutation<any, any>({
             query: ({ payload }) => {
                 return ({
