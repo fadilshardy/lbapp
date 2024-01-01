@@ -3,12 +3,16 @@ import LayoutAuthenticated from '@layouts/Authenticated';
 import Head from 'next/head';
 import { ReactElement } from 'react';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
+import BaseIcon from '@components/BaseIcon';
+import { Card, CardContent, CardHeader } from '@components/ui/card';
 import { getPageTitle } from '@config';
 import { Cart, PaymentInfo } from '@features/pos/cart';
 import { ProductCatalog } from '@features/pos/product-catalog';
+import { mdiCartVariant } from '@mdi/js';
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+
+
 
 const PosPage = () => {
   return (
@@ -25,7 +29,13 @@ const PosPage = () => {
           <div className="col-span-6 sm:col-span-2">
             <Card>
               <CardHeader>
-                <CardTitle>Carts</CardTitle>
+                <div className='w-full flex justify-between'>
+                  <span className='text-2xl font-semibold'>Carts</span>
+                  <BaseIcon
+                    path={mdiCartVariant}
+                    className="h-8 w-8 text-gray-600"
+                  />
+                </div>
               </CardHeader>
               <CardContent>
                 <Cart />
