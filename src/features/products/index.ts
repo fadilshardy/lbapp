@@ -1,4 +1,5 @@
 export * from './components/Button/CreateProductButton';
+export * from './components/Button/DeleteProductButton';
 export * from './components/Button/ImportProductButton';
 export * from './components/Button/UpdateProductButton';
 export * from './components/Form/CreateProductForm';

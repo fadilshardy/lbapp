@@ -1,9 +1,9 @@
 import { DataTableCrudRowActions } from '@components/ui/datatables/DataTableCrudRowActions';
 import { DataTableColumnHeader } from '@components/ui/datatables/column-header';
-import { Product } from '@features/products';
+import { DeleteProductButton, Product, UpdateProductButton } from '@features/products';
 import { ColumnDef } from '@tanstack/react-table';
 
-interface ProductColumnsProps {}
+interface ProductColumnsProps { }
 
 export const getProductColumns = (): ColumnDef<Product>[] => [
   {
@@ -33,6 +33,10 @@ export const getProductColumns = (): ColumnDef<Product>[] => [
   },
   {
     id: 'actions',
-    cell: ({ row }) => <DataTableCrudRowActions row={row} />,
+    cell: ({ row }) => <DataTableCrudRowActions row={row}>
+      <UpdateProductButton currentProduct={row.original} />
+      <DeleteProductButton currentProduct={row.original} />
+    </DataTableCrudRowActions>
+    ,
   },
 ];
