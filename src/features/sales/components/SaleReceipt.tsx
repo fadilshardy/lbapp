@@ -1,7 +1,5 @@
-import { CreateCheckoutForm } from '@features/pos/checkout/Components/Form/CreateCheckoutForm';
 import { SaleRecord } from '@features/sales';
 import { formatCurrency } from '@lib/format';
-import { useAppSelector } from '@stores/hooks';
 import * as React from 'react';
 
 interface ISaleReceiptProps {
@@ -11,13 +9,22 @@ interface ISaleReceiptProps {
 }
 
 const SaleReceipt: React.FunctionComponent<ISaleReceiptProps> = ({
-    handleModalToggle,
-    saleRecord
+    saleRecord,
+    isLoading
 }) => {
-    console.log(saleRecord);
 
-    const { totalPrice, cartItems } = useAppSelector((state) => state.cart);
-    const { cash, change } = useAppSelector((state) => state.payment);
+    if (isLoading) {
+        return <div className='h-full w-full flex justify-center p-16'>
+            <div
+                className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                role="status">
+                <span
+                    className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+                >Loading...</span>
+            </div>
+        </div>
+    }
+
     return (
         <div className="text-sm border border-dotted rounded">
             <div className="rounded-lg shadow-sm p-8 text-xs mt-4 mx-4 sm:mx-0">
@@ -97,14 +104,12 @@ const SaleReceipt: React.FunctionComponent<ISaleReceiptProps> = ({
                     </div>
                 </div>
 
-                <div className="flex items-center justify-center pt-4">
-                    <CreateCheckoutForm handleModalToggle={handleModalToggle} />
-                </div>
+
                 <div className="flex">
                     <span className="mt-5 text-sm text-gray-500">© 2023 Lbapp</span>
                 </div>
             </div>
-            {/* End Card */}
+
         </div>
     );
 };

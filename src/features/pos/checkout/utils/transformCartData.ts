@@ -1,4 +1,3 @@
-// src\features\pos\checkout\utils\transformCartData.ts
 import { ICartItem } from '@features/pos/cart';
 
 
