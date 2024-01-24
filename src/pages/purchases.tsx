@@ -5,27 +5,27 @@ import { ReactElement } from 'react';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@components/ui/card';
 import { getPageTitle } from '@config';
-import { SaleDatatable } from '@features/sales';
+import { PurchaseDatatable } from '@features/purchases';
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
-const SalePage = () => {
+const PurchasePage = () => {
   return (
     <>
       <Head>
-        <title>{getPageTitle('Products')}</title>
+        <title>{getPageTitle('Purchases')}</title>
       </Head>
 
       <SectionMain>
         <Card>
           <CardHeader>
-            <CardTitle className="text-2xl font-bold tracking-tight">Sales Management</CardTitle>
+            <CardTitle className="text-2xl font-bold tracking-tight">Purchase Management</CardTitle>
             <CardDescription className="text-muted-foreground">
-              Manage master data for sales
+              Manage master data for Purchases
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <SaleDatatable />
+            <PurchaseDatatable />
           </CardContent>
         </Card>
       </SectionMain>
@@ -33,11 +33,11 @@ const SalePage = () => {
   );
 };
 
-SalePage.getLayout = function getLayout(page: ReactElement) {
+PurchasePage.getLayout = function getLayout(page: ReactElement) {
   return <LayoutAuthenticated>{page}</LayoutAuthenticated>;
 };
 
-export default SalePage;
+export default PurchasePage;
 
 export const getStaticProps: GetStaticProps = async ({ locale }: any) => ({
   props: {

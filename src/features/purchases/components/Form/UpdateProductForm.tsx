@@ -4,38 +4,44 @@ import { useToast } from '@components/ui/use-toast';
 import { HandleFormSubmit } from '@lib/form';
 import { useForm } from 'react-hook-form';
 import { Product, ProductSchema } from '../../schemas/productSchema';
-import { productApi } from '../../services/productApi';
-import { ProductForm } from './ProductForm';
+import { productApi } from '../../services/PurchaseApi';
+import { ProductForm } from './PurchaseForm';
 
-interface IProductCreateFormProps {
-  initialValues?: Product;
+interface IUpdateProductFormProps {
   handleModalToggle(open: boolean): void;
+  currentProduct: Product;
 }
 
-export const CreateProductForm: React.FC<IProductCreateFormProps> = ({ handleModalToggle }) => {
+export const UpdateProductForm: React.FC<IUpdateProductFormProps> = ({
+  handleModalToggle,
+  currentProduct,
+}) => {
   const { toast } = useToast();
 
   const form = useForm<Product>({
     resolver: zodResolver(ProductSchema),
     defaultValues: {
-      name: '',
-      unit: '',
-      brand: '',
-      type: '',
-      category_id: '',
+      ...currentProduct,
+      category_id: String(currentProduct.category_id),
     },
   });
 
-  const [createProduct, { isLoading: isProductLoading }] = productApi.useCreateProductMutation();
+  const [updateProduct, { isLoading: isProductLoading }] = productApi.useUpdateProductMutation();
+
+  const cors = productApi.useGetCorsQuery({});
 
   async function onSubmit(product: Product) {
     HandleFormSubmit({
       form: form,
       toast: toast,
-      mutation: createProduct,
+      mutation: updateProduct,
       handleModalToggle: handleModalToggle,
+      successMessage: `${product.name} is successfully updated!`,
       mutationProps: {
-        payload: product,
+        payload: {
+          ...product,
+        },
+        productKey: currentProduct.code,
       },
     });
   }

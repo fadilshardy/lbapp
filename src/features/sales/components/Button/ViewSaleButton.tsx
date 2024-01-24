@@ -5,7 +5,7 @@ import { Sale, saleApi } from '@features/sales';
 import { useModalToggle } from '@hooks/useModalToggle';
 import { mdiDotsHorizontalCircleOutline } from '@mdi/js';
 import * as React from 'react';
-import SaleReceipt from '../SaleReceipt';
+import ViewSaleDetail from '../ViewSaleDetail';
 
 interface ICreateProductButtonProps {
     currentSale: Sale;
@@ -36,7 +36,8 @@ export const ViewSaleButton: React.FC<ICreateProductButtonProps> = ({ currentSal
             title="View Sale Detail"
             modalToggleBtn={ViewButton}
         >
-            <SaleReceipt handleModalToggle={handleModalToggle} saleRecord={data} isLoading={isLoading} />
+            {/* <SaleReceipt handleModalToggle={handleModalToggle} saleRecord={data} isLoading={isLoading} /> */}
+            <ViewSaleDetail handleModalToggle={handleModalToggle} saleRecord={data} isLoading={isLoading} />
         </ModalForm>
     );
 };

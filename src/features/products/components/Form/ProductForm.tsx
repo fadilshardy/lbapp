@@ -40,16 +40,16 @@ export const ProductForm: React.FC<IUpdateProductFormProps> = ({
 
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit} className="space-y-8">
-        <div className="flex flex-col space-y-4 overflow-y-auto">
+      <form onSubmit={handleSubmit} className='space-y-8'>
+        <div className='flex flex-col space-y-4 overflow-y-auto'>
           <FormField
             control={form.control}
-            name="name"
+            name='name'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="product name..." {...field} />
+                  <Input placeholder='product name...' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -57,20 +57,20 @@ export const ProductForm: React.FC<IUpdateProductFormProps> = ({
           />
           <FormField
             control={form.control}
-            name="category_id"
+            name='category_id'
             render={({ field }) => (
-              <FormItem className="flex flex-col">
+              <FormItem className='flex flex-col'>
                 <FormLabel>Category</FormLabel>
                 <SeaarchableSelect
                   field={field}
                   selectItems={categories}
-                  selectName="category"
+                  selectName='category'
                   searchQuery={query}
                   handleQueryChange={handleQueryChange}
                   isLoading={isCategoryLoading}
                   currentValue={currentCategory}
                   handleSelect={(value) => {
-                    return form.setValue('category_id', value);
+                    return form.setValue('category_id', value.id);
                   }}
                 />
                 <FormMessage />
@@ -80,12 +80,12 @@ export const ProductForm: React.FC<IUpdateProductFormProps> = ({
 
           <FormField
             control={form.control}
-            name="unit"
+            name='unit'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Unit</FormLabel>
                 <FormControl>
-                  <Input placeholder="product Unit..." {...field} />
+                  <Input placeholder='product Unit...' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -93,12 +93,12 @@ export const ProductForm: React.FC<IUpdateProductFormProps> = ({
           />
           <FormField
             control={form.control}
-            name="brand"
+            name='brand'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Brand</FormLabel>
                 <FormControl>
-                  <Input placeholder="product brand..." {...field} />
+                  <Input placeholder='product brand...' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -106,22 +106,22 @@ export const ProductForm: React.FC<IUpdateProductFormProps> = ({
           />
           <FormField
             control={form.control}
-            name="type"
+            name='type'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Type</FormLabel>
                 <FormControl>
-                  <Input placeholder="product type..." {...field} />
+                  <Input placeholder='product type...' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
-        <div className="border-t flex justify-between w-full items-center pt-4">
+        <div className='border-t flex justify-between w-full items-center pt-4'>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
 
-          <Button type="submit" disabled={isProductLoading} variant="action">
+          <Button type='submit' disabled={isProductLoading} variant='action'>
             Submit
           </Button>
         </div>

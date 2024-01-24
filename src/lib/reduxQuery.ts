@@ -1,3 +1,6 @@
+
+
+import { mutationResponseTransformers } from '@lib/apiHelpers';
 import { AxiosBaseQueryArgs } from "@stores/axiosBaseQuery";
 
 interface TagDescription<T> { type: T; searchQuery?: string };
@@ -11,10 +14,56 @@ interface GetAllEndpointProps<T extends string> {
 
 interface EndpointProps<T extends string> {
     baseUrl: string;
-    itemId: string;
+    itemId?: string;
     tagType: T;
-
 };
+
+interface createEndpointProps<T extends string> {
+    baseUrl: string;
+};
+
+export const generateEndpoint = <T extends string>({
+    baseUrl,
+    method,
+}: createEndpointProps<T> & { method: 'POST' | 'PUT' | 'DELETE' }) => {
+    const queryFn = ({ payload, itemId }: { payload?: any; itemId: string }): AxiosBaseQueryArgs => {
+        return {
+            url: itemId ? `${baseUrl}/${itemId}` : baseUrl,
+            method,
+            data: payload,
+        };
+    };
+
+    return {
+        query: queryFn,
+        ...mutationResponseTransformers(),
+    };
+};
+
+export const generateGetEndpoint = <T extends string>({
+    baseUrl,
+    tagType
+}: EndpointProps<T>) => {
+    const queryFn = ({ itemId }: { itemId: string }): AxiosBaseQueryArgs => {
+        return {
+            url: `${baseUrl}/${itemId}`,
+            method: 'GET',
+        };
+    };
+    return {
+        query: queryFn,
+        providesTags: (id: any) => {
+            return [{ type: tagType, id }]
+        }
+    };
+};
+
+export const generateCreateEndpoint = ({ baseUrl }: { baseUrl: string }) => generateEndpoint({ baseUrl: baseUrl, method: 'POST' });
+export const generateUpdateEndpoint = ({ baseUrl }: { baseUrl: string }) => generateEndpoint({ baseUrl: baseUrl, method: 'PUT' });
+export const generateDeleteEndpoint = ({ baseUrl }: { baseUrl: string }) => generateEndpoint({ baseUrl: baseUrl, method: 'DELETE' });
+export const generateImportEndpoint = ({ baseUrl }: { baseUrl: string }) => generateEndpoint({ baseUrl: `${baseUrl}/import`, method: 'POST' });
+
+
 const buildQueryParamsUrl = (
     baseUrl: string,
     searchQuery: string,
@@ -65,44 +114,6 @@ export const generateGetAllEndpoint = <T extends string>({
     };
 };
 
-export const generateGetEndpoint = <T extends string>({
-    baseUrl,
-    tagType
-}: EndpointProps<T>) => {
-    const queryFn = ({ itemId }: { itemId: string }): AxiosBaseQueryArgs => {
-        return {
-            url: `${baseUrl}/${itemId}`,
-            method: 'GET',
-        };
-    };
-    return {
-        query: queryFn,
-        providesTags: (result: any, error: any, id: any) => {
-            return [{ type: tagType, id }]
-        }
-    };
-};
 
-export const generateCreateEndpoint = <T extends string>({
-    baseUrl,
-    tagType
-}: EndpointProps<T>) => {
-    const queryFn = ({ payload }: { payload: any }): AxiosBaseQueryArgs => {
-        return {
-            url: baseUrl,
-            method: 'POST',
-            data: payload
-        };
-    };
-    return {
-        query: queryFn,
-        transformResponse: (response: { data: any }, meta: any, arg: any) => response.data,
-        transformErrorResponse: (
-            response: { data: { errors: {} } },
-            meta: any, arg: any
-        ) => response.data,
-        invalidatesTags: tagType,
-    };
-};
 
 

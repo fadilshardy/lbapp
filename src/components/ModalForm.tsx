@@ -31,10 +31,11 @@ const ModalForm: React.FC<IModalFormProps> = ({
     <AlertDialog open={isOpen} onOpenChange={handleModalToggle}>
       <AlertDialogTrigger asChild>{modalToggleBtn}</AlertDialogTrigger>
       <AlertDialogContent className={cn(' py-6 px-1', className)}>
-        <AlertDialogHeader className="flex flex-row justify-between px-6 pb-2">
-          <AlertDialogTitle className="text-2xl font-bold tracking-tight ">
+        <AlertDialogHeader className="flex flex-row justify-between px-6 pb-4 border-b">
+          <AlertDialogTitle className="text-2xl">
             {title}
           </AlertDialogTitle>
+
           <button
             className="text-gray-500 transition hover:text-red-600"
             onClick={() => handleModalToggle(false)}

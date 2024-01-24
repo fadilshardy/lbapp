@@ -21,7 +21,7 @@ interface ISearchSelectProps<T> {
   selectName: string;
   selectItems: any;
   isLoading?: boolean;
-  handleSelect: (value: string) => void;
+  handleSelect: (value: any) => void;
   searchQuery: string;
   handleQueryChange: (query: string) => void;
   currentValue?: ISelectLabel;
@@ -84,7 +84,7 @@ export const SeaarchableSelect: React.FC<ISearchSelectProps<any>> = ({
                   value={item.name}
                   key={item.id}
                   onSelect={() => {
-                    handleSelect(item.id);
+                    handleSelect(item);
                     setOpen(false);
                   }}
                 >

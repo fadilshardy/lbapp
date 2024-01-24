@@ -1,4 +1,4 @@
-export function formatDateToString(initialDate) {
+export function formatDateToString(initialDate: any) {
     const date = new Date(initialDate);
 
     const formattedDate = new Intl.DateTimeFormat('id-ID', {
@@ -9,7 +9,7 @@ export function formatDateToString(initialDate) {
 
     return formattedDate;
 }
-export function formatCurrency(number) {
+export function formatCurrency(number: any) {
 
     const numberFormatter = new Intl.NumberFormat('id-ID', {
         style: 'currency',
@@ -18,6 +18,19 @@ export function formatCurrency(number) {
     });
 
     const formattedNumber = numberFormatter.format(number);
+
+    return formattedNumber;
+}
+
+export function formatCurrencyWithoutSymbol(number: any) {
+
+    const numberFormatter = new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0,
+    })
+
+    const formattedNumber = numberFormatter.format(number).replace('Rp', '');
 
     return formattedNumber;
 }
