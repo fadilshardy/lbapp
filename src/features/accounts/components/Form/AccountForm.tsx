@@ -8,6 +8,13 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { SeaarchableSelect } from '@components/ui/SearchableSelect';
 import { Switch } from '@components/ui/Switch';
 import { AlertDialogCancel } from '@components/ui/alert-dialog';
@@ -33,12 +40,14 @@ export const AccountForm: React.FC<IAccountFormProps> = ({
   const searchDebouncedQuery = useDebouncedQuery(query);
 
   const isParent = form.watch('isParent');
+
+  form.watch('parentId');
+
   const handleIsParentToggle = (checked: boolean) => {
     form.setValue('isParent', checked);
     form.setValue('parentId', '');
     form.setValue('code', '');
   };
-
 
   const { data, isFetching: isCategoryLoading } = accountApi.useGetSelectAccountsQuery({
     searchQuery: searchDebouncedQuery,
@@ -46,18 +55,19 @@ export const AccountForm: React.FC<IAccountFormProps> = ({
 
   const parentAccounts = data ?? [];
 
-  const currentParentAccountId = form.getValues('parentId') as ISelectLabel | undefined;
+  const currentParentAccount = form.getValues('parentId') as ISelectLabel | undefined;
+  console.log(currentParentAccount);
 
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit} className="space-y-8">
-        <div className="flex flex-col space-y-4 overflow-y-auto">
+      <form onSubmit={handleSubmit} className='space-y-8'>
+        <div className='flex flex-col space-y-4 overflow-y-auto'>
           <FormField
             control={form.control}
-            name="isParent"
+            name='isParent'
             render={({ field }) => (
-              <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
-                <div className="space-y-0.5">
+              <FormItem className='flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm'>
+                <div className='space-y-0.5'>
                   <FormLabel>Parent Account</FormLabel>
                   <FormDescription>
                     If disabled, the account will be signed as child account.
@@ -68,7 +78,7 @@ export const AccountForm: React.FC<IAccountFormProps> = ({
                     onCheckedChange={handleIsParentToggle}
                     name={field.name}
                     ref={field.ref}
-                    className="data-[state=checked]:bg-blue-500"
+                    className='data-[state=checked]:bg-blue-500'
                   />
                 </FormControl>
               </FormItem>
@@ -78,12 +88,12 @@ export const AccountForm: React.FC<IAccountFormProps> = ({
           {isParent && (
             <FormField
               control={form.control}
-              name="code"
+              name='code'
               render={({ field }) => (
-                <FormItem className="transition animate-in fade-in  duration-500">
+                <FormItem className='transition animate-in fade-in  duration-500'>
                   <FormLabel>Parent Code</FormLabel>
                   <FormControl>
-                    <Input placeholder="code..." {...field} disabled={!isParent} />
+                    <Input placeholder='code...' {...field} disabled={!isParent} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -94,22 +104,25 @@ export const AccountForm: React.FC<IAccountFormProps> = ({
           {!isParent && (
             <FormField
               control={form.control}
-              name="parentId"
+              name='parentId'
               render={({ field }) => (
-                <FormItem className="transition animate-in fade-in duration-500">
+                <FormItem className='transition animate-in fade-in duration-500'>
                   <FormLabel>Parent Account</FormLabel>
                   <FormControl>
                     <SeaarchableSelect
                       disabled={isParent}
                       field={field}
                       selectItems={parentAccounts}
-                      selectName="account"
+                      selectName='account'
                       searchQuery={query}
                       handleQueryChange={handleQueryChange}
                       isLoading={isCategoryLoading}
-                      currentValue={currentParentAccountId}
+                      currentValue={currentParentAccount}
                       handleSelect={(value) => {
-                        return form.setValue('parentId', value);
+                        console.log(value);
+
+                        form.setValue('type', value.type);
+                        form.setValue('parentId', value.id);
                       }}
                     />
                   </FormControl>
@@ -121,36 +134,46 @@ export const AccountForm: React.FC<IAccountFormProps> = ({
 
           <FormField
             control={form.control}
-            name="name"
+            name='name'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="name..." {...field} />
+                  <Input placeholder='name...' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
-            name="type"
+            name='type'
             render={({ field }) => (
-              <FormItem>
+              <FormItem className='focus:outline-none'>
                 <FormLabel>Type</FormLabel>
-                <FormControl>
-                  <Input placeholder="Account type..." {...field} />
-                </FormControl>
+                <Select onValueChange={field.onChange} disabled={!isParent} value={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder='Select account type' />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value='asset'>Asset</SelectItem>
+                    <SelectItem value='liability'>Liability</SelectItem>
+                    <SelectItem value='equity'>Equity</SelectItem>
+                    <SelectItem value='revenue'>Revenue</SelectItem>
+                    <SelectItem value='expense'>Expense</SelectItem>
+                  </SelectContent>
+                </Select>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
-        <div className="border-t flex justify-between w-full items-center pt-4">
+        <div className='border-t flex justify-between w-full items-center pt-4'>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
 
-          <Button type="submit" disabled={isAccountLoading} variant="action">
+          <Button type='submit' disabled={isAccountLoading} variant='action'>
             Submit
           </Button>
         </div>

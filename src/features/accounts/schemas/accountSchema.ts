@@ -16,7 +16,7 @@ export const AccountSchema: z.Schema<IAccount> = z.object({
     openingBalance: z.number().max(255).optional(),
     closingBalance: z.number().max(255).optional(),
     description: z.string().nonempty().max(255).optional(),
-    parentId: z.string().max(255).optional(),
+    parent_id: z.string().max(255).optional(),
     isParent: z.boolean().optional(),
 }).superRefine((data, ctx) => {
     if (data.isParent && !data.code) {
@@ -26,10 +26,10 @@ export const AccountSchema: z.Schema<IAccount> = z.object({
             message: "The account code is required.",
         });
     }
-    if (!data.isParent && !data.parentId) {
+    if (!data.isParent && !data.parent_id) {
         ctx.addIssue({
             code: z.ZodIssueCode.custom,
-            path: ["parentId"],
+            path: ["parent_id"],
             message: "The parent account is required.",
         });
     }

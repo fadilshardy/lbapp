@@ -6,16 +6,17 @@ import {
   accountApi,
   getAccountColumns,
 } from '@features/accounts';
+import { InsertOpeningBalanceForm } from './Form/InsertOpeningBalanceForm';
 
-interface ProductDataTableProps {}
+interface AccountDataTableProps {}
 
-export const AccountDatatable: React.FC<ProductDataTableProps> = () => {
-  const productApiQuery = accountApi.useGetAccountsQuery;
+export const AccountDatatable: React.FC<AccountDataTableProps> = () => {
+  const accountApiQuery = accountApi.useGetAccountsQuery;
   const accountColumns = getAccountColumns();
 
   const ActionButtons = () => {
     return (
-      <div className="flex gap-4">
+      <div className='flex gap-4'>
         <ImportProductButton />
         <CreateAccountButton />
       </div>
@@ -23,9 +24,10 @@ export const AccountDatatable: React.FC<ProductDataTableProps> = () => {
   };
 
   return (
-    <div className="space-y-4 w-full">
+    <div className='space-y-4 w-full'>
+      <InsertOpeningBalanceForm />
       <DataTables
-        apiQuery={productApiQuery}
+        apiQuery={accountApiQuery}
         columns={accountColumns}
         ActionMenu={<ActionButtons />}
       />

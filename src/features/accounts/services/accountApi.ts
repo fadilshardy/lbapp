@@ -89,7 +89,8 @@ export const accountApi = appApi.injectEndpoints({
                 transformResponse: (response: any) =>
                     response.data.map((item: any) => ({
                         name: `${item.code} - ${item.name}`,
-                        id: String(item.id)
+                        id: String(item.id),
+                        type: item.type
                     })),
                 providesTags: (result: any) => {
                     if (!result) return [{ type: TAG_TYPE, id: 'LIST' }]

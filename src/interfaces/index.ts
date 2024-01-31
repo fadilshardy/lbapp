@@ -85,4 +85,5 @@ export interface PaginationResponse<T> {
 export interface ISelectLabel {
   name: string;
   id: string;
+  type?: string;
 }

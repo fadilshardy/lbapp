@@ -8,6 +8,6 @@ export interface IAccount {
     openingBalance?: number;
     closingBalance?: number;
     description?: string;
-    parentId?: string | undefined;
+    parent_id?: string | undefined;
     isParent?: boolean;
 }

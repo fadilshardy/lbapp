@@ -49,7 +49,7 @@ export const ProductForm: React.FC<IUpdateProductFormProps> = ({
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder='product name...' {...field} />
+                  <Input placeholder='Product Name' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -64,7 +64,7 @@ export const ProductForm: React.FC<IUpdateProductFormProps> = ({
                 <SeaarchableSelect
                   field={field}
                   selectItems={categories}
-                  selectName='category'
+                  selectName='Category'
                   searchQuery={query}
                   handleQueryChange={handleQueryChange}
                   isLoading={isCategoryLoading}
@@ -85,7 +85,7 @@ export const ProductForm: React.FC<IUpdateProductFormProps> = ({
               <FormItem>
                 <FormLabel>Unit</FormLabel>
                 <FormControl>
-                  <Input placeholder='product Unit...' {...field} />
+                  <Input placeholder='Product Unit' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
