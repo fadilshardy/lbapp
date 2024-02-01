@@ -10,24 +10,22 @@ interface ICreateProductButtonProps {
   customButton?: JSX.Element;
 }
 
-const DefaultButton = (
-  <Button size="default">
-    <BaseIcon path={mdiPlusBox} className="w-4 h-4 flex mr-2" />
-    Product
-  </Button>
-);
-
 export const CreateProductButton: React.FC<ICreateProductButtonProps> = ({ customButton }) => {
   const { isOpen, handleModalToggle } = useModalToggle(false);
-
-  const ModalButton = customButton || DefaultButton;
 
   return (
     <ModalForm
       isOpen={isOpen}
       handleModalToggle={handleModalToggle}
-      title="Create new product"
-      modalToggleBtn={ModalButton}
+      title='Create new product'
+      modalToggleBtn={
+        customButton || (
+          <Button size='default'>
+            <BaseIcon path={mdiPlusBox} className='w-4 h-4 flex mr-2' />
+            Product
+          </Button>
+        )
+      }
     >
       <CreateProductForm handleModalToggle={handleModalToggle} />
     </ModalForm>

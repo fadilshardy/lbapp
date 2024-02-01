@@ -98,7 +98,7 @@ export const ProductForm: React.FC<IUpdateProductFormProps> = ({
               <FormItem>
                 <FormLabel>Brand</FormLabel>
                 <FormControl>
-                  <Input placeholder='product brand...' {...field} />
+                  <Input placeholder='Product Brand' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -111,8 +111,30 @@ export const ProductForm: React.FC<IUpdateProductFormProps> = ({
               <FormItem>
                 <FormLabel>Type</FormLabel>
                 <FormControl>
-                  <Input placeholder='product type...' {...field} />
+                  <Input placeholder='Product Type' {...field} />
                 </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='vendor_id'
+            render={({ field }) => (
+              <FormItem className='flex flex-col'>
+                <FormLabel>Vendor</FormLabel>
+                <SeaarchableSelect
+                  field={field}
+                  selectItems={categories}
+                  selectName='Vendor'
+                  searchQuery={query}
+                  handleQueryChange={handleQueryChange}
+                  isLoading={isCategoryLoading}
+                  currentValue={currentCategory}
+                  handleSelect={(value) => {
+                    return form.setValue('category_id', value.id);
+                  }}
+                />
                 <FormMessage />
               </FormItem>
             )}

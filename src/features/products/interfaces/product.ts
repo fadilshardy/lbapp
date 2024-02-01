@@ -10,5 +10,6 @@ export interface IProduct {
     brand: string;
     type: string;
     category_id: string;
+    vendor_id: string;
     category?: ICategory;
 }

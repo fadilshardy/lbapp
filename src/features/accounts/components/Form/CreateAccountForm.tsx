@@ -18,7 +18,7 @@ export const CreateAccountForm: React.FC<IAccountCreateFormProps> = ({ handleMod
     defaultValues: {
       name: '',
       type: '',
-      parentId: '',
+      parent_id: '',
       code: '',
       isParent: false,
     },
@@ -33,7 +33,7 @@ export const CreateAccountForm: React.FC<IAccountCreateFormProps> = ({ handleMod
       mutation: createAccount,
       handleModalToggle: handleModalToggle,
       mutationProps: {
-        payload: { ...account, parent_id: account.parentId },
+        payload: { ...account, parent_id: account.parent_id },
       },
     });
   }

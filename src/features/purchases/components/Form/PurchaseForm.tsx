@@ -106,10 +106,8 @@ export const PurchaseForm: React.FC<IUpdateProductFormProps> = ({
                           id: currentPurchase.product_id as string,
                         }}
                         handleSelect={(value) => {
-                          return form.setValue(`details.${index}`, {
-                            product_id: value.id,
-                            product_name: value.name,
-                          });
+                          form.setValue(`details.${index}.product_id`, value.id);
+                          form.setValue(`details.${index}.product_name`, value.name);
                         }}
                       />
                       <FormMessage />

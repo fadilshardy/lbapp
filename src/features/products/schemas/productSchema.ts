@@ -9,6 +9,7 @@ export const ProductSchema: z.Schema<IProduct> = z.object({
     brand: z.string().nonempty().max(255),
     type: z.string().nonempty().max(255),
     category_id: z.string().nonempty().max(255),
+    vendor_id: z.string().nonempty().max(255),
 });
 
 export type Product = z.infer<typeof ProductSchema>;

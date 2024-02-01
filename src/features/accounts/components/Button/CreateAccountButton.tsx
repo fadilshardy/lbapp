@@ -10,24 +10,21 @@ interface ICreateAccountButtonProps {
   customButton?: JSX.Element;
 }
 
-const DefaultButton = (
-  <Button size="default">
-    <BaseIcon path={mdiPlusBox} className="w-4 h-4 flex mr-2" />
-    Account
-  </Button>
-);
-
 export const CreateAccountButton: React.FC<ICreateAccountButtonProps> = ({ customButton }) => {
   const { isOpen, handleModalToggle } = useModalToggle(false);
-
-  const ModalButton = customButton || DefaultButton;
-
   return (
     <ModalForm
       isOpen={isOpen}
       handleModalToggle={handleModalToggle}
-      title="Create new account"
-      modalToggleBtn={ModalButton}
+      title='Create new account'
+      modalToggleBtn={
+        customButton || (
+          <Button size='default'>
+            <BaseIcon path={mdiPlusBox} className='w-4 h-4 flex mr-2' />
+            Account
+          </Button>
+        )
+      }
     >
       <CreateAccountForm handleModalToggle={handleModalToggle} />
     </ModalForm>
