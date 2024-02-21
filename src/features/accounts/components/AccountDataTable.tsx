@@ -6,7 +6,6 @@ import {
   accountApi,
   getAccountColumns,
 } from '@features/accounts';
-import { InsertOpeningBalanceForm } from './Form/InsertOpeningBalanceForm';
 
 interface AccountDataTableProps {}
 
@@ -25,7 +24,6 @@ export const AccountDatatable: React.FC<AccountDataTableProps> = () => {
 
   return (
     <div className='space-y-4 w-full'>
-      <InsertOpeningBalanceForm />
       <DataTables
         apiQuery={accountApiQuery}
         columns={accountColumns}

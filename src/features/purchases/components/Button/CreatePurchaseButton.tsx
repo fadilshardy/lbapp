@@ -14,7 +14,7 @@ export const CreatePurchaseButton: React.FC<ICreatePurchaseButtonProps> = ({ cus
 
   return (
     <ModalForm
-      className='max-w-3xl'
+      className='max-w-5xl'
       isOpen={isOpen}
       handleModalToggle={handleModalToggle}
       title='Create new Purchase'

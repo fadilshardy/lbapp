@@ -24,7 +24,7 @@ interface ISearchSelectProps<T> {
   handleSelect: (value: any) => void;
   searchQuery: string;
   handleQueryChange: (query: string) => void;
-  currentValue?: ISelectLabel;
+  currentValue?: any;
   disabled?: boolean;
 }
 
@@ -55,8 +55,8 @@ export const SeaarchableSelect: React.FC<ISearchSelectProps<any>> = ({
       <PopoverTrigger asChild>
         <FormControl>
           <Button
-            variant="outline"
-            role="combobox"
+            variant='outline'
+            role='combobox'
             aria-expanded={open}
             className={cn(
               'justify-between font-normal flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring',
@@ -65,18 +65,18 @@ export const SeaarchableSelect: React.FC<ISearchSelectProps<any>> = ({
             disabled={disabled}
           >
             {selectedOption}
-            <BaseIcon path={mdiUnfoldMoreHorizontal} className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            <BaseIcon path={mdiUnfoldMoreHorizontal} className='ml-2 h-4 w-4 shrink-0 opacity-50' />
           </Button>
         </FormControl>
       </PopoverTrigger>
-      <PopoverContent className="p-0 w-[200px]" side="right" align="start">
+      <PopoverContent className='p-0 w-[200px]' side='right' align='start'>
         <Command>
           <CommandInput
             placeholder={`Search ${selectName}...`}
             value={searchQuery}
             onValueChange={handleQueryChange}
           />
-          <CommandList className="h-[var(--cmdk-list-height)] max-h-[200px]">
+          <CommandList className='h-[var(--cmdk-list-height)] max-h-[200px]'>
             <CommandEmpty>{isLoading ? `Loading...` : `No ${selectName} found.`}</CommandEmpty>
             <CommandGroup>
               {selectItems.map((item: ISelectLabel) => (

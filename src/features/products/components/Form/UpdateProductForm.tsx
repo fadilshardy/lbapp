@@ -28,8 +28,6 @@ export const UpdateProductForm: React.FC<IUpdateProductFormProps> = ({
 
   const [updateProduct, { isLoading: isProductLoading }] = productApi.useUpdateProductMutation();
 
-  const cors = productApi.useGetCorsQuery({});
-
   async function onSubmit(product: Product) {
     HandleFormSubmit({
       form: form,

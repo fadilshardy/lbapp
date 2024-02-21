@@ -21,7 +21,6 @@ import { AlertDialogCancel } from '@components/ui/alert-dialog';
 import { Button } from '@components/ui/button';
 import { Account, accountApi } from '@features/accounts';
 import { useDebouncedQuery, useSearchQuery } from '@hooks/useSearchQuery';
-import { ISelectLabel } from '@interfaces';
 import { FormEventHandler } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 
@@ -39,24 +38,24 @@ export const AccountForm: React.FC<IAccountFormProps> = ({
   const { query, handleQueryChange } = useSearchQuery();
   const searchDebouncedQuery = useDebouncedQuery(query);
 
-  const isParent = form.watch('isParent');
+  const isParent = form.watch('is_parent');
 
-  form.watch('parentId');
+  form.watch('parent_id');
 
   const handleIsParentToggle = (checked: boolean) => {
-    form.setValue('isParent', checked);
-    form.setValue('parentId', '');
+    form.setValue('is_parent', checked);
+    form.setValue('parent_id', '');
     form.setValue('code', '');
   };
 
   const { data, isFetching: isCategoryLoading } = accountApi.useGetSelectAccountsQuery({
     searchQuery: searchDebouncedQuery,
+    customFilter: 'is_parent=1',
   });
 
   const parentAccounts = data ?? [];
 
-  const currentParentAccount = form.getValues('parentId') as ISelectLabel | undefined;
-  console.log(currentParentAccount);
+  const currentParentAccount = form.getValues('parent_id');
 
   return (
     <Form {...form}>
@@ -64,7 +63,7 @@ export const AccountForm: React.FC<IAccountFormProps> = ({
         <div className='flex flex-col space-y-4 overflow-y-auto'>
           <FormField
             control={form.control}
-            name='isParent'
+            name='is_parent'
             render={({ field }) => (
               <FormItem className='flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm'>
                 <div className='space-y-0.5'>
@@ -104,7 +103,7 @@ export const AccountForm: React.FC<IAccountFormProps> = ({
           {!isParent && (
             <FormField
               control={form.control}
-              name='parentId'
+              name='parent_id'
               render={({ field }) => (
                 <FormItem className='transition animate-in fade-in duration-500'>
                   <FormLabel>Parent Account</FormLabel>
@@ -119,10 +118,8 @@ export const AccountForm: React.FC<IAccountFormProps> = ({
                       isLoading={isCategoryLoading}
                       currentValue={currentParentAccount}
                       handleSelect={(value) => {
-                        console.log(value);
-
                         form.setValue('type', value.type);
-                        form.setValue('parentId', value.id);
+                        form.setValue('parent_id', value.id);
                       }}
                     />
                   </FormControl>

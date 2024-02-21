@@ -3,9 +3,9 @@ import { Badge } from '@components/ui/badge';
 import { Button } from '@components/ui/button';
 import { DataTableCrudRowActions } from '@components/ui/datatables/DataTableCrudRowActions';
 import { DataTableColumnHeader } from '@components/ui/datatables/column-header';
-import { Account } from '@features/accounts';
+import { Account, UpdateAccountButton } from '@features/accounts';
 import { formatCurrencyWithoutSymbol } from '@lib/format';
-import { mdiSquareEditOutline, mdiTrashCanOutline } from '@mdi/js';
+import { mdiTrashCanOutline } from '@mdi/js';
 import { ColumnDef } from '@tanstack/react-table';
 import { InsertOpeningBalanceForm } from '../components/Form/InsertOpeningBalanceForm';
 export const getAccountColumns = (): ColumnDef<Account>[] => [
@@ -61,13 +61,7 @@ export const getAccountColumns = (): ColumnDef<Account>[] => [
         <DataTableCrudRowActions row={row}>
           <InsertOpeningBalanceForm />
 
-          <Button
-            className='border-e text-gray-700 hover:bg-gray-50 focus:relative'
-            title='Edit Product'
-            variant='ghost'
-          >
-            <BaseIcon path={mdiSquareEditOutline} className='w-4 h-4' />
-          </Button>
+          <UpdateAccountButton currentAccount={row.original} />
           <Button
             className='border-e text-gray-700 hover:bg-gray-50 focus:relative'
             title='Edit Product'

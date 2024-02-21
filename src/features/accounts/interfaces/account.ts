@@ -9,5 +9,5 @@ export interface IAccount {
     closingBalance?: number;
     description?: string;
     parent_id?: string | undefined;
-    isParent?: boolean;
+    is_parent: boolean;
 }

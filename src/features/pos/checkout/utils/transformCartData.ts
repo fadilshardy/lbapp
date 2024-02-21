@@ -15,10 +15,10 @@ interface TransformedData {
         no_receipt: string;
         date: string;
         note: string;
-        balance: number;
+        total_amount: number;
         transaction_id: number;
     };
-    details: TransformedItem[];
+    saleDetails: TransformedItem[];
 }
 
 export function transformCartData(cartItems: ICartItem[], totalPrice: number): TransformedData {
@@ -27,10 +27,10 @@ export function transformCartData(cartItems: ICartItem[], totalPrice: number): T
             no_receipt: Math.floor(Math.random() * 10000000000).toString(),
             date: new Date().toISOString().split('T')[0],
             note: '',
-            balance: totalPrice,
+            total_amount: totalPrice,
             transaction_id: 1,
         },
-        details: [],
+        saleDetails: [],
     };
 
     cartItems.forEach((item) => {
@@ -41,7 +41,7 @@ export function transformCartData(cartItems: ICartItem[], totalPrice: number): T
             total_price: item.quantityToBuy * Number(item.salePrice),
             discount: 0,
         };
-        transformedData.details.push(transformedItem);
+        transformedData.saleDetails.push(transformedItem);
     });
 
     return transformedData;

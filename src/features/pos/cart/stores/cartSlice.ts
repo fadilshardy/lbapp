@@ -75,10 +75,5 @@ function calculateTotalPrice(cartItems: ICartItem[]): number {
         0
     );
 }
-function updateTotalPrice(state: CartState) {
-    return {
-        ...state,
-        totalPrice: calculateTotalPrice(state.cartItems),
-    };
-}
+
 

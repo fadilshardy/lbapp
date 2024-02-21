@@ -10,8 +10,8 @@ import { Input } from '@/components/ui/input';
 import { SeaarchableSelect } from '@components/ui/SearchableSelect';
 import { AlertDialogCancel } from '@components/ui/alert-dialog';
 import { Button } from '@components/ui/button';
+import { vendorApi } from '@features/vendors';
 import { useDebouncedQuery, useSearchQuery } from '@hooks/useSearchQuery';
-import { ISelectLabel } from '@interfaces';
 import { FormEventHandler } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { Product } from '../../schemas/productSchema';
@@ -28,15 +28,26 @@ export const ProductForm: React.FC<IUpdateProductFormProps> = ({
   handleSubmit,
   isProductLoading,
 }) => {
-  const { query, handleQueryChange } = useSearchQuery();
-  const searchDebouncedQuery = useDebouncedQuery(query);
+  const { query: categoryQuery, handleQueryChange: handleCategoryQueryChange } = useSearchQuery();
+  const { query: vendoryQuery, handleQueryChange: handleVendorQueryChange } = useSearchQuery();
 
-  const { data, isFetching: isCategoryLoading } = categoryApi.useGetSelectCategoriesQuery({
-    searchQuery: searchDebouncedQuery,
+  const searchCategoryDebouncedQuery = useDebouncedQuery(categoryQuery);
+  const searchVendorDebouncedQuery = useDebouncedQuery(vendoryQuery);
+
+  const { data: fetchedCategories, isFetching: isCategoryLoading } =
+    categoryApi.useGetSelectCategoriesQuery({
+      searchQuery: searchCategoryDebouncedQuery,
+    });
+
+  const { data: fetchedVendors, isFetching: isVendorLoading } = vendorApi.useGetSelectVendorsQuery({
+    searchQuery: searchVendorDebouncedQuery,
   });
 
-  const categories = data ?? [];
-  const currentCategory = form.getValues('category') as ISelectLabel;
+  const categories = fetchedCategories ?? [];
+  const vendors = fetchedVendors ?? [];
+
+  const currentCategory = form.getValues('category_id');
+  const currentVendor = form.getValues('vendor_id');
 
   return (
     <Form {...form}>
@@ -65,8 +76,8 @@ export const ProductForm: React.FC<IUpdateProductFormProps> = ({
                   field={field}
                   selectItems={categories}
                   selectName='Category'
-                  searchQuery={query}
-                  handleQueryChange={handleQueryChange}
+                  searchQuery={categoryQuery}
+                  handleQueryChange={handleCategoryQueryChange}
                   isLoading={isCategoryLoading}
                   currentValue={currentCategory}
                   handleSelect={(value) => {
@@ -125,14 +136,14 @@ export const ProductForm: React.FC<IUpdateProductFormProps> = ({
                 <FormLabel>Vendor</FormLabel>
                 <SeaarchableSelect
                   field={field}
-                  selectItems={categories}
+                  selectItems={vendors}
                   selectName='Vendor'
-                  searchQuery={query}
-                  handleQueryChange={handleQueryChange}
-                  isLoading={isCategoryLoading}
-                  currentValue={currentCategory}
+                  searchQuery={vendoryQuery}
+                  handleQueryChange={handleVendorQueryChange}
+                  isLoading={isVendorLoading}
+                  currentValue={currentVendor}
                   handleSelect={(value) => {
-                    return form.setValue('category_id', value.id);
+                    return form.setValue('vendor_id', value.id);
                   }}
                 />
                 <FormMessage />

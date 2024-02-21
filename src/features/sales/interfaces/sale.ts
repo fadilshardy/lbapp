@@ -11,7 +11,7 @@ interface ISale {
     no_receipt: string;
     date: string;
     note: string;
-    balance: number;
+    total_amount: number;
     transaction_id: number;
 }
 

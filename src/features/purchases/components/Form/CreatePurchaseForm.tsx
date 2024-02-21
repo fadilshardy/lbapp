@@ -10,10 +10,8 @@ import {
 } from '@features/purchases';
 import { HandleFormSubmit } from '@lib/form';
 import { useForm } from 'react-hook-form';
-import { Product } from '../../schemas/productSchema';
 
 interface IPurchaseCreateFormProps {
-  initialValues?: Product;
   handleModalToggle(open: boolean): void;
 }
 
@@ -24,14 +22,31 @@ export const CreatePurchaseForm: React.FC<IPurchaseCreateFormProps> = ({ handleM
     purchase: {
       date: format(new Date(), 'dd MMMM yyyy'),
       note: '',
+      total_amount: 0,
     },
-    details: [
+    purchaseDetails: [
       {
         product_name: 'select product',
         product_id: '',
         quantity: 0,
         net_price: 0,
         sale_price: 0,
+        purchase_amount: 0,
+      },
+    ],
+    transaction: {
+      type_id: 1,
+      reference_id: 1,
+      date: format(new Date(), 'dd MMMM yyyy'),
+      total_amount: 0,
+    },
+    transactionDetails: [
+      {
+        account_name: 'select account',
+        account_id: 0,
+        balance: 0,
+        transaction_amount: 0,
+        transaction_type: 'credit',
       },
     ],
   };
@@ -45,6 +60,14 @@ export const CreatePurchaseForm: React.FC<IPurchaseCreateFormProps> = ({ handleM
     purchaseApi.useCreatePurchaseMutation();
 
   async function onSubmit(purchaseRecord: PurchaseRecord) {
+    const DebitTransaction = {
+      account_id: 1,
+      transaction_amount: purchaseRecord.purchase.total_amount,
+      transaction_type: 'debit',
+    };
+
+    purchaseRecord.transactionDetails.push(DebitTransaction);
+
     HandleFormSubmit({
       form: form,
       toast: toast,

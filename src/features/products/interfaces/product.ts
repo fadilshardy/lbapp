@@ -1,7 +1,11 @@
+import { IVendor } from "@features/vendors";
+
 interface ICategory {
     id: string;
     name: string;
 }
+
+
 
 export interface IProduct {
     name: string;
@@ -12,4 +16,5 @@ export interface IProduct {
     category_id: string;
     vendor_id: string;
     category?: ICategory;
+    vendor?: IVendor;
 }

@@ -26,7 +26,7 @@ export const getPurchaseColumns = (): ColumnDef<Purchase>[] => [
   {
     accessorKey: 'balance',
     header: ({ column }) => <DataTableColumnHeader column={column} title='Amount (Rp)' />,
-    cell: ({ row }) => formatCurrencyWithoutSymbol(row.original.balance),
+    cell: ({ row }) => formatCurrencyWithoutSymbol(row.original.total_amount),
   },
   {
     id: 'actions',

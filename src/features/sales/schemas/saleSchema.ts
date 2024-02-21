@@ -13,7 +13,7 @@ export const SaleSchema: z.Schema<ISale> = z.object({
     no_receipt: z.string().nonempty().max(255),
     date: z.string().nonempty().max(255),
     note: z.string().nonempty().max(255),
-    balance: z.number().nonnegative(),
+    total_amount: z.number().nonnegative(),
     transaction_id: z.number().nonnegative()
 });
 

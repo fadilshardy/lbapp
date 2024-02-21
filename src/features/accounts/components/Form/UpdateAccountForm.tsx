@@ -15,13 +15,12 @@ export const UpdateAccountForm: React.FC<IUpdateAccountFormProps> = ({
   currentAccount,
 }) => {
   const { toast } = useToast();
-  console.log(currentAccount);
 
   const form = useForm<Account>({
     resolver: zodResolver(AccountSchema),
     defaultValues: {
       ...currentAccount,
-      isParent: currentAccount.parentId,
+      is_parent: currentAccount.is_parent,
     },
   });
 

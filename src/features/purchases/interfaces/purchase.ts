@@ -10,6 +10,7 @@ interface IPurchaseDetail {
     sale_price: number;
     profit?: number;
     due_date?: string;
+    purchase_amount: number;
 }
 
 interface IPurchase {
@@ -18,9 +19,12 @@ interface IPurchase {
     note?: string;
     balance?: number;
     transaction_id?: number;
+    total_amount: number;
 }
 
 interface IPurchaseRecord {
     purchase: IPurchase;
-    details: IPurchaseDetail[];
+    purchaseDetails: IPurchaseDetail[];
+    transaction: Transaction;
+    transactionDetails: TransactionDetail[];
 }

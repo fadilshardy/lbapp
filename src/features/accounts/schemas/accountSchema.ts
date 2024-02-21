@@ -17,16 +17,16 @@ export const AccountSchema: z.Schema<IAccount> = z.object({
     closingBalance: z.number().max(255).optional(),
     description: z.string().nonempty().max(255).optional(),
     parent_id: z.string().max(255).optional(),
-    isParent: z.boolean().optional(),
+    is_parent: z.boolean(),
 }).superRefine((data, ctx) => {
-    if (data.isParent && !data.code) {
+    if (data.is_parent && !data.code) {
         ctx.addIssue({
             code: z.ZodIssueCode.custom,
             path: ["code"],
             message: "The account code is required.",
         });
     }
-    if (!data.isParent && !data.parent_id) {
+    if (!data.is_parent && !data.parent_id) {
         ctx.addIssue({
             code: z.ZodIssueCode.custom,
             path: ["parent_id"],

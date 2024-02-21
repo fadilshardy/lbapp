@@ -20,24 +20,25 @@ export const CreateCheckoutForm: React.FC<ICheckoutCreateFormProps> = ({ handleM
 
     try {
       const transformedData = transformCartData(cartItems, totalPrice);
+
       await createCheckout({ payload: transformedData }).unwrap();
 
       toast({
         title: 'Success!',
-        variant: "success",
+        variant: 'success',
         description: 'Transaction is successfully created!',
       });
 
       if (handleModalToggle && !isLoading) {
         handleModalToggle(false);
       }
-
     } catch (error: unknown) {
-      if (error instanceof Error) {
+      console.log(error);
 
+      if (error instanceof Error) {
         toast({
           title: 'Failed!',
-          variant: "destructive",
+          variant: 'destructive',
           description: 'Transaction Failed, something went wrong.',
         });
 
@@ -47,9 +48,9 @@ export const CreateCheckoutForm: React.FC<ICheckoutCreateFormProps> = ({ handleM
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
-      <Button type="submit" disabled={isLoading} variant="action">
-        <BaseIcon path={mdiPrinterPos} className="mr-2 h-4 w-4" />
+    <form onSubmit={handleSubmit} className='space-y-8'>
+      <Button type='submit' disabled={isLoading} variant='action'>
+        <BaseIcon path={mdiPrinterPos} className='mr-2 h-4 w-4' />
         Confirm
       </Button>
     </form>

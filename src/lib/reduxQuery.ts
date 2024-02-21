@@ -69,13 +69,15 @@ const buildQueryParamsUrl = (
     searchQuery: string,
     page: number,
     perPage: number,
-    queryParams?: string[]
+    queryParams?: string[],
+    customFilter?: string
 ): string => {
 
     const params = [
         searchQuery ? `search=${searchQuery}` : null,
         page ? `page=${page}` : null,
         perPage ? `per_page=${perPage}` : null,
+        customFilter ? customFilter : null,
         ...(queryParams && queryParams.length > 0 ? queryParams.filter(param => param !== '') : []),
     ];
 
@@ -88,15 +90,16 @@ export const generateGetAllEndpoint = <T extends string>({
     baseUrl,
     queryParams,
     tagType,
-    itemId
+    itemId,
 }: GetAllEndpointProps<T>) => {
-    const queryFn = ({ searchQuery = '', page = 1, perPage = 30 }: {
+    const queryFn = ({ searchQuery = '', page = 1, perPage = 30, customFilter = '' }: {
         searchQuery?: string;
         page?: number;
         perPage?: number;
+        customFilter?: string;
     }): AxiosBaseQueryArgs => {
         return {
-            url: buildQueryParamsUrl(baseUrl, searchQuery, page, perPage, queryParams),
+            url: buildQueryParamsUrl(baseUrl, searchQuery, page, perPage, queryParams, customFilter),
             method: 'GET',
         };
     };
