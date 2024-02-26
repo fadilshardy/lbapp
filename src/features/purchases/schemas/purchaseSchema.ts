@@ -1,6 +1,6 @@
+import { IPurchase, IPurchaseDetail, IPurchaseRecord } from '@features/purchases';
 import * as z from "zod";
-import { TransactionDetailSchema, TransactionSchema } from "./transactionSchema";
-
+import { TransactionDetailSchema, TransactionSchema } from "../../transactions/schemas/transactionSchema";
 export const PurchaseDetailSchema: z.Schema<IPurchaseDetail> = z.object({
     product_id: z.string(),
     net_price: z.coerce.number(),
@@ -35,7 +35,7 @@ export const PurchaseRecordSchema: z.Schema<IPurchaseRecord> = z.object({
                 message: "must be balanced.",
             });
             data.transactionDetails.forEach(({ transaction_amount, balance }, index) => {
-                if (transaction_amount >= balance) {
+                if (balance && transaction_amount >= balance) {
                     ctx.addIssue({
                         type: "number",
                         code: z.ZodIssueCode.too_big,

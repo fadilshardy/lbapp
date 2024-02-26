@@ -1,5 +1,8 @@
-interface IDetail {
-    product_name: string;
+import { ITransaction, ITransactionDetail } from "@features/transactions";
+
+
+export interface ISaleDetail {
+    product_name?: string;
     purchase_detail_id: number;
     sale_quantity: number;
     unit_price: number;
@@ -7,15 +10,16 @@ interface IDetail {
     discount: number;
 }
 
-interface ISale {
+export interface ISale {
     no_receipt: string;
     date: string;
     note: string;
     total_amount: number;
-    transaction_id: number;
 }
 
-interface ISaleRecord {
+export interface ISaleRecord {
     sale: ISale;
-    details: IDetail[];
+    saleDetails: ISaleDetail[];
+    transaction: ITransaction;
+    transactionDetails: ITransactionDetail[];
 }

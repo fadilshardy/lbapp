@@ -1,11 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { useToast } from '@components/ui/use-toast';
+import { Product, ProductForm, ProductSchema, productApi } from '@features/products';
 import { HandleFormSubmit } from '@lib/form';
 import { useForm } from 'react-hook-form';
-import { Product, ProductSchema } from '../../schemas/productSchema';
-import { productApi } from '../../services/PurchaseApi';
-import { ProductForm } from './PurchaseForm';
 
 interface IUpdateProductFormProps {
   handleModalToggle(open: boolean): void;
@@ -27,8 +25,6 @@ export const UpdateProductForm: React.FC<IUpdateProductFormProps> = ({
   });
 
   const [updateProduct, { isLoading: isProductLoading }] = productApi.useUpdateProductMutation();
-
-  const cors = productApi.useGetCorsQuery({});
 
   async function onSubmit(product: Product) {
     HandleFormSubmit({

@@ -60,13 +60,13 @@ export const CreatePurchaseForm: React.FC<IPurchaseCreateFormProps> = ({ handleM
     purchaseApi.useCreatePurchaseMutation();
 
   async function onSubmit(purchaseRecord: PurchaseRecord) {
-    const DebitTransaction = {
+    const debitTransaction = {
       account_id: 1,
       transaction_amount: purchaseRecord.purchase.total_amount,
       transaction_type: 'debit',
     };
 
-    purchaseRecord.transactionDetails.push(DebitTransaction);
+    purchaseRecord.transactionDetails.push(debitTransaction);
 
     HandleFormSubmit({
       form: form,

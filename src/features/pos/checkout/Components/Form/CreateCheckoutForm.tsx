@@ -1,8 +1,9 @@
 import BaseIcon from '@components/BaseIcon';
 import { Button } from '@components/ui/button';
 import { useToast } from '@components/ui/use-toast';
+import { clearCart, resetPayment } from '@features/pos/cart';
 import { mdiPrinterPos } from '@mdi/js';
-import { useAppSelector } from '@stores/hooks';
+import { useAppDispatch, useAppSelector } from '@stores/hooks';
 import { checkoutApi } from '../../services/checkoutApi';
 import { transformCartData } from '../../utils/transformCartData';
 
@@ -14,6 +15,7 @@ export const CreateCheckoutForm: React.FC<ICheckoutCreateFormProps> = ({ handleM
   const { toast } = useToast();
   const { totalPrice, cartItems } = useAppSelector((state) => state.cart);
   const [createCheckout, { isLoading }] = checkoutApi.useCreateCheckoutMutation();
+  const dispatch = useAppDispatch();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault();
@@ -31,6 +33,8 @@ export const CreateCheckoutForm: React.FC<ICheckoutCreateFormProps> = ({ handleM
 
       if (handleModalToggle && !isLoading) {
         handleModalToggle(false);
+        dispatch(clearCart());
+        dispatch(resetPayment());
       }
     } catch (error: unknown) {
       console.log(error);

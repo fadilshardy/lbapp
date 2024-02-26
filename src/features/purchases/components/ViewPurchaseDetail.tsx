@@ -51,7 +51,7 @@ const ViewPurchaseDetail: React.FunctionComponent<IPurchaseDetailProps> = ({
 
           <div className='md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b'>
             <p className='text-gray-600 font-medium'>Total</p>
-            <p>{formatCurrency(purchaseRecord?.purchase.balance)}</p>
+            <p>{formatCurrency(purchaseRecord?.purchase.total_amount)}</p>
           </div>
           {purchaseRecord?.purchase.note && (
             <div className='md:grid md:grid-cols-2 hover:bg-gray-50 md:space-y-0 space-y-1 p-4 border-b'>
@@ -85,7 +85,7 @@ const ViewPurchaseDetail: React.FunctionComponent<IPurchaseDetailProps> = ({
           </TableRow>
         </TableHeader>
         <TableBody className='text-xs'>
-          {purchaseRecord?.details.map((item, id) => {
+          {purchaseRecord?.purchaseDetails.map((item, id) => {
             const itemNetPrice =
               item.initial_quantity && item.net_price ? item.initial_quantity * item.net_price : 0;
 

@@ -23,7 +23,8 @@ export const productCatalogsApi = appApi.injectEndpoints({
                     purchaseDate: item.purchase_date,
                 })),
             providesTags: (result, error, searchQuery) => {
-                return searchQuery ? [{ type: 'productCatalogs', searchQuery }] : ['productCatalogs']
+                // return searchQuery ? [{ type: 'productCatalogs', searchQuery }] : ['productCatalogs']
+                return ['productCatalogs']
             }
         }),
     }),

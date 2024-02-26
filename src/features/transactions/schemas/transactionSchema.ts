@@ -1,16 +1,16 @@
+import { ITransaction, ITransactionDetail } from "@features/transactions";
 import * as z from "zod";
 
 
-export const TransactionSchema = z.object({
+export const TransactionSchema: z.Schema<ITransaction> = z.object({
     type_id: z.number(),
     reference_id: z.number(),
     date: z.string(),
-    // description: z.string(),
+    note: z.string().optional(),
     total_amount: z.coerce.number()
 });
 
-export const TransactionDetailSchema = z.object({
-    // transaction_id: z.coerce.number(),
+export const TransactionDetailSchema: z.Schema<ITransactionDetail> = z.object({
     account_id: z.coerce.number(),
     balance: z.coerce.number(),
     transaction_amount: z.coerce.number(),

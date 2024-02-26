@@ -1,4 +1,6 @@
-interface IPurchaseDetail {
+import { ITransaction, ITransactionDetail } from "@features/transactions";
+
+export interface IPurchaseDetail {
     purchase_id?: number;
     product_name?: string;
     product_id?: string;
@@ -13,7 +15,7 @@ interface IPurchaseDetail {
     purchase_amount: number;
 }
 
-interface IPurchase {
+export interface IPurchase {
     no_receipt?: string;
     date?: string;
     note?: string;
@@ -22,9 +24,9 @@ interface IPurchase {
     total_amount: number;
 }
 
-interface IPurchaseRecord {
+export interface IPurchaseRecord {
     purchase: IPurchase;
     purchaseDetails: IPurchaseDetail[];
-    transaction: Transaction;
-    transactionDetails: TransactionDetail[];
+    transaction: ITransaction;
+    transactionDetails: ITransactionDetail[];
 }

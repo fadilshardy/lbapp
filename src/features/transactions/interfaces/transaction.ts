@@ -1,13 +1,13 @@
-interface Transaction {
+export interface ITransaction {
     id?: number;
-    type_id: number;
-    reference_id: number;
+    type_id?: number;
+    reference_id?: number;
     date?: string;
     description?: string;
     total_amount?: number;
 }
 
-interface TransactionDetail {
+export interface ITransactionDetail {
     id?: number;
     account_name?: string;
     transaction_id?: number;

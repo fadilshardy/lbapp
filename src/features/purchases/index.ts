@@ -10,12 +10,11 @@ export * from './components/Form/UpdateProductForm';
 
 export * from './components/PurchaseDataTable';
 export * from './datatable/purchaseColumns';
-export * from './interfaces/product';
-export * from './schemas/productSchema';
 export * from './schemas/purchaseSchema';
 
 
 export * from './components/Form/PurchaseForm';
 export * from './components/ViewPurchaseDetail';
+export * from './interfaces/purchase';
 export * from './services/PurchaseApi';
 
