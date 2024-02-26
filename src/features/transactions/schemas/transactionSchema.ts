@@ -1,4 +1,4 @@
-import { ITransaction, ITransactionDetail } from "@features/transactions";
+import { ITransaction, ITransactionDetail, ITransactionRecord } from "@features/transactions";
 import * as z from "zod";
 
 
@@ -17,7 +17,14 @@ export const TransactionDetailSchema: z.Schema<ITransactionDetail> = z.object({
     transaction_type: z.string(),
 });
 
+export const TransactionRecordSchema: z.Schema<ITransactionRecord> = z.object({
+    transaction: TransactionSchema,
+    transactionDetails: z.array(TransactionDetailSchema),
+});
+
+
 
 
 export type Transaction = z.infer<typeof TransactionSchema>;
 export type TransactionDetail = z.infer<typeof TransactionDetailSchema>;
+export type TransactionRecord = z.infer<typeof TransactionRecordSchema>;

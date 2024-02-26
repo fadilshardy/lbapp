@@ -18,7 +18,7 @@ import DataTableLayout, {
   DataTableFooter,
   DataTableHeader,
 } from './DataTableLayout';
-import { DataTablePagination } from './DataTablePagination';
+import { DataTablePagination } from './dataTablePagination';
 
 interface DataTablesProps<T> {
   apiQuery: any;
@@ -65,21 +65,21 @@ export const DataTables: React.FC<DataTablesProps<any>> = ({ apiQuery, columns, 
 
   return (
     <DataTableLayout>
-      <div className="space-y-4 w-full">
+      <div className='space-y-4 w-full'>
         <DataTableHeader>
-          <div className="flex items-center justify-between">
-            <div className="flex flex-1 items-center space-x-2">
+          <div className='flex items-center justify-between'>
+            <div className='flex flex-1 items-center space-x-2'>
               <Input
-                placeholder="Filter..."
+                placeholder='Filter...'
                 value={query}
                 onChange={(e) => handleQueryChange(e.target.value)}
-                className="h-h-12  w-[150px] lg:w-[250px]"
-                type="search"
-                name="search"
+                className='h-h-12  w-[150px] lg:w-[250px]'
+                type='search'
+                name='search'
               />
             </div>
 
-            <div className="flex items-center space-x-2">{ActionMenu}</div>
+            <div className='flex items-center space-x-2'>{ActionMenu}</div>
           </div>
         </DataTableHeader>
         <DataTableContent>

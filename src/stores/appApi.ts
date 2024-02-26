@@ -8,6 +8,6 @@ export const appApi = createApi({
         baseUrl: API_URL,
     }),
 
-    tagTypes: ["products", "productCatalogs", "categories", "accounts", "sales", "purchases", "vendors"],
+    tagTypes: ["products", "productCatalogs", "categories", "accounts", "sales", "purchases", "vendors", "transactions"],
     endpoints: (builder) => ({}),
 });

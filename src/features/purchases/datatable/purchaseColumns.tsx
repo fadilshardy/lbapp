@@ -2,7 +2,7 @@ import { DataTableColumnHeader } from '@components/ui/datatables/column-header';
 import { Purchase } from '@features/purchases';
 import { formatCurrencyWithoutSymbol } from '@lib/format';
 import { ColumnDef } from '@tanstack/react-table';
-import { ViewPurchaseButton } from '../components/ViewPurchaseButton';
+import { ViewPurchaseButton } from '../components/Button/ViewPurchaseButton';
 
 interface ProductColumnsProps {}
 
