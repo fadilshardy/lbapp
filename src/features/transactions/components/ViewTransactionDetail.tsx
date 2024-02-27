@@ -26,7 +26,39 @@ const ViewTransactionDetail: React.FunctionComponent<ITransactionDetailProps> = 
 }) => {
   if (isLoading) return <LoadingSpinner />;
 
-  console.log(transactionRecord);
+  const creditTransactions = transactionRecord?.transactionDetails.filter(
+    (item) => item.transaction_type === 'credit'
+  );
+  const debitTransactions = transactionRecord?.transactionDetails.filter(
+    (item) => item.transaction_type === 'debit'
+  );
+
+  const totalCreditAmount = creditTransactions?.reduce(
+    (total, item) => total + Number(item.transaction_amount),
+    0
+  );
+
+  const totalDebitAmount = debitTransactions?.reduce(
+    (total, item) => total + Number(item.transaction_amount),
+    0
+  );
+
+  const generateTransactionRows = () => {
+    const transactionRows = [];
+
+    if (creditTransactions && debitTransactions) {
+      const maxLength = Math.max(creditTransactions.length, debitTransactions.length);
+
+      for (let i = 0; i < maxLength; i++) {
+        transactionRows.push({
+          credit: creditTransactions[i] || null,
+          debit: debitTransactions[i] || null,
+        });
+      }
+    }
+
+    return transactionRows;
+  };
 
   return (
     <div>
@@ -73,54 +105,67 @@ const ViewTransactionDetail: React.FunctionComponent<ITransactionDetailProps> = 
         </TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead className='w-[100px]'>Credit Account Name</TableHead>
-            <TableHead>Credit Transaction Type</TableHead>
-            <TableHead className='text-right'>Credit Amount</TableHead>
+            <TableHead>Account Name</TableHead>
+            <TableHead> Type</TableHead>
+            <TableHead className='text-right'>Amount</TableHead>
             <TableHead className='border-l' />
-            <TableHead>Debit Account Name</TableHead>
-            <TableHead>Debit Transaction Type</TableHead>
-            <TableHead className='text-right'>Debit Amount</TableHead>
+            <TableHead>Account Name</TableHead>
+            <TableHead>Type</TableHead>
+            <TableHead className='text-right'>Amount</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody className='text-xs'>
-          {transactionRecord?.transactionDetails.map((item, id) => {
-            return (
+          {transactionRecord &&
+            generateTransactionRows().map((row, id) => (
               <TableRow key={id}>
-                {item.transaction_type === 'credit' && (
+                {row.credit ? (
                   <>
-                    <TableCell className='font-medium text-gray-900 whitespace-nowrap '>
-                      {item.account_name}
+                    <TableCell className='font-medium text-gray-900 whitespace-nowrap'>
+                      {row.credit.account_name}
                     </TableCell>
-                    <TableCell>{item.transaction_type}</TableCell>
+                    <TableCell>{row.credit.transaction_type}</TableCell>
                     <TableCell className='text-right'>
-                      {formatCurrencyWithoutSymbol(item.transaction_amount)}
+                      {formatCurrencyWithoutSymbol(row.credit.transaction_amount)}
                     </TableCell>
                   </>
-                )}
-                <TableCell className='border-l' />
-                {item.transaction_type === 'debit' && (
+                ) : (
                   <>
-                    <TableCell className='font-medium text-gray-900 whitespace-nowrap '>
-                      {item.account_name}
+                    <TableCell />
+                    <TableCell />
+                    <TableCell />
+                  </>
+                )}
+
+                <TableCell className='border-l' />
+
+                {row.debit ? (
+                  <>
+                    <TableCell className='font-medium text-gray-900 whitespace-nowrap'>
+                      {row.debit.account_name}
                     </TableCell>
-                    <TableCell>{item.transaction_type}</TableCell>
+                    <TableCell>{row.debit.transaction_type}</TableCell>
                     <TableCell className='text-right'>
-                      {formatCurrencyWithoutSymbol(item.transaction_amount)}
+                      {formatCurrencyWithoutSymbol(row.debit.transaction_amount)}
                     </TableCell>
+                  </>
+                ) : (
+                  <>
+                    <TableCell />
+                    <TableCell />
+                    <TableCell />
                   </>
                 )}
               </TableRow>
-            );
-          })}
+            ))}
         </TableBody>
         <TableFooter>
           <TableRow>
-            <TableCell colSpan={3} className='font-bold'>
+            <TableCell colSpan={2} className='font-bold'>
               Total
             </TableCell>
-            {/* <TableCell className='text-right'>{formatCurrency(totalNetPrice)}</TableCell>
+            <TableCell className='text-right'>{formatCurrency(totalCreditAmount)}</TableCell>
             <TableCell colSpan={3} className='border-l' />
-            <TableCell className='text-right'>{formatCurrency(totalSalePrice)}</TableCell> */}
+            <TableCell className='text-right'>{formatCurrency(totalDebitAmount)}</TableCell>
           </TableRow>
         </TableFooter>
       </Table>

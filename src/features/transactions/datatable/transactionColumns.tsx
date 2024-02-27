@@ -3,6 +3,7 @@ import { DataTableColumnHeader } from '@components/ui/datatables/column-header';
 import { ITransaction, ViewTransactionButton } from '@features/transactions';
 import { formatCurrencyWithoutSymbol } from '@lib/format';
 import { ColumnDef } from '@tanstack/react-table';
+import { format } from 'date-fns';
 
 export const getTransactionColumns = (): ColumnDef<ITransaction>[] => [
   {
@@ -19,6 +20,7 @@ export const getTransactionColumns = (): ColumnDef<ITransaction>[] => [
   {
     accessorKey: 'date',
     header: ({ column }) => <DataTableColumnHeader column={column} title='Date' />,
+    cell: ({ row }) => (row.original.date ? format(row.original.date, 'dd MMMM yyyy') : 'N/A'),
   },
   {
     accessorKey: 'total_amount',
