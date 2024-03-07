@@ -11,7 +11,7 @@ interface TransactionFormProps {
   form: UseFormReturn<PurchaseRecord>;
 }
 
-export const TransactionForm: React.FC<TransactionFormProps> = ({ form }) => {
+export const PaymentTransactionForm: React.FC<TransactionFormProps> = ({ form }) => {
   const initialTransaction = {
     account_name: 'select account',
     account_id: 0,

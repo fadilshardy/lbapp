@@ -11,17 +11,17 @@ import { AlertDialogCancel } from '@components/ui/alert-dialog';
 import { Button } from '@components/ui/button';
 import { Input } from '@components/ui/input';
 import { Textarea } from '@components/ui/textarea';
-import { PurchaseDetailForm, PurchaseRecord, TransactionForm } from '@features/purchases';
+import { PaymentTransactionForm, PurchaseDetailForm, PurchaseRecord } from '@features/purchases';
 import { FormEventHandler, useEffect } from 'react';
 import { UseFormReturn, useWatch } from 'react-hook-form';
 
-interface IUpdateProductFormProps {
+interface IProductFormProps {
   form: UseFormReturn<PurchaseRecord>;
   handleSubmit: FormEventHandler<HTMLFormElement>;
   isProductLoading: boolean;
 }
 
-export const PurchaseForm: React.FC<IUpdateProductFormProps> = ({
+export const PurchaseForm: React.FC<IProductFormProps> = ({
   form,
   handleSubmit,
   isProductLoading,
@@ -81,7 +81,7 @@ export const PurchaseForm: React.FC<IUpdateProductFormProps> = ({
                 )}
               />
             </div>
-            <TransactionForm form={form} />
+            <PaymentTransactionForm form={form} />
           </div>
 
           <hr className='border-dotted' />

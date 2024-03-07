@@ -56,6 +56,9 @@ export const CreatePurchaseForm: React.FC<IPurchaseCreateFormProps> = ({ handleM
     defaultValues: purchaseRecordInitial,
   });
 
+  console.log(form);
+  
+
   const [createPurchase, { isLoading: isPurchaseLoading }] =
     purchaseApi.useCreatePurchaseMutation();
 

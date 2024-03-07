@@ -1,7 +1,7 @@
 import BaseIcon from '@components/BaseIcon';
 import ModalForm from '@components/ModalForm';
 import { Button } from '@components/ui/button';
-import { TransactionForm } from '@features/purchases';
+import { CreateTransactionForm } from '@features/transactions';
 import { useModalToggle } from '@hooks/useModalToggle';
 import { mdiPlusBox } from '@mdi/js';
 
@@ -19,7 +19,7 @@ export const CreateTransactionButton: React.FC<ICreateTransactionButtonProps> = 
       className='max-w-5xl'
       isOpen={isOpen}
       handleModalToggle={handleModalToggle}
-      title='Create new Purchase'
+      title='Create new Transaction'
       modalToggleBtn={
         customButton || (
           <Button size='default'>
@@ -29,9 +29,9 @@ export const CreateTransactionButton: React.FC<ICreateTransactionButtonProps> = 
         )
       }
     >
-      tes
-      <TransactionForm/>
-      {/* <CreatePurchaseForm handleModalToggle={handleModalToggle} /> */}
+      <CreateTransactionForm
+        handleModalToggle={handleModalToggle}
+      />
     </ModalForm>
   );
 };
