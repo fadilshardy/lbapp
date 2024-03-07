@@ -21,5 +21,11 @@ export const transactionApi = appApi.injectEndpoints({
         itemId: 'code',
       })
     ),
+    createTransaction: builder.mutation<TransactionRecord, any>({
+      ...reduxQuery.generateCreateEndpoint({
+        baseUrl: BASE_TRANSACTION_URL,
+      }),
+      invalidatesTags: ['transactions'],
+    }),
   }),
 });

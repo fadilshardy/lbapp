@@ -1,3 +1,4 @@
+export * from './components/Button/CreateTransactionButton';
 export * from './components/Button/ViewTransactionButton';
 export * from './components/TransactionDataTable';
 export * from './components/ViewTransactionDetail';

@@ -18,10 +18,22 @@ export const getTransactionColumns = (): ColumnDef<ITransaction>[] => [
     },
   },
   {
+    accessorKey: 'reference',
+    header: ({ column }) => <DataTableColumnHeader column={column} title='reference' />,
+    cell: ({ row }) => {
+      return (
+        <div className='flex flex-col'>
+          <p className='max-w-[400px] truncate font-xs'>{row.original.note}</p>
+        </div>
+      );
+    },
+  },
+  {
     accessorKey: 'date',
     header: ({ column }) => <DataTableColumnHeader column={column} title='Date' />,
     cell: ({ row }) => (row.original.date ? format(row.original.date, 'dd MMMM yyyy') : 'N/A'),
   },
+
   {
     accessorKey: 'total_amount',
     header: ({ column }) => <DataTableColumnHeader column={column} title='Amount (Rp)' />,

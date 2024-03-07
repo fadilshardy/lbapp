@@ -1,5 +1,9 @@
 import { DataTables } from '@components/ui/datatables/DataTables';
-import { getTransactionColumns, transactionApi } from '@features/transactions';
+import {
+  CreateTransactionButton,
+  getTransactionColumns,
+  transactionApi,
+} from '@features/transactions';
 
 interface PurchaseDataTableProps {}
 
@@ -8,7 +12,11 @@ export const TransactionDatatable: React.FC<PurchaseDataTableProps> = () => {
   const productColumns = getTransactionColumns();
 
   const ActionButtons = () => {
-    return <div className='flex gap-4'></div>;
+    return (
+      <div className='flex gap-4'>
+        <CreateTransactionButton />
+      </div>
+    );
   };
 
   return (

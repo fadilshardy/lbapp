@@ -37,6 +37,8 @@ const MenuAside = () => {
         },
         {
           label: t('journal_entry'),
+          href: '/transaction',
+
         },
         {
           label: t('general_ledger'),
