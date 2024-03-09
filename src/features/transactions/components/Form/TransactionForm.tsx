@@ -7,14 +7,22 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Button } from '@components/ui/button';
-import { SelectableAccount, TransactionRecord } from '@features/transactions';
-import { FormEventHandler, useEffect, useState } from 'react';
-import { UseFormReturn, useFieldArray, useWatch } from 'react-hook-form';
+import { SelectableAccount, TransactionRecord, useTransactionTotals } from '@features/transactions';
+import { FormEventHandler } from 'react';
+import { UseFormReturn, useFieldArray } from 'react-hook-form';
 
 import {} from '@/components/ui/form';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { DatePicker } from '@components/DatePicker';
 import { Input } from '@components/ui/input';
 import { Textarea } from '@components/ui/textarea';
+
 interface TransactionFormProps {
   form: UseFormReturn<TransactionRecord>;
   customFilter?: string;
@@ -22,50 +30,28 @@ interface TransactionFormProps {
   isProductLoading: boolean;
 }
 
+const initialTransaction = {
+  account_name: 'select account',
+  account_id: 0,
+  balance: 0,
+  transaction_amount: 0,
+  transaction_type: '',
+};
+
 export const TransactionForm: React.FC<TransactionFormProps> = ({
   form,
   customFilter,
   handleSubmit,
+  isProductLoading,
 }) => {
-  const initialTransaction = {
-    account_name: 'select account',
-    account_id: 0,
-    balance: 0,
-    transaction_amount: 0,
-    transaction_type: '',
-  };
-
   const { fields, append, remove } = useFieldArray({
     name: 'transactionDetails',
     control: form.control,
   });
 
-  const details = useWatch({
-    control: form.control,
-    name: ['transactionDetails'],
-  });
-
-  const [totalCredit, setTotalCredit] = useState(0);
-  const [totalDebit, setTotalDebit] = useState(0);
-
-  useEffect(() => {
-    const transactionDetails = form.getValues('transactionDetails');
-
-    const totalDebitAmount = transactionDetails
-      .filter((item) => item.transaction_type === 'debit')
-      .reduce((total, item) => {
-        return total + Number(item.transaction_amount);
-      }, 0);
-
-    const totalCreditAmount = transactionDetails
-      .filter((item) => item.transaction_type === 'credit')
-      .reduce((total, item) => {
-        return total + Number(item.transaction_amount);
-      }, 0);
-
-    setTotalCredit(totalCreditAmount);
-    setTotalDebit(totalDebitAmount);
-  }, [details]);
+  const { totalCredit, totalDebit } = useTransactionTotals(form);
+  const isDisabled =
+    totalCredit === 0 || totalDebit === 0 || isProductLoading || totalCredit !== totalDebit;
 
   return (
     <Form {...form}>
@@ -73,6 +59,20 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
         <div className='flex flex-col w-full gap-y-4'>
           <div>
             <div className='flex justify-between'>
+              <FormItem>
+                <FormLabel>Select Transaction</FormLabel>
+                <Select>
+                  <SelectTrigger className='w-[180px]'>
+                    <SelectValue placeholder='Type' />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value='expense'>Expense</SelectItem>
+                    <SelectItem value='liability'>Liability</SelectItem>
+                    <SelectItem value='system'>System</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
               <FormField
                 control={form.control}
                 name='transaction.date'
@@ -206,7 +206,7 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
             >
               clear
             </Button>
-            <Button type='submit' variant='action' className=' border'>
+            <Button type='submit' variant='action' className=' border' disabled={isDisabled}>
               submit
             </Button>
           </div>

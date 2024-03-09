@@ -6,8 +6,8 @@ export * from './components/SelectableAccount';
 export * from './components/TransactionDataTable';
 export * from './components/ViewTransactionDetail';
 export * from './datatable/transactionColumns';
+export * from './hooks/useTransactionTotals';
 export * from './interfaces/transaction';
 export * from './schemas/transactionSchema';
 export * from './services/transactionApi';
-export * from './utils/createTransaction';
 

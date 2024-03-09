@@ -18,33 +18,40 @@ import { UseFormReturn, useWatch } from 'react-hook-form';
 interface IProductFormProps {
   form: UseFormReturn<PurchaseRecord>;
   handleSubmit: FormEventHandler<HTMLFormElement>;
-  isProductLoading: boolean;
+  isPurchaseLoading: boolean;
 }
 
 export const PurchaseForm: React.FC<IProductFormProps> = ({
   form,
   handleSubmit,
-  isProductLoading,
+  isPurchaseLoading,
 }) => {
   const details = useWatch({
     control: form.control,
     name: ['purchaseDetails', 'transactionDetails'],
   });
 
+  let totalTransaction = 0;
+  let totalPurchase = 0;
+
   useEffect(() => {
-    const totalPurchaseAmount = form.getValues('purchaseDetails').reduce((total, item) => {
+    totalPurchase = form.getValues('purchaseDetails').reduce((total, item) => {
       return total + Number(item.quantity * item.net_price);
     }, 0);
 
-    const totalPaymentAmount = form.getValues('transactionDetails').reduce((total, item) => {
+    totalTransaction = form.getValues('transactionDetails').reduce((total, item) => {
       return total + Number(item.transaction_amount);
     }, 0);
 
-    form.setValue('purchase.total_amount', totalPurchaseAmount);
-    form.setValue('transaction.total_amount', totalPaymentAmount);
+    form.setValue('purchase.total_amount', totalPurchase);
+    form.setValue('transaction.total_amount', totalTransaction);
   }, [details]);
 
-  console.log(form.formState.errors);
+  const isDisabled =
+    totalTransaction !== totalPurchase ||
+    totalTransaction === 0 ||
+    totalPurchase === 0 ||
+    isPurchaseLoading;
 
   return (
     <Form {...form}>
@@ -139,7 +146,7 @@ export const PurchaseForm: React.FC<IProductFormProps> = ({
         <div className='border-t flex justify-between w-full items-center pt-4'>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
 
-          <Button type='submit' disabled={isProductLoading} variant='action'>
+          <Button type='submit' variant='action' disabled={isDisabled}>
             Submit
           </Button>
         </div>

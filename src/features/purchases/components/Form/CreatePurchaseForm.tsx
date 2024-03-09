@@ -56,9 +56,6 @@ export const CreatePurchaseForm: React.FC<IPurchaseCreateFormProps> = ({ handleM
     defaultValues: purchaseRecordInitial,
   });
 
-  console.log(form);
-  
-
   const [createPurchase, { isLoading: isPurchaseLoading }] =
     purchaseApi.useCreatePurchaseMutation();
 
@@ -86,7 +83,7 @@ export const CreatePurchaseForm: React.FC<IPurchaseCreateFormProps> = ({ handleM
     <PurchaseForm
       form={form}
       handleSubmit={form.handleSubmit(onSubmit)}
-      isProductLoading={isPurchaseLoading}
+      isPurchaseLoading={isPurchaseLoading}
     />
   );
 };
