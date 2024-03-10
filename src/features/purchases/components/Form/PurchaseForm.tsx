@@ -47,11 +47,9 @@ export const PurchaseForm: React.FC<IProductFormProps> = ({
     form.setValue('transaction.total_amount', totalTransaction);
   }, [details]);
 
-  const isDisabled =
-    totalTransaction !== totalPurchase ||
-    totalTransaction === 0 ||
-    totalPurchase === 0 ||
-    isPurchaseLoading;
+  // const isDisabled =
+  //   totalTransaction !== totalPurchase || totalTransaction === 0 || totalPurchase === 0;
+  const isDisabled = false;
 
   return (
     <Form {...form}>
@@ -102,7 +100,7 @@ export const PurchaseForm: React.FC<IProductFormProps> = ({
             name={`transaction.total_amount`}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>  
+                <FormLabel>
                   Total Payment <span className='text-xs text-gray-500'>(Credit)</span>
                 </FormLabel>
                 <FormControl>

@@ -75,7 +75,10 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
         <div className='flex flex-col w-full gap-y-4'>
           <div>
             <div className='flex justify-between'>
-              <SelectTransactionType handleTransactionFilter={handleTransactionFilter} />
+              <SelectTransactionType
+                handleTransactionFilter={handleTransactionFilter}
+                form={form}
+              />
               <FormField
                 control={form.control}
                 name='transaction.date'

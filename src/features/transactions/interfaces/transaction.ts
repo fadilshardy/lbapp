@@ -7,6 +7,7 @@ export interface ITransaction {
     total_amount?: number;
     code?: string;
     is_balanced?: boolean;
+    transaction_type: string;
 }
 
 export interface ITransactionDetail {

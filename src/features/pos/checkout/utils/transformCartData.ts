@@ -15,6 +15,7 @@ export function transformCartData(cartItems: ICartItem[], totalPrice: number): I
             type_id: 2,
             date: new Date().toISOString().split('T')[0],
             total_amount: totalPrice,
+            transaction_type: 'asset'
         },
         transactionDetails: [
             {

@@ -16,7 +16,7 @@ import Barcode from 'react-barcode';
 
 interface ITransactionDetailProps {
   handleModalToggle(open: boolean): void;
-  transactionRecord: TransactionRecord;
+  transactionRecord?: TransactionRecord;
   isLoading: boolean;
 }
 
@@ -24,10 +24,12 @@ const ViewTransactionDetail: React.FunctionComponent<ITransactionDetailProps> = 
   transactionRecord,
   isLoading,
 }) => {
-  if (isLoading) return <LoadingSpinner />;
+  const { totalCreditAmount, totalDebitAmount, transactionRows } = transactionRecord
+    ? processTransactionDetails(transactionRecord)
+    : { totalCreditAmount: 0, totalDebitAmount: 0, transactionRows: [] };
 
-  const { totalCreditAmount, totalDebitAmount, transactionRows } =
-    processTransactionDetails(transactionRecord);
+  console.log(transactionRows);
+  if (isLoading || !transactionRows) return <LoadingSpinner />;
 
   return (
     <div>
@@ -85,6 +87,7 @@ const ViewTransactionDetail: React.FunctionComponent<ITransactionDetailProps> = 
         </TableHeader>
         <TableBody className='text-xs'>
           {transactionRecord &&
+            transactionRows &&
             transactionRows.map((row, id) => (
               <TableRow key={id}>
                 {row.debit ? (
@@ -109,7 +112,7 @@ const ViewTransactionDetail: React.FunctionComponent<ITransactionDetailProps> = 
                 {row.credit ? (
                   <>
                     <TableCell className='font-medium text-gray-900 whitespace-nowrap'>
-                      {row.debit.account_code} - {row.debit.account_name}
+                      {row.credit.account_code} - {row.credit.account_name}
                     </TableCell>
                     <TableCell>{row.credit.transaction_type}</TableCell>
                     <TableCell className='text-right'>

@@ -39,6 +39,7 @@ export const CreatePurchaseForm: React.FC<IPurchaseCreateFormProps> = ({ handleM
       reference_id: 1,
       date: format(new Date(), 'dd MMMM yyyy'),
       total_amount: 0,
+      transaction_type: 'asset',
     },
     transactionDetails: [
       {
@@ -67,6 +68,8 @@ export const CreatePurchaseForm: React.FC<IPurchaseCreateFormProps> = ({ handleM
     };
 
     purchaseRecord.transactionDetails.push(debitTransaction);
+
+    console.log(purchaseRecord);
 
     HandleFormSubmit({
       form: form,

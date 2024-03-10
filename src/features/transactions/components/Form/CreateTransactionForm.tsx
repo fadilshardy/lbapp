@@ -22,6 +22,7 @@ const transactionRecordInitial: ITransactionRecord = {
     reference_id: 1,
     date: format(new Date(), 'dd MMMM yyyy'),
     total_amount: 0,
+    transaction_type: '',
   },
   transactionDetails: [
     {
@@ -55,6 +56,8 @@ export const CreateTransactionForm: React.FC<ITransactionCreateFormProps> = ({
     transactionApi.useCreateTransactionMutation();
 
   async function onSubmit(transactionRecord: TransactionRecord) {
+    console.log(transactionRecord);
+
     HandleFormSubmit({
       form: form,
       toast: toast,

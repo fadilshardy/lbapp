@@ -27,10 +27,12 @@ export const ViewTransactionButton: React.FC<IViewTransactionButtonProps> = ({
 
   const { isOpen, handleModalToggle } = useModalToggle(false);
 
-  const { data, isLoading } = transactionApi.useGetTransactionQuery(
+  const { data, isFetching } = transactionApi.useGetTransactionQuery(
     { itemId: currentTransaction.code },
     { skip: !isOpen }
   );
+
+  const transaction = data ?? [];
 
   return (
     <ModalForm
@@ -42,7 +44,7 @@ export const ViewTransactionButton: React.FC<IViewTransactionButtonProps> = ({
     >
       <ViewTransactionDetail
         transactionRecord={data}
-        isLoading={isLoading}
+        isLoading={isFetching}
         handleModalToggle={handleModalToggle}
       />
     </ModalForm>

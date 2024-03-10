@@ -7,7 +7,8 @@ export const TransactionSchema: z.Schema<ITransaction> = z.object({
     reference_id: z.number(),
     date: z.string(),
     note: z.string().optional(),
-    total_amount: z.coerce.number()
+    total_amount: z.coerce.number(),
+    transaction_type: z.string()
 });
 
 export const TransactionDetailSchema: z.Schema<ITransactionDetail> = z.object({
