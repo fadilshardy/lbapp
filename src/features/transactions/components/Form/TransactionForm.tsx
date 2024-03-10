@@ -7,18 +7,16 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Button } from '@components/ui/button';
-import { SelectableAccount, TransactionRecord, useTransactionTotals } from '@features/transactions';
-import { FormEventHandler } from 'react';
+import {
+  SelectTransactionType,
+  SelectableAccount,
+  TransactionRecord,
+  useTransactionTotals,
+} from '@features/transactions';
+import { FormEventHandler, useState } from 'react';
 import { UseFormReturn, useFieldArray } from 'react-hook-form';
 
 import {} from '@/components/ui/form';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { DatePicker } from '@components/DatePicker';
 import { Input } from '@components/ui/input';
 import { Textarea } from '@components/ui/textarea';
@@ -49,6 +47,24 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
     control: form.control,
   });
 
+  const [debitFilter, setDebitFilter] = useState('');
+  const [creditFilter, setCreditFilter] = useState('');
+
+  const clearAccountInput = () => {
+    remove(fields.map((obj, index) => index));
+    append([
+      { ...initialTransaction, transaction_type: 'credit' },
+      { ...initialTransaction, transaction_type: 'debit' },
+    ]);
+  };
+
+  const handleTransactionFilter = (debit: string, credit: string) => {
+    const commonFilter = 'is_parent=0&is_active=1';
+    setDebitFilter(`${commonFilter}${debit}`);
+    setCreditFilter(`${commonFilter}${credit}`);
+    clearAccountInput();
+  };
+
   const { totalCredit, totalDebit } = useTransactionTotals(form);
   const isDisabled =
     totalCredit === 0 || totalDebit === 0 || isProductLoading || totalCredit !== totalDebit;
@@ -59,26 +75,18 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
         <div className='flex flex-col w-full gap-y-4'>
           <div>
             <div className='flex justify-between'>
-              <FormItem>
-                <FormLabel>Select Transaction</FormLabel>
-                <Select>
-                  <SelectTrigger className='w-[180px]'>
-                    <SelectValue placeholder='Type' />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value='expense'>Expense</SelectItem>
-                    <SelectItem value='liability'>Liability</SelectItem>
-                    <SelectItem value='system'>System</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
+              <SelectTransactionType handleTransactionFilter={handleTransactionFilter} />
               <FormField
                 control={form.control}
                 name='transaction.date'
                 render={({ field }) => (
                   <FormItem className='flex flex-col'>
-                    <FormLabel>Date</FormLabel>
+                    <FormLabel>
+                      <span className='text-xs font-bold relative top-[-3px] text-red-500 pr-1'>
+                        (2)
+                      </span>
+                      Date
+                    </FormLabel>
                     <DatePicker field={field} />
                     <FormMessage />
                   </FormItem>
@@ -91,10 +99,18 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                    Note <span className='text-xs text-gray-500'>(optional)</span>
+                    <span className='text-xs font-bold relative top-[-3px] text-red-500 pr-1'>
+                      (3)
+                    </span>
+                    Note
                   </FormLabel>
                   <FormControl>
-                    <Textarea placeholder='...' className='resize-none h-full' {...field} />
+                    <Textarea
+                      placeholder='...'
+                      className='resize-none h-full'
+                      {...field}
+                      required
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -103,7 +119,10 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
           </div>
           <div className='grid grid-cols-2 space-x-4'>
             <div>
-              <h3 className='text-lg font-semibold border-b text-center  mb-4  pb-2'>Debit</h3>
+              <h3 className='text-lg font-semibold border-b text-center  mb-4  pb-2'>
+                <span className='text-xs font-bold relative top-[-5px] text-red-500 pr-1'>(4)</span>
+                Debit
+              </h3>
               {fields.map((field, index) => {
                 const currentAccount = form.getValues(`transactionDetails.${index}`);
                 return (
@@ -112,8 +131,9 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
                       <SelectableAccount
                         form={form}
                         index={index}
-                        customFilter={customFilter}
+                        customFilter={debitFilter}
                         remove={remove}
+                        disabled={!debitFilter}
                       />
                     )}
                   </div>
@@ -122,7 +142,10 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
             </div>
 
             <div>
-              <h3 className='text-lg font-semibold border-b text-center mb-4 pb-2'>Credit</h3>
+              <h3 className='text-lg font-semibold border-b text-center mb-4 pb-2'>
+                <span className='text-xs font-bold relative top-[-5px] text-red-500 pr-1'>(5)</span>
+                Credit
+              </h3>
               {fields.map((field, index) => {
                 const currentAccount = form.getValues(`transactionDetails.${index}`);
                 return (
@@ -131,8 +154,9 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
                       <SelectableAccount
                         form={form}
                         index={index}
-                        customFilter={customFilter}
+                        customFilter={creditFilter}
                         remove={remove}
+                        disabled={!creditFilter}
                       />
                     )}
                   </div>
@@ -192,18 +216,7 @@ export const TransactionForm: React.FC<TransactionFormProps> = ({
             </FormItem>
           </div>
           <div className='flex justify-between'>
-            <Button
-              type='button'
-              variant='default'
-              className=' border'
-              onClick={() => {
-                remove(fields.map((obj, index) => index));
-                append([
-                  { ...initialTransaction, transaction_type: 'credit' },
-                  { ...initialTransaction, transaction_type: 'debit' },
-                ]);
-              }}
-            >
+            <Button type='button' variant='default' className=' border' onClick={clearAccountInput}>
               clear
             </Button>
             <Button type='submit' variant='action' className=' border' disabled={isDisabled}>

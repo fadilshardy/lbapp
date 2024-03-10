@@ -14,6 +14,7 @@ export interface ITransactionDetail {
     account_name?: string;
     transaction_id?: number;
     account_id?: number;
+    account_code?: string;
     transaction_amount: number;
     transaction_type: string;
     balance?: number;

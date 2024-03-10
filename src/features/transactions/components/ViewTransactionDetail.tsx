@@ -9,14 +9,14 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import LoadingSpinner from '@components/LoadingSpinner';
-import { TransactionRecord } from '@features/transactions';
+import { TransactionRecord, processTransactionDetails } from '@features/transactions';
 import { formatCurrency, formatCurrencyWithoutSymbol } from '@lib/format';
 import * as React from 'react';
 import Barcode from 'react-barcode';
 
 interface ITransactionDetailProps {
   handleModalToggle(open: boolean): void;
-  transactionRecord?: TransactionRecord;
+  transactionRecord: TransactionRecord;
   isLoading: boolean;
 }
 
@@ -26,39 +26,8 @@ const ViewTransactionDetail: React.FunctionComponent<ITransactionDetailProps> = 
 }) => {
   if (isLoading) return <LoadingSpinner />;
 
-  const creditTransactions = transactionRecord?.transactionDetails.filter(
-    (item) => item.transaction_type === 'credit'
-  );
-  const debitTransactions = transactionRecord?.transactionDetails.filter(
-    (item) => item.transaction_type === 'debit'
-  );
-
-  const totalCreditAmount = creditTransactions?.reduce(
-    (total, item) => total + Number(item.transaction_amount),
-    0
-  );
-
-  const totalDebitAmount = debitTransactions?.reduce(
-    (total, item) => total + Number(item.transaction_amount),
-    0
-  );
-
-  const generateTransactionRows = () => {
-    const transactionRows = [];
-
-    if (creditTransactions && debitTransactions) {
-      const maxLength = Math.max(creditTransactions.length, debitTransactions.length);
-
-      for (let i = 0; i < maxLength; i++) {
-        transactionRows.push({
-          credit: creditTransactions[i] || null,
-          debit: debitTransactions[i] || null,
-        });
-      }
-    }
-
-    return transactionRows;
-  };
+  const { totalCreditAmount, totalDebitAmount, transactionRows } =
+    processTransactionDetails(transactionRecord);
 
   return (
     <div>
@@ -116,16 +85,16 @@ const ViewTransactionDetail: React.FunctionComponent<ITransactionDetailProps> = 
         </TableHeader>
         <TableBody className='text-xs'>
           {transactionRecord &&
-            generateTransactionRows().map((row, id) => (
+            transactionRows.map((row, id) => (
               <TableRow key={id}>
-                {row.credit ? (
+                {row.debit ? (
                   <>
                     <TableCell className='font-medium text-gray-900 whitespace-nowrap'>
-                      {row.credit.account_name}
+                      {row.debit.account_code} - {row.debit.account_name}
                     </TableCell>
-                    <TableCell>{row.credit.transaction_type}</TableCell>
+                    <TableCell>{row.debit.transaction_type}</TableCell>
                     <TableCell className='text-right'>
-                      {formatCurrencyWithoutSymbol(row.credit.transaction_amount)}
+                      {formatCurrencyWithoutSymbol(row.debit.transaction_amount)}
                     </TableCell>
                   </>
                 ) : (
@@ -135,17 +104,16 @@ const ViewTransactionDetail: React.FunctionComponent<ITransactionDetailProps> = 
                     <TableCell />
                   </>
                 )}
-
                 <TableCell className='border-l' />
 
-                {row.debit ? (
+                {row.credit ? (
                   <>
                     <TableCell className='font-medium text-gray-900 whitespace-nowrap'>
-                      {row.debit.account_name}
+                      {row.debit.account_code} - {row.debit.account_name}
                     </TableCell>
-                    <TableCell>{row.debit.transaction_type}</TableCell>
+                    <TableCell>{row.credit.transaction_type}</TableCell>
                     <TableCell className='text-right'>
-                      {formatCurrencyWithoutSymbol(row.debit.transaction_amount)}
+                      {formatCurrencyWithoutSymbol(row.credit.transaction_amount)}
                     </TableCell>
                   </>
                 ) : (

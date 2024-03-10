@@ -30,7 +30,7 @@ export const PaymentTransactionForm: React.FC<TransactionFormProps> = ({ form })
 
   const { data, isFetching: isLoading } = accountApi.useGetSelectAccountsQuery({
     searchQuery: searchDebouncedQuery,
-    customFilter: 'is_parent=0&type[]=liability&type[]=asset&is_active=1',
+      customFilter: 'is_parent=0&type[]=liability&type[]=asset&is_active=1',
   });
   const accounts = data ?? [];
 

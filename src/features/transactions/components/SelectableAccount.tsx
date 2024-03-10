@@ -13,6 +13,7 @@ interface TransactionFormProps {
   customFilter?: string;
   index: number;
   remove: (index: number) => void;
+  disabled?: boolean;
 }
 
 export const SelectableAccount: FC<TransactionFormProps> = ({
@@ -20,6 +21,7 @@ export const SelectableAccount: FC<TransactionFormProps> = ({
   index,
   customFilter,
   remove,
+  disabled,
 }) => {
   const { query, handleQueryChange } = useSearchQuery();
   const searchDebouncedQuery = useDebouncedQuery(query);
@@ -28,10 +30,10 @@ export const SelectableAccount: FC<TransactionFormProps> = ({
     searchQuery: searchDebouncedQuery,
     customFilter: customFilter,
   });
+
   const accounts = data ?? [];
 
-  const currentAccount = form.getValues(`transactionDetails.${index}`);
-  form.watch(`transactionDetails.${index}`);
+  const currentAccount = form.watch(`transactionDetails.${index}`);
 
   return (
     <div className='col-span-2'>
@@ -49,6 +51,7 @@ export const SelectableAccount: FC<TransactionFormProps> = ({
                 searchQuery={query}
                 handleQueryChange={handleQueryChange}
                 isLoading={isLoading}
+                disabled={disabled}
                 currentValue={{
                   name: currentAccount.account_name,
                   id: currentAccount.account_id,

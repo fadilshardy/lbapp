@@ -102,7 +102,7 @@ export const PurchaseForm: React.FC<IProductFormProps> = ({
             name={`transaction.total_amount`}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>
+                <FormLabel>  
                   Total Payment <span className='text-xs text-gray-500'>(Credit)</span>
                 </FormLabel>
                 <FormControl>
