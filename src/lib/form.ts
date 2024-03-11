@@ -26,6 +26,8 @@ export const HandleFormSubmit = async <T extends FieldValues>({
 }: HandleFormSubmitProps<T>) => {
 
     const handleServerErrors = (errors: any) => {
+        console.log(errors);
+
 
         if (errors && errors.errors) {
             const { errors: serverErrors } = errors;

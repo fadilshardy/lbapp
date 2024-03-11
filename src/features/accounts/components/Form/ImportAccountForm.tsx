@@ -1,21 +1,21 @@
 import { FileImportForm } from '@components/FileImportForm';
-import { productApi } from '@features/products';
+import { accountApi } from '@features/accounts';
 import * as React from 'react';
 
-interface IImportProductFormProps {
+interface IImportAccountFormProps {
   handleModalToggle(open: boolean): void;
 }
 
-export const ImportProductForm: React.FunctionComponent<IImportProductFormProps> = ({
+export const ImportAccountForm: React.FunctionComponent<IImportAccountFormProps> = ({
   handleModalToggle,
 }) => {
-  const [importProduct, { isLoading }] = productApi.useImportProductsMutation();
+  const [importAccount, { isLoading }] = accountApi.useImportAccountsMutation();
 
   return (
     <>
       <FileImportForm
         handleModalToggle={handleModalToggle}
-        mutation={importProduct}
+        mutation={importAccount}
         isLoading={isLoading}
       />
     </>
