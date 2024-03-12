@@ -26,15 +26,11 @@ export const HandleFormSubmit = async <T extends FieldValues>({
 }: HandleFormSubmitProps<T>) => {
 
     const handleServerErrors = (errors: any) => {
-        console.log(errors);
-
-
+        console.error(errors);
         if (errors && errors.errors) {
             const { errors: serverErrors } = errors;
-
             Object.keys(serverErrors).forEach((fieldName) => {
                 const field = fieldName as FieldPath<T>;
-
                 const errorMessage = serverErrors[fieldName][0];
                 const error = {
                     type: 'server',
@@ -42,6 +38,14 @@ export const HandleFormSubmit = async <T extends FieldValues>({
                 };
                 form.setError(field, error);
             });
+        } else {
+
+
+            const field = 'errors' as FieldPath<T>;
+            form.setError(field, {
+                type: "server",
+                message: errors,
+            })
         }
 
     };
@@ -60,7 +64,6 @@ export const HandleFormSubmit = async <T extends FieldValues>({
 
 
     } catch (error) {
-        console.log(error);
         handleServerErrors(error);
     }
 };

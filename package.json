@@ -9,6 +9,7 @@
     "format": "prettier '{components,pages,src,interfaces,hooks}/**/*.{tsx,ts,js}' --write"
   },
   "dependencies": {
+    "@hookform/error-message": "^2.0.1",
     "@hookform/resolvers": "^3.1.1",
     "@mdi/js": "^7.0.96",
     "@radix-ui/react-alert-dialog": "^1.0.4",

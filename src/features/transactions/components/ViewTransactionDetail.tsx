@@ -28,8 +28,7 @@ const ViewTransactionDetail: React.FunctionComponent<ITransactionDetailProps> = 
     ? processTransactionDetails(transactionRecord)
     : { totalCreditAmount: 0, totalDebitAmount: 0, transactionRows: [] };
 
-  console.log(transactionRows);
-  if (isLoading || !transactionRows) return <LoadingSpinner />;
+  if (isLoading) return <LoadingSpinner />;
 
   return (
     <div>

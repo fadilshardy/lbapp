@@ -13,10 +13,14 @@ export const getAccountColumns = (): ColumnDef<Account>[] => [
     accessorKey: 'code',
     header: ({ column }) => <DataTableColumnHeader column={column} title='Code' />,
     cell: ({ row }) => {
-      const isChild = row.original.parent_id;
+      const isParent = row.original.is_parent;
       const code = row.original.code;
 
-      return isChild ? <div className='pl-1'>{code}</div> : <div>{code}</div>;
+      return isParent ? (
+        <div className='font-bold'>{code}</div>
+      ) : (
+        <div className='pl-2'>{code}</div>
+      );
     },
   },
   {

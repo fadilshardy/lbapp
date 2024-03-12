@@ -20,11 +20,7 @@ export const CreateCheckoutForm: React.FC<ICheckoutCreateFormProps> = ({ handleM
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>): Promise<void> {
     e.preventDefault();
 
-    try {
-      const transformedData = transformCartData(cartItems, totalPrice);
-
-      await createCheckout({ payload: transformedData }).unwrap();
-
+    const handleSuccess = () => {
       toast({
         title: 'Success!',
         variant: 'success',
@@ -36,17 +32,28 @@ export const CreateCheckoutForm: React.FC<ICheckoutCreateFormProps> = ({ handleM
         dispatch(clearCart());
         dispatch(resetPayment());
       }
+    };
+
+    const handleError = (error: Error) => {
+      toast({
+        title: 'Failed!',
+        variant: 'destructive',
+        description: 'Transaction Failed, something went wrong.',
+      });
+
+      console.error('Request failed:', error.message);
+    };
+
+    try {
+      const transformedData = transformCartData(cartItems, totalPrice);
+      await createCheckout({ payload: transformedData }).unwrap();
+
+      handleSuccess();
     } catch (error: unknown) {
       console.log(error);
 
       if (error instanceof Error) {
-        toast({
-          title: 'Failed!',
-          variant: 'destructive',
-          description: 'Transaction Failed, something went wrong.',
-        });
-
-        console.error('Request failed:', error.message);
+        handleError(error);
       }
     }
   }
