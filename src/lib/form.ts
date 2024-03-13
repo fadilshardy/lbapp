@@ -39,8 +39,6 @@ export const HandleFormSubmit = async <T extends FieldValues>({
                 form.setError(field, error);
             });
         } else {
-
-
             const field = 'errors' as FieldPath<T>;
             form.setError(field, {
                 type: "server",

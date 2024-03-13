@@ -62,7 +62,7 @@ export const CreatePurchaseForm: React.FC<IPurchaseCreateFormProps> = ({ handleM
 
   async function onSubmit(purchaseRecord: PurchaseRecord) {
     const debitTransaction = {
-      account_id: 1,
+      account_id: 101,
       transaction_amount: purchaseRecord.purchase.total_amount,
       transaction_type: 'debit',
     };

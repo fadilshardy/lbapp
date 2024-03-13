@@ -16,11 +16,7 @@ export const getAccountColumns = (): ColumnDef<Account>[] => [
       const isParent = row.original.is_parent;
       const code = row.original.code;
 
-      return isParent ? (
-        <div className='font-bold'>{code}</div>
-      ) : (
-        <div className='pl-2'>{code}</div>
-      );
+      return isParent ? <div className='font-bold'>{code}</div> : <div>{code}</div>;
     },
   },
   {

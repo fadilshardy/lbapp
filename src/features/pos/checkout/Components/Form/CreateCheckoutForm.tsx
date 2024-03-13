@@ -2,9 +2,9 @@ import BaseIcon from '@components/BaseIcon';
 import { Button } from '@components/ui/button';
 import { useToast } from '@components/ui/use-toast';
 import { clearCart, resetPayment } from '@features/pos/cart';
+import { saleApi } from '@features/sales';
 import { mdiPrinterPos } from '@mdi/js';
 import { useAppDispatch, useAppSelector } from '@stores/hooks';
-import { checkoutApi } from '../../services/checkoutApi';
 import { transformCartData } from '../../utils/transformCartData';
 
 interface ICheckoutCreateFormProps {
@@ -14,7 +14,8 @@ interface ICheckoutCreateFormProps {
 export const CreateCheckoutForm: React.FC<ICheckoutCreateFormProps> = ({ handleModalToggle }) => {
   const { toast } = useToast();
   const { totalPrice, cartItems } = useAppSelector((state) => state.cart);
-  const [createCheckout, { isLoading }] = checkoutApi.useCreateCheckoutMutation();
+  const [createSale, { isLoading }] = saleApi.useCreateSaleMutation();
+
   const dispatch = useAppDispatch();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>): Promise<void> {
@@ -46,7 +47,9 @@ export const CreateCheckoutForm: React.FC<ICheckoutCreateFormProps> = ({ handleM
 
     try {
       const transformedData = transformCartData(cartItems, totalPrice);
-      await createCheckout({ payload: transformedData }).unwrap();
+      console.log(transformedData);
+
+      await createSale({ payload: transformedData }).unwrap();
 
       handleSuccess();
     } catch (error: unknown) {

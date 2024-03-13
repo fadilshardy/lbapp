@@ -20,12 +20,12 @@ export function transformCartData(cartItems: ICartItem[], totalPrice: number): I
         transactionDetails: [
             {
                 transaction_amount: totalPrice,
-                account_id: 43, // Debit entry (asset) - This account represents cash or similar assets. It increases when a sale is made.
+                account_id: 102, // Debit entry (asset) - This account represents cash or similar assets. It increases when a sale is made.
                 transaction_type: "debit"
             },
             {
                 transaction_amount: totalPrice,
-                account_id: 1, // Credit entry (asset) - This account represents inventory or goods for sale. It decreases when items are sold.
+                account_id: 101, // Credit entry (asset) - This account represents inventory or goods for sale. It decreases when items are sold.
                 transaction_type: "credit"
             }
         ]

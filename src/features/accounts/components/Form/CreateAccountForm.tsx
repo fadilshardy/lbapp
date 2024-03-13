@@ -21,6 +21,7 @@ export const CreateAccountForm: React.FC<IAccountCreateFormProps> = ({ handleMod
       parent_id: '',
       code: '',
       is_parent: false,
+      balance: 0,
     },
   });
 
