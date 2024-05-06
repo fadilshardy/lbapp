@@ -47,7 +47,7 @@ export const accountApi = appApi.injectEndpoints({
             }),
             invalidatesTags: [TAG_TYPE],
         }),
-        getSelectAccounts: builder.query<Account, any>(
+        getSelectAccounts: builder.query<Account[], any>(
             {
                 ...reduxQuery.generateGetAllEndpoint({
                     baseUrl: BASE_API_URL,

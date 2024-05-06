@@ -20,7 +20,6 @@ export const UpdateAccountForm: React.FC<IUpdateAccountFormProps> = ({
     resolver: zodResolver(AccountSchema),
     defaultValues: {
       ...currentAccount,
-      is_parent: currentAccount.is_parent,
     },
   });
 

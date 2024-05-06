@@ -10,4 +10,5 @@ export interface IAccount {
     description?: string;
     parent_id?: string | undefined;
     is_parent: boolean;
+    id: string;
 }

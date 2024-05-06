@@ -12,8 +12,6 @@ import { mdiCartVariant } from '@mdi/js';
 import { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
-
-
 const PosPage = () => {
   return (
     <>
@@ -22,19 +20,16 @@ const PosPage = () => {
       </Head>
 
       <SectionMain>
-        <div className="grid grid-cols-6 w-full space-y-4 sm:space-y-0">
-          <div className="col-span-6 sm:col-span-4">
+        <div className='grid grid-cols-6 w-full space-y-4 sm:space-y-0'>
+          <div className='col-span-6 sm:col-span-4'>
             <ProductCatalog />
           </div>
-          <div className="col-span-6 sm:col-span-2">
+          <div className='col-span-6 sm:col-span-2'>
             <Card>
               <CardHeader>
                 <div className='w-full flex justify-between'>
                   <span className='text-2xl font-semibold'>Carts</span>
-                  <BaseIcon
-                    path={mdiCartVariant}
-                    className="h-8 w-8 text-gray-600"
-                  />
+                  <BaseIcon path={mdiCartVariant} className='h-8 w-8 text-gray-600' />
                 </div>
               </CardHeader>
               <CardContent>

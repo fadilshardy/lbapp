@@ -17,8 +17,6 @@ export const DeleteProductForm: React.FC<IDeleteProductFormProps> = ({
 
   const [deleteProduct, { isLoading: isProductLoading }] = productApi.useDeleteProductMutation();
 
-  const cors = productApi.useGetCorsQuery({});
-
   async function handleDelete() {
     try {
       await deleteProduct({ productKey: currentProduct.code }).unwrap();
@@ -40,15 +38,15 @@ export const DeleteProductForm: React.FC<IDeleteProductFormProps> = ({
 
   return (
     <>
-      <AlertDialogDescription className="py-4">
+      <AlertDialogDescription className='py-4'>
         This action cannot be undone. This will permanently delete{' '}
-        <span className="font-medium">{currentProduct.name}</span> and remove all data from our
+        <span className='font-medium'>{currentProduct.name}</span> and remove all data from our
         servers.
       </AlertDialogDescription>
-      <div className="border-t flex justify-between w-full items-center pt-4">
+      <div className='border-t flex justify-between w-full items-center pt-4'>
         <AlertDialogCancel>Cancel</AlertDialogCancel>
 
-        <Button onClick={handleDelete} disabled={isProductLoading} variant="destructive">
+        <Button onClick={handleDelete} disabled={isProductLoading} variant='destructive'>
           Delete
         </Button>
       </div>

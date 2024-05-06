@@ -77,7 +77,7 @@ const ViewSaleDetail: React.FunctionComponent<ISaleDetailProps> = ({ saleRecord,
         <TableBody className='text-xs'>
           {saleRecord?.details.map((item, id) => {
             return (
-              <TableRow>
+              <TableRow key={id}>
                 <TableCell className='font-medium text-gray-900 whitespace-nowrap'>
                   {item.product_name}
                 </TableCell>

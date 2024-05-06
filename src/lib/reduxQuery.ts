@@ -3,24 +3,24 @@
 import { mutationResponseTransformers } from '@lib/apiHelpers';
 import { AxiosBaseQueryArgs } from "@stores/axiosBaseQuery";
 
-interface TagDescription<T> { type: T; searchQuery?: string };
+interface TagDescription<T> { type: T; searchQuery?: string }
 
 interface GetAllEndpointProps<T extends string> {
     baseUrl: string;
     queryParams?: string[];
     tagType: T;
     itemId: string;
-};
+}
 
 interface EndpointProps<T extends string> {
     baseUrl: string;
     itemId?: string;
     tagType: T;
-};
+}
 
 interface createEndpointProps<T extends string> {
     baseUrl: string;
-};
+}
 
 export const generateEndpoint = <T extends string>({
     baseUrl,

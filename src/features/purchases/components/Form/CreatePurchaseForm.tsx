@@ -15,42 +15,42 @@ interface IPurchaseCreateFormProps {
   handleModalToggle(open: boolean): void;
 }
 
+const purchaseRecordInitial: PurchaseRecord = {
+  purchase: {
+    date: format(new Date(), 'dd MMMM yyyy'),
+    note: '',
+    total_amount: 0,
+  },
+  purchaseDetails: [
+    {
+      product_name: 'select product',
+      product_id: '',
+      quantity: 0,
+      net_price: 0,
+      sale_price: 0,
+      purchase_amount: 0,
+    },
+  ],
+  transaction: {
+    type_id: 1,
+    reference_id: 1,
+    date: format(new Date(), 'dd MMMM yyyy'),
+    total_amount: 0,
+    transaction_type: 'asset',
+  },
+  transactionDetails: [
+    {
+      account_name: 'select account',
+      account_id: 0,
+      balance: 0,
+      transaction_amount: 0,
+      transaction_type: 'credit',
+    },
+  ],
+};
+
 export const CreatePurchaseForm: React.FC<IPurchaseCreateFormProps> = ({ handleModalToggle }) => {
   const { toast } = useToast();
-
-  const purchaseRecordInitial: PurchaseRecord = {
-    purchase: {
-      date: format(new Date(), 'dd MMMM yyyy'),
-      note: '',
-      total_amount: 0,
-    },
-    purchaseDetails: [
-      {
-        product_name: 'select product',
-        product_id: '',
-        quantity: 0,
-        net_price: 0,
-        sale_price: 0,
-        purchase_amount: 0,
-      },
-    ],
-    transaction: {
-      type_id: 1,
-      reference_id: 1,
-      date: format(new Date(), 'dd MMMM yyyy'),
-      total_amount: 0,
-      transaction_type: 'asset',
-    },
-    transactionDetails: [
-      {
-        account_name: 'select account',
-        account_id: 0,
-        balance: 0,
-        transaction_amount: 0,
-        transaction_type: 'credit',
-      },
-    ],
-  };
 
   const form = useForm<PurchaseRecord>({
     resolver: zodResolver(PurchaseRecordSchema),
@@ -68,8 +68,6 @@ export const CreatePurchaseForm: React.FC<IPurchaseCreateFormProps> = ({ handleM
     };
 
     purchaseRecord.transactionDetails.push(debitTransaction);
-
-    console.log(purchaseRecord);
 
     HandleFormSubmit({
       form: form,

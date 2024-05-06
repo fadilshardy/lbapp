@@ -8,6 +8,7 @@ export interface ITransaction {
     code?: string;
     is_balanced?: boolean;
     transaction_type: string;
+    running_balance?: number;
 }
 
 export interface ITransactionDetail {

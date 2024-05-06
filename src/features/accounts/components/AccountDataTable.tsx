@@ -7,9 +7,7 @@ import {
   getAccountColumns,
 } from '@features/accounts';
 
-interface AccountDataTableProps {}
-
-export const AccountDatatable: React.FC<AccountDataTableProps> = () => {
+export const AccountDatatable: React.FC = () => {
   const accountApiQuery = accountApi.useGetAccountsQuery;
   const accountColumns = getAccountColumns();
 

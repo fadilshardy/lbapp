@@ -15,13 +15,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import LoadingSpinner from '@components/LoadingSpinner';
 import { SeaarchableSelect } from '@components/ui/SearchableSelect';
 import { Switch } from '@components/ui/Switch';
 import { AlertDialogCancel } from '@components/ui/alert-dialog';
 import { Button } from '@components/ui/button';
-import { Account, accountApi } from '@features/accounts';
-import { useDebouncedQuery, useSearchQuery } from '@hooks/useSearchQuery';
-import { FormEventHandler } from 'react';
+import { Account, useCustomSelect } from '@features/accounts';
+import { ISelectLabel } from '@interfaces';
+import { FormEventHandler, useEffect } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 
 interface IAccountFormProps {
@@ -35,27 +36,35 @@ export const AccountForm: React.FC<IAccountFormProps> = ({
   handleSubmit,
   isAccountLoading,
 }) => {
-  const { query, handleQueryChange } = useSearchQuery();
-  const searchDebouncedQuery = useDebouncedQuery(query);
-
   const isParent = form.watch('is_parent');
+  const parentId = form.watch('parent_id');
 
-  form.watch('parent_id');
+  const {
+    selectedAccount,
+    handleSelectedChange,
+    accounts,
+    query,
+    handleQueryChange,
+    isAccountFetching,
+  } = useCustomSelect({
+    customFilter: parentId ? `id=${parentId}` : 'is_parent=1',
+  });
+
+  useEffect(() => {
+    if (!isParent && parentId && !selectedAccount.id && !isAccountFetching) {
+      const account = accounts?.find((account) => account.id == parentId) as ISelectLabel;
+      handleSelectedChange(account);
+    }
+  }, [selectedAccount, isAccountFetching]);
+
+  if (isAccountFetching) return <LoadingSpinner />;
 
   const handleIsParentToggle = (checked: boolean) => {
     form.setValue('is_parent', checked);
     form.setValue('parent_id', '');
     form.setValue('code', '');
+    handleSelectedChange({ id: null, name: null });
   };
-
-  const { data, isFetching: isCategoryLoading } = accountApi.useGetSelectAccountsQuery({
-    searchQuery: searchDebouncedQuery,
-    customFilter: 'is_parent=1',
-  });
-
-  const parentAccounts = data ?? [];
-
-  const currentParentAccount = form.getValues('parent_id');
 
   return (
     <Form {...form}>
@@ -74,9 +83,11 @@ export const AccountForm: React.FC<IAccountFormProps> = ({
                 </div>
                 <FormControl>
                   <Switch
+                    checked={field.value}
                     onCheckedChange={handleIsParentToggle}
                     name={field.name}
                     ref={field.ref}
+                    disabled={!isParent}
                     className='data-[state=checked]:bg-blue-500'
                   />
                 </FormControl>
@@ -84,7 +95,7 @@ export const AccountForm: React.FC<IAccountFormProps> = ({
             )}
           />
 
-          {isParent && (
+          {isParent === true && (
             <FormField
               control={form.control}
               name='code'
@@ -92,7 +103,7 @@ export const AccountForm: React.FC<IAccountFormProps> = ({
                 <FormItem className='transition animate-in fade-in  duration-500'>
                   <FormLabel>Parent Code</FormLabel>
                   <FormControl>
-                    <Input placeholder='code...' {...field} disabled={!isParent} />
+                    <Input {...field} disabled={!isParent} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -109,15 +120,16 @@ export const AccountForm: React.FC<IAccountFormProps> = ({
                   <FormLabel>Parent Account</FormLabel>
                   <FormControl>
                     <SeaarchableSelect
-                      disabled={isParent}
+                      disabled={!isParent && selectedAccount.id !== null}
                       field={field}
-                      selectItems={parentAccounts}
+                      selectItems={accounts}
                       selectName='account'
                       searchQuery={query}
                       handleQueryChange={handleQueryChange}
-                      isLoading={isCategoryLoading}
-                      currentValue={currentParentAccount}
+                      isLoading={isAccountFetching}
+                      currentValue={selectedAccount}
                       handleSelect={(value) => {
+                        handleSelectedChange(value);
                         form.setValue('type', value.type);
                         form.setValue('parent_id', value.id);
                       }}
@@ -136,7 +148,7 @@ export const AccountForm: React.FC<IAccountFormProps> = ({
               <FormItem>
                 <FormLabel>Name</FormLabel>
                 <FormControl>
-                  <Input placeholder='name...' {...field} />
+                  <Input {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

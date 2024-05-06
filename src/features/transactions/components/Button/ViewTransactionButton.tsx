@@ -15,31 +15,26 @@ interface IViewTransactionButtonProps {
 export const ViewTransactionButton: React.FC<IViewTransactionButtonProps> = ({
   currentTransaction,
 }) => {
-  const ViewButton = (
-    <Button
-      size='sm'
-      variant='ghost'
-      className=' text-gray-700 hover:bg-gray-50 hover:text-gray-400  focus:relative '
-    >
-      <BaseIcon path={mdiDotsHorizontalCircleOutline} className='h-6 w-6' />
-    </Button>
-  );
-
   const { isOpen, handleModalToggle } = useModalToggle(false);
-
   const { data, isFetching } = transactionApi.useGetTransactionQuery(
     { itemId: currentTransaction.code },
     { skip: !isOpen }
   );
-
-  const transaction = data ?? [];
 
   return (
     <ModalForm
       isOpen={isOpen}
       handleModalToggle={handleModalToggle}
       title='View Transaction Detail'
-      modalToggleBtn={ViewButton}
+      modalToggleBtn={
+        <Button
+          size='sm'
+          variant='ghost'
+          className=' text-gray-700 hover:bg-gray-50 hover:text-gray-400  focus:relative '
+        >
+          <BaseIcon path={mdiDotsHorizontalCircleOutline} className='h-6 w-6' />
+        </Button>
+      }
       className='max-w-3xl'
     >
       <ViewTransactionDetail

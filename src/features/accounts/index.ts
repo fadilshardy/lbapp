@@ -7,7 +7,7 @@ export * from './components/Form/CreateAccountForm';
 export * from './components/Form/ImportAccountForm';
 export * from './components/Form/UpdateAccountForm';
 export * from './datatable/accountColumns';
+export * from './hooks/useSelectAccount';
 export * from './interfaces/account';
 export * from './schemas/accountSchema';
 export * from './services/accountApi';
-

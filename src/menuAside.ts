@@ -42,6 +42,8 @@ const MenuAside = () => {
         },
         {
           label: t('general_ledger'),
+          href: '/report/ledger',
+
         },
         {
           label: t('general_journal'),

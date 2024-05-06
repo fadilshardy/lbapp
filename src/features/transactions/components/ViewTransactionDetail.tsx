@@ -75,11 +75,11 @@ const ViewTransactionDetail: React.FunctionComponent<ITransactionDetailProps> = 
         </TableCaption>
         <TableHeader>
           <TableRow>
-            <TableHead>Account Name</TableHead>
+            <TableHead>Name</TableHead>
             <TableHead> Type</TableHead>
             <TableHead className='text-right'>Amount</TableHead>
             <TableHead className='border-l' />
-            <TableHead>Account Name</TableHead>
+            <TableHead>Name</TableHead>
             <TableHead>Type</TableHead>
             <TableHead className='text-right'>Amount</TableHead>
           </TableRow>
@@ -91,7 +91,7 @@ const ViewTransactionDetail: React.FunctionComponent<ITransactionDetailProps> = 
               <TableRow key={id}>
                 {row.debit ? (
                   <>
-                    <TableCell className='font-medium text-gray-900 whitespace-nowrap'>
+                    <TableCell className='font-medium text-gray-900 text-wrap'>
                       {row.debit.account_code} - {row.debit.account_name}
                     </TableCell>
                     <TableCell>{row.debit.transaction_type}</TableCell>
@@ -110,7 +110,7 @@ const ViewTransactionDetail: React.FunctionComponent<ITransactionDetailProps> = 
 
                 {row.credit ? (
                   <>
-                    <TableCell className='font-medium text-gray-900 whitespace-nowrap'>
+                    <TableCell className='font-medium text-gray-900 text-wrap'>
                       {row.credit.account_code} - {row.credit.account_name}
                     </TableCell>
                     <TableCell>{row.credit.transaction_type}</TableCell>

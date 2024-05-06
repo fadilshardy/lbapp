@@ -21,7 +21,7 @@ export const saleApi = appApi.injectEndpoints({
             ...reduxQuery.generateCreateEndpoint({
                 baseUrl: BASE_SALE_URL,
             }),
-            invalidatesTags: ['sales', 'productCatalogs', 'accounts']
+            invalidatesTags: ['sales', 'productCatalogs', 'accounts', 'transactions']
         }),
     })
 });

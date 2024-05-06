@@ -148,14 +148,6 @@ export const PurchaseForm: React.FC<IProductFormProps> = ({
             Submit
           </Button>
         </div>
-        <hr />
-        {/* <ErrorMessage
-          errors={form.formState.errors}
-          name='errors'
-          render={({ message }) => (
-            <p className='text-destructive text-xs text-center'>{message}</p>
-          )}
-        /> */}
       </form>
     </Form>
   );

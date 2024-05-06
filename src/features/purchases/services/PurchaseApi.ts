@@ -22,7 +22,7 @@ export const purchaseApi = appApi.injectEndpoints({
             ...reduxQuery.generateCreateEndpoint({
                 baseUrl: BASE_PURCHASE_URL,
             }),
-            invalidatesTags: ['purchases', 'accounts']
+            invalidatesTags: ['purchases', 'accounts', 'transactions']
         }),
         updatePurchase: builder.mutation<Purchase, any>({
             ...reduxQuery.generateUpdateEndpoint({
